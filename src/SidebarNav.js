@@ -175,7 +175,7 @@ class AppSidebarNav extends Component {
 
     // sidebar-nav root
     return (
-      <PerfectScrollbar className={navClasses} {...attributes} option={{ suppressScrollX: true }} >
+      <PerfectScrollbar className={navClasses} {...attributes} options={{ suppressScrollX: true }} >
         <Nav>
           {children || this.navList(navConfig.items)}
         </Nav>
