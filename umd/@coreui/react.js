@@ -12708,7 +12708,7 @@ NavbarBrand_AppNavbarBrand.defaultProps = NavbarBrand_defaultProps;
 var react_onclickout = __webpack_require__(10);
 var react_onclickout_default = /*#__PURE__*/__webpack_require__.n(react_onclickout);
 
-// EXTERNAL MODULE: ./node_modules/element-closest/element-closest.js
+// EXTERNAL MODULE: ./src/Shared/element-closest.js
 var element_closest = __webpack_require__(19);
 
 // CONCATENATED MODULE: ./src/Sidebar.js
@@ -12819,8 +12819,10 @@ var Sidebar_AppSidebar = function (_Component) {
   };
 
   AppSidebar.prototype.onClickOut = function onClickOut(e) {
-    if (!e.target.closest('[data-sidebar-toggler]')) {
-      this.hideMobile();
+    if (typeof window !== 'undefined' && document.body.classList.contains('sidebar-show')) {
+      if (!e.target.closest('[data-sidebar-toggler]')) {
+        this.hideMobile();
+      }
     }
   };
 
@@ -15243,40 +15245,39 @@ module.exports = exports['default'];
 /* 19 */
 /***/ (function(module, exports) {
 
-// element-closest | CC0-1.0 | github.com/jonathantneal/closest
-
 (function (ElementProto) {
-	if (typeof ElementProto.matches !== 'function') {
-		ElementProto.matches = ElementProto.msMatchesSelector || ElementProto.mozMatchesSelector || ElementProto.webkitMatchesSelector || function matches(selector) {
-			var element = this;
-			var elements = (element.document || element.ownerDocument).querySelectorAll(selector);
-			var index = 0;
+  if (!ElementProto) {
+    return;
+  }
+  if (typeof ElementProto.matches !== 'function') {
+    ElementProto.matches = ElementProto.msMatchesSelector || ElementProto.mozMatchesSelector || ElementProto.webkitMatchesSelector || function matches(selector) {
+      var element = this;
+      var elements = (element.document || element.ownerDocument).querySelectorAll(selector);
+      var index = 0;
 
-			while (elements[index] && elements[index] !== element) {
-				++index;
-			}
+      while (elements[index] && elements[index] !== element) {
+        ++index;
+      }
 
-			return Boolean(elements[index]);
-		};
-	}
+      return Boolean(elements[index]);
+    };
+  }
 
-	if (typeof ElementProto.closest !== 'function') {
-		ElementProto.closest = function closest(selector) {
-			var element = this;
+  if (typeof ElementProto.closest !== 'function') {
+    ElementProto.closest = function closest(selector) {
+      var element = this;
 
-			while (element && element.nodeType === 1) {
-				if (element.matches(selector)) {
-					return element;
-				}
+      while (element && element.nodeType === 1) {
+        if (element.matches(selector)) {
+          return element;
+        }
+        element = element.parentNode;
+      }
 
-				element = element.parentNode;
-			}
-
-			return null;
-		};
-	}
-})(window.Element.prototype);
-
+      return null;
+    };
+  }
+})(typeof window !== 'undefined' && window.Element.prototype);
 
 /***/ }),
 /* 20 */

@@ -13,7 +13,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { sidebarCssClasses } from './Shared';
 import ClickOutHandler from 'react-onclickout';
-import 'element-closest';
+import './Shared/element-closest';
 
 var propTypes = {
   children: PropTypes.node,
@@ -105,8 +105,10 @@ var AppSidebar = function (_Component) {
   };
 
   AppSidebar.prototype.onClickOut = function onClickOut(e) {
-    if (!e.target.closest('[data-sidebar-toggler]')) {
-      this.hideMobile();
+    if (typeof window !== 'undefined' && document.body.classList.contains('sidebar-show')) {
+      if (!e.target.closest('[data-sidebar-toggler]')) {
+        this.hideMobile();
+      }
     }
   };
 
