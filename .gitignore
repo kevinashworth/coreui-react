@@ -11,9 +11,9 @@ package-lock.json
 /coverage
 
 # production
-/es
-/lib
-/umd
+# /es
+# /lib
+# /umd
 
 # misc
 .DS_Store
