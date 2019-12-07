@@ -1,5 +1,5 @@
 /*!
- * @coreui/react v2.0.5 - https://coreui.io
+ * @coreui/react v2.0.6-v8-alba - https://coreui.io
  * MIT Licensed
  */
 (function webpackUniversalModuleDefinition(root, factory) {
