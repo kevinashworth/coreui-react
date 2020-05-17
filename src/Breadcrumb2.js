@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Route, Link, matchPath } from 'react-router-dom';
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 let routes;
+let router;
 
 const getPaths = (pathname) => {
   const paths = ['/'];
@@ -19,13 +19,15 @@ const getPaths = (pathname) => {
   return paths;
 };
 
-const findRouteName = (url) => {
+const findRouteName2 = (url) => {
+  const matchPath = router.matchPath;
   const aroute = routes.find(route => matchPath(url, {path: route.path, exact: route.exact}));
   return (aroute && aroute.name) ? aroute.name : null
 };
 
-const BreadcrumbsItem = ({ match }) => {
-  const routeName = findRouteName(match.url);
+const BreadcrumbsItem2 = ({ match }) => {
+  const routeName = findRouteName2(match.url);
+  const Link = router.Link;
   if (routeName) {
     return (
         // eslint-disable-next-line react/prop-types
@@ -42,15 +44,16 @@ const BreadcrumbsItem = ({ match }) => {
   return null;
 };
 
-BreadcrumbsItem.propTypes = {
+BreadcrumbsItem2.propTypes = {
   match: PropTypes.shape({
     url: PropTypes.string
   })
 };
 
-const Breadcrumbs = (args) => {
+const Breadcrumbs2 = (args) => {
+  const Route = router.Route;
   const paths = getPaths(args.location.pathname);
-  const items = paths.map((path, i) => <Route key={i.toString()} path={path} component={BreadcrumbsItem} />);
+  const items = paths.map((path, i) => <Route key={i.toString()} path={path} component={BreadcrumbsItem2} />);
   return (
     <Breadcrumb>
       {items}
@@ -62,7 +65,8 @@ const propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
   appRoutes: PropTypes.any,
-  tag: PropTypes.oneOfType([PropTypes.func, PropTypes.string])
+  tag: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
+  router: PropTypes.any
 };
 
 const defaultProps = {
@@ -71,12 +75,13 @@ const defaultProps = {
   appRoutes: [{ path: '/', exact: true, name: 'Home', component: null }]
 };
 
-class AppBreadcrumb extends Component {
+class AppBreadcrumb2 extends Component {
   constructor(props) {
     super(props);
 
     this.state = { routes: props.appRoutes };
     routes = this.state.routes;
+    router = props.router;
   }
 
   render() {
@@ -84,18 +89,21 @@ class AppBreadcrumb extends Component {
 
     delete attributes.children
     delete attributes.appRoutes
+    delete attributes.router
 
     const classes = classNames(className);
 
+    const Route = router.Route;
+
     return (
       <Tag className={classes}>
-        <Route path="/:path" component={Breadcrumbs} {...attributes} />
+        <Route path="/:path" component={Breadcrumbs2} {...attributes} />
       </Tag>
     );
   }
 }
 
-AppBreadcrumb.propTypes = propTypes;
-AppBreadcrumb.defaultProps = defaultProps;
+AppBreadcrumb2.propTypes = propTypes;
+AppBreadcrumb2.defaultProps = defaultProps;
 
-export default AppBreadcrumb;
+export default AppBreadcrumb2;
