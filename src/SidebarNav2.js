@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { NavLink } from 'react-router-dom';
 import { Badge, Nav, NavItem, NavLink as RsNavLink } from 'reactstrap';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import PerfectScrollbar from 'react-perfect-scrollbar';
+import 'react-perfect-scrollbar/dist/css/styles.css';
 
 const propTypes = {
   children: PropTypes.node,
@@ -12,7 +12,9 @@ const propTypes = {
   navFunc: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
   isOpen: PropTypes.bool,
   staticContext: PropTypes.any,
-  tag: PropTypes.oneOfType([PropTypes.func, PropTypes.string])
+  tag: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
+  router: PropTypes.any,
+  props: PropTypes.any
 };
 
 const defaultProps = {
@@ -26,10 +28,11 @@ const defaultProps = {
         badge: { variant: 'info', text: 'NEW' }
       }]
   },
-  isOpen: false
+  isOpen: false,
+  router: {RsNavLink}
 };
 
-class AppSidebarNav extends Component {
+class AppSidebarNav2 extends Component {
   constructor(props) {
     super(props);
 
@@ -55,6 +58,10 @@ class AppSidebarNav extends Component {
     }
   }
 
+  getAttribs(attributes) {
+    return JSON.parse(JSON.stringify(attributes || {}));
+  }
+
   // nav list
   navList(items) {
     return items.map((item, index) => this.navType(item, index));
@@ -73,7 +80,7 @@ class AppSidebarNav extends Component {
 
   // nav list section title
   navTitle(title, key) {
-    const classes = classNames('nav-title', title.class);
+    const classes = classNames('nav-title', title.class, title.className);
     return <li key={key} className={classes}>{this.navWrapper(title)} </li>;
   }
 
@@ -84,7 +91,7 @@ class AppSidebarNav extends Component {
 
   // nav list divider
   navDivider(divider, key) {
-    const classes = classNames('divider', divider.class);
+    const classes = classNames('divider', divider.class, divider.className);
     return <li key={key} className={classes} />;
   }
 
@@ -108,11 +115,16 @@ class AppSidebarNav extends Component {
   // nav dropdown
   navDropdown(item, key) {
     const classIcon = classNames('nav-icon', item.icon);
-    const attributes = JSON.parse(JSON.stringify(item.attributes || {}));
-    const classes = classNames('nav-link', 'nav-dropdown-toggle', item.class, attributes.class);
+    const attributes = this.getAttribs(item.attributes);
+    const classes = classNames('nav-link', 'nav-dropdown-toggle', item.class, attributes.class, attributes.className);
     delete attributes.class;
+    delete attributes.className;
+    const itemAttr = this.getAttribs(item.itemAttr);
+    const liClasses = classNames(this.activeRoute(item.url, this.props), itemAttr.class, itemAttr.className)
+    delete itemAttr.class;
+    delete itemAttr.className;
     return (
-      <li key={key} className={this.activeRoute(item.url, this.props)}>
+      <li key={key} className={liClasses} {...itemAttr}>
         <a className={classes} href="#" onClick={this.handleClick} {...attributes}><i className={classIcon}/>
           {item.name}{this.navBadge(item.badge)}
         </a>
@@ -139,15 +151,23 @@ class AppSidebarNav extends Component {
     const url = item.url || '';
     const itemIcon = <i className={classes.icon} />
     const itemBadge = this.navBadge(item.badge)
-    const attributes = item.attributes || {}
+    const attributes = this.getAttribs(item.attributes)
+    classes.link = classNames(classes.link, attributes.class, attributes.className)
+    delete attributes.class;
+    delete attributes.className;
+    const itemAttr = this.getAttribs(item.itemAttr)
+    classes.item = classNames(classes.item, itemAttr.class, itemAttr.className)
+    delete itemAttr.class;
+    delete itemAttr.className;
+    const NavLink = this.props.router.NavLink || RsNavLink
     return (
-      <NavItem key={key} className={classes.item}>
+      <NavItem key={key} className={classes.item} {...itemAttr}>
         { attributes.disabled ?
             <RsNavLink href={''} className={classes.link} {...attributes}>
               {itemIcon}{item.name}{itemBadge}
             </RsNavLink>
          :
-          this.isExternal(url) ?
+          this.isExternal(url, this.props) || NavLink === RsNavLink ?
             <RsNavLink href={url} className={classes.link} active {...attributes}>
               {itemIcon}{item.name}{itemBadge}
             </RsNavLink> :
@@ -162,7 +182,7 @@ class AppSidebarNav extends Component {
   // badge addon to NavItem
   navBadge(badge) {
     if (badge) {
-      const classes = classNames(badge.class);
+      const classes = classNames(badge.class, badge.className);
       return (
         <Badge className={classes} color={badge.variant}>{badge.text}</Badge>
       );
@@ -170,9 +190,14 @@ class AppSidebarNav extends Component {
     return null;
   }
 
-  isExternal(url) {
-    const link = url ? url.substring(0, 4) : '';
-    return link === 'http';
+  isExternal(url, props) {
+    const linkType = typeof url;
+    const link =
+        linkType === 'string' ? url :
+          linkType === 'object' && url.pathname ? url.pathname :
+            linkType === 'function' && typeof url(props.location) === 'string'  ? url(props.location) :
+              linkType === 'function' && typeof url(props.location) === 'object' ? url(props.location).pathname : '' ;
+    return link.substring(0, 4) === 'http';
   }
 
   render() {
@@ -181,6 +206,7 @@ class AppSidebarNav extends Component {
     delete attributes.isOpen
     delete attributes.staticContext
     delete attributes.Tag
+    delete attributes.router
 
     const navClasses = classNames(className, 'sidebar-nav');
 
@@ -189,11 +215,7 @@ class AppSidebarNav extends Component {
 
     // sidebar-nav root
     return (
-<<<<<<< HEAD
-      <PerfectScrollbar className={navClasses} {...attributes} options={{ suppressScrollX: true }} >
-=======
       <PerfectScrollbar className={navClasses} {...attributes} options={{ suppressScrollX: !isRtl }} >
->>>>>>> master
         <Nav>
           {children || this.navList(navConfig.items)}
         </Nav>
@@ -202,7 +224,7 @@ class AppSidebarNav extends Component {
   }
 }
 
-AppSidebarNav.propTypes = propTypes;
-AppSidebarNav.defaultProps = defaultProps;
+AppSidebarNav2.propTypes = propTypes;
+AppSidebarNav2.defaultProps = defaultProps;
 
-export default AppSidebarNav;
+export default AppSidebarNav2;
