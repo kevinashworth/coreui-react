@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { sidebarCssClasses } from './Shared';
 import ClickOutHandler from 'react-onclickout'
 import './Shared/element-closest'
-import LayoutHelper from './Shared/layout/layout'
+import { sidebarToggle } from './Shared/my-helpers.js'
 
 const propTypes = {
   children: PropTypes.node,
@@ -58,7 +58,7 @@ class AppSidebar extends Component {
   }
 
   isMinimized(minimized) {
-    LayoutHelper.sidebarToggle(minimized)
+    sidebarToggle(minimized)
   }
 
   isOffCanvas(offCanvas) {

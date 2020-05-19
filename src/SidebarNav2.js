@@ -6,7 +6,7 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import '../css/scrollbar.css';
 
-import LayoutHelper from './Shared/layout/layout'
+import { sidebarPSToggle } from './Shared/my-helpers.js'
 
 const propTypes = {
   children: PropTypes.node,
@@ -247,7 +247,7 @@ class AppSidebarNav2 extends Component {
         const isSidebarMinimized = document.body.classList.contains('sidebar-minimized') || false
         this.setState({ sidebarMinimized: isSidebarMinimized })
 
-        LayoutHelper.sidebarPSToggle(!isSidebarMinimized)
+        sidebarPSToggle(!isSidebarMinimized)
 
       });
       const element = document.body;
@@ -260,7 +260,7 @@ class AppSidebarNav2 extends Component {
   }
 
   onResize() {
-    LayoutHelper.sidebarPSToggle(true)
+    sidebarPSToggle(true)
   }
 
   componentDidMount() {
