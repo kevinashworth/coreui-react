@@ -12,7 +12,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import LayoutHelper from './Shared/layout/layout';
+import { sidebarToggle, sidebarPSToggle } from './Shared/my-helpers.js';
 
 var propTypes = {
   children: PropTypes.node,
@@ -40,11 +40,11 @@ var AppSidebarMinimizer = function (_Component) {
 
   AppSidebarMinimizer.prototype.componentDidMount = function componentDidMount() {
     var isMinimized = document.body.classList.contains('sidebar-minimized');
-    LayoutHelper.sidebarPSToggle(!isMinimized);
+    sidebarPSToggle(!isMinimized);
   };
 
   AppSidebarMinimizer.prototype.handleClick = function handleClick() {
-    LayoutHelper.sidebarToggle();
+    sidebarToggle();
   };
 
   AppSidebarMinimizer.prototype.render = function render() {

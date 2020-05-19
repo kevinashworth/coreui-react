@@ -10899,37 +10899,55 @@ var react_onclickout_default = /*#__PURE__*/__webpack_require__.n(react_onclicko
 // EXTERNAL MODULE: ./src/Shared/element-closest.js
 var element_closest = __webpack_require__(19);
 
-// CONCATENATED MODULE: ./src/Shared/layout/layout.js
-var _class, _temp;
+// CONCATENATED MODULE: ./src/Shared/my-helpers.js
+var addBodyClass = function addBodyClass(className) {
+  return document.body.classList.add(className);
+};
+var removeBodyClass = function removeBodyClass(className) {
+  return document.body.classList.remove(className);
+};
+var my_helpers_toggle = function toggle(className) {
+  return document.body.classList.toggle(className);
+};
 
-function layout_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function sidebarMinimize(force) {
+  toggleClass('sidebar-minimized', force);
+}
 
-var LayoutHelper = (_temp = _class = function () {
-  function LayoutHelper() {
-    layout_classCallCheck(this, LayoutHelper);
+function brandMinimize(force) {
+  toggleClass('brand-minimized', force);
+}
+
+function toggleClass(className, force) {
+  if (document.body) {
+    if (force === true) {
+      addBodyClass(className);
+    } else if (force === false) {
+      removeBodyClass(className);
+    } else {
+      my_helpers_toggle(className);
+    }
   }
+}
 
-  LayoutHelper.sidebarToggle = function sidebarToggle(toggle) {
-    var minimize = arguments.length ? toggle : !this.elClassList.contains('sidebar-minimized');
-    this.sidebarMinimize(minimize);
-    this.brandMinimize(minimize);
-    this.sidebarPSToggle(!minimize); /*remove PS on sidebar minimized*/
-  };
+function isOnMobile() {
+  var onMobile = false;
+  return onMobile;
+}
 
-  LayoutHelper.sidebarMinimize = function sidebarMinimize(force) {
-    return this.toggleClass('sidebar-minimized', force);
-  };
+function sidebarToggle(toggle) {
+  if (document.body) {
+    var minimize = typeof toggle !== 'undefined' ? toggle : !document.body.classList.contains('sidebar-minimized');
+    sidebarMinimize(minimize);
+    brandMinimize(minimize);
+    sidebarPSToggle(!minimize);
+  }
+}
 
-  LayoutHelper.brandMinimize = function brandMinimize(force) {
-    this.toggleClass('brand-minimized', force);
-  };
-
-  //  sidebar perfect scrollbar ugly hack
-
-
-  LayoutHelper.sidebarPSToggle = function sidebarPSToggle(toggle) {
-
-    if (this.isOnMobile()) {
+function sidebarPSToggle() {
+  var toggle;
+  if (document.body) {
+    if (isOnMobile()) {
       toggle = true;
     } else {
       var isSidebarMinimized = document.body.classList.contains('sidebar-minimized') || false;
@@ -10976,42 +10994,8 @@ var LayoutHelper = (_temp = _class = function () {
         sidebar.classList.remove('ps--active-y');
       }
     }
-  };
-
-  LayoutHelper.toggleClass = function toggleClass(className, force) {
-
-    if (force === true) {
-      this.elClassList.add(className);
-    } else if (force === false) {
-      this.elClassList.remove(className);
-    } else {
-      this.elClassList.toggle(className);
-    }
-    return this.elClassList.contains(className);
-  };
-
-  LayoutHelper.isOnMobile = function isOnMobile() {
-    var onMobile = false;
-    try {
-      var minimizerElement = document.querySelector('.sidebar-minimizer');
-      if (minimizerElement) {
-        onMobile = getComputedStyle(minimizerElement).getPropertyValue('display') === 'none';
-      } else {
-        var sidebarElement = document.querySelector('.sidebar .sidebar-nav');
-        sidebarElement && (onMobile = getComputedStyle(sidebarElement).getPropertyValue('overflow-y') === 'auto');
-      }
-    } catch (ignore) {
-      // eslint-disable-next-line
-      console.warn('CoreUI isOnMobile failed to getComputedStyle', ignore);
-    }
-    return onMobile;
-  };
-
-  return LayoutHelper;
-}(), _class.elClassList = document.body.classList, _temp);
-
-
-/* harmony default export */ var layout = (LayoutHelper);
+  }
+}
 // CONCATENATED MODULE: ./src/Sidebar.js
 var Sidebar_extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -11092,7 +11076,7 @@ var Sidebar_AppSidebar = function (_Component) {
   };
 
   AppSidebar.prototype.isMinimized = function isMinimized(minimized) {
-    layout.sidebarToggle(minimized);
+    sidebarToggle(minimized);
   };
 
   AppSidebar.prototype.isOffCanvas = function isOffCanvas(offCanvas) {
@@ -11383,11 +11367,11 @@ var SidebarMinimizer_AppSidebarMinimizer = function (_Component) {
 
   AppSidebarMinimizer.prototype.componentDidMount = function componentDidMount() {
     var isMinimized = document.body.classList.contains('sidebar-minimized');
-    layout.sidebarPSToggle(!isMinimized);
+    sidebarPSToggle(!isMinimized);
   };
 
   AppSidebarMinimizer.prototype.handleClick = function handleClick() {
-    layout.sidebarToggle();
+    sidebarToggle();
   };
 
   AppSidebarMinimizer.prototype.render = function render() {
@@ -11991,7 +11975,7 @@ var SidebarNav2_AppSidebarNav2 = function (_Component) {
         var isSidebarMinimized = document.body.classList.contains('sidebar-minimized') || false;
         _this5.setState({ sidebarMinimized: isSidebarMinimized });
 
-        layout.sidebarPSToggle(!isSidebarMinimized);
+        sidebarPSToggle(!isSidebarMinimized);
       });
       var element = document.body;
       this.changes.observe(element, {
@@ -12003,7 +11987,7 @@ var SidebarNav2_AppSidebarNav2 = function (_Component) {
   };
 
   AppSidebarNav2.prototype.onResize = function onResize() {
-    layout.sidebarPSToggle(true);
+    sidebarPSToggle(true);
   };
 
   AppSidebarNav2.prototype.componentDidMount = function componentDidMount() {
