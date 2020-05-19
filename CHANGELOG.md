@@ -1,5 +1,37 @@
 ### [@coreui/react](https://coreui.io/) changelog
 
+##### `v2.5.8`
+- chore(demo/polyfill): update to core-js v3
+
+###### dependencies update
+- update: `core-js` to `^3.6.5`
+- update: `react` to `^16.13.1`
+- update: `react-dom` to `^16.13.1`
+- update: `react-router-dom` to `^5.2.0`
+- update: `mutationobserver-shim` to `^0.3.5`
+- update: `eslint` to `^7.0.0`
+- update: `eslint-plugin-import` to `^2.20.2`
+- update: `eslint-plugin-react` to `^7.20.0`
+- update: `nwb` to `^0.24.7`
+- update: `react` to `^16.13.1`
+- update: `react-dom` to `^16.13.1`
+- update: `react-router-dom` to `^5.2.0`
+- update: `sinon` to `^9.0.2`
+
+##### `v2.5.7`
+- fix(SidebarNav): add missing alternative icon config object
+
+##### `v2.5.6`
+- fix(SidebarNav): navigate to route on AppSideBarNav parent menu click - thanx @regimani #98 
+
+###### dependencies update
+- update `react` to `^16.13.0`
+- update `react-dom` to `^16.13.0`
+
+##### `v2.5.5`
+- fix(SidebarNav): perfect scrollbar issue on sidebar minimized / rtl
+- chore: dependencies update and config refactor
+
 ##### `v2.5.4`
 - fix(SidebarNav): allow location object as navConfig item url parameter
 

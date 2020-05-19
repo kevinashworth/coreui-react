@@ -4,6 +4,9 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css';
+import '../css/scrollbar.css';
+
+import LayoutHelper from './Shared/layout/layout'
 
 const propTypes = {
   children: PropTypes.node,
@@ -39,17 +42,30 @@ class AppSidebarNav2 extends Component {
     this.handleClick = this.handleClick.bind(this);
     this.activeRoute = this.activeRoute.bind(this);
     this.hideMobile = this.hideMobile.bind(this);
+
+    this.changes = null;
+    this.state = { sidebarMinimized: false }
   }
 
-  handleClick(e) {
-    e.preventDefault();
+  _scrollBarRef = null;
+
+  handleClick(e, item) {
+    if (item.attributes && typeof item.attributes.onClick  === 'function' && !this.isActiveRoute(item.url, this.props)) {
+      item.attributes.onClick(e, item)
+    } else {
+      e.preventDefault();
+    }
     e.currentTarget.parentElement.classList.toggle('open');
   }
 
-  activeRoute(routeName, props) {
+  isActiveRoute(routeName, props) {
     return props.location.pathname.indexOf(routeName) > -1
-      ? 'nav-item nav-dropdown open'
-      : 'nav-item nav-dropdown';
+  }
+
+  activeRoute(routeName, props) {
+    return this.isActiveRoute(routeName, props) ?
+      'nav-item nav-dropdown open' :
+      'nav-item nav-dropdown';
   }
 
   hideMobile() {
@@ -59,7 +75,7 @@ class AppSidebarNav2 extends Component {
   }
 
   getAttribs(attributes) {
-    return JSON.parse(JSON.stringify(attributes || {}));
+    return {...attributes};
   }
 
   // nav list
@@ -114,20 +130,26 @@ class AppSidebarNav2 extends Component {
 
   // nav dropdown
   navDropdown(item, key) {
-    const classIcon = classNames('nav-icon', item.icon);
+    const itemIcon = this.navIcon(item)
     const attributes = this.getAttribs(item.attributes);
     const classes = classNames('nav-link', 'nav-dropdown-toggle', item.class, attributes.class, attributes.className);
     delete attributes.class;
     delete attributes.className;
     const itemAttr = this.getAttribs(item.itemAttr);
-    const liClasses = classNames(this.activeRoute(item.url, this.props), itemAttr.class, itemAttr.className)
+    const liClasses = classNames('nav-item', 'nav-dropdown', itemAttr.class, itemAttr.className);
     delete itemAttr.class;
     delete itemAttr.className;
+    const NavLink = this.props.router.NavLink || RsNavLink;
+
     return (
-      <li key={key} className={liClasses} {...itemAttr}>
-        <a className={classes} href="#" onClick={this.handleClick} {...attributes}><i className={classIcon}/>
-          {item.name}{this.navBadge(item.badge)}
-        </a>
+      <li key={key} className={classNames(liClasses, {'open': this.isActiveRoute(item.url, this.props)})} {...itemAttr}>
+        <NavLink activeClassName='open'
+                 className={classes}
+                 to={item.url || ''}
+                 {...attributes}
+                 onClick={(e) => this.handleClick(e, item)}>
+          {itemIcon}{item.name}{this.navBadge(item.badge)}
+        </NavLink>
         <ul className="nav-dropdown-items">
           {this.navList(item.children)}
         </ul>
@@ -146,10 +168,26 @@ class AppSidebarNav2 extends Component {
     );
   }
 
+  navIcon(item) {
+    const icon = item.icon;
+    const iconObject = (typeof icon === 'object' && (icon !== null)) ? {iconClass: icon.class, iconClassName: icon.className, ...icon} : { iconClass: icon };
+    const {iconClass, iconClassName, innerText, img, attributes} = iconObject;
+    const iconAttr = {...attributes};
+    delete iconAttr.class;
+    delete iconAttr.className;
+    delete iconAttr.img;
+    const iconImg = img && img.src ? img : null;
+    const iconInner = innerText || null;
+    const classIcon = classNames('nav-icon', iconClass, iconClassName);
+    const iconComponent = iconImg ? <img {...iconAttr} className={classIcon} src={iconImg.src} /> : <i {...iconAttr} className={classIcon}>{iconInner}</i>
+    return (iconComponent)
+  }
+
   // nav link
   navLink(item, key, classes) {
+    const ref = React.createRef();
     const url = item.url || '';
-    const itemIcon = <i className={classes.icon} />
+    const itemIcon = this.navIcon(item)
     const itemBadge = this.navBadge(item.badge)
     const attributes = this.getAttribs(item.attributes)
     classes.link = classNames(classes.link, attributes.class, attributes.className)
@@ -171,7 +209,7 @@ class AppSidebarNav2 extends Component {
             <RsNavLink href={url} className={classes.link} active {...attributes}>
               {itemIcon}{item.name}{itemBadge}
             </RsNavLink> :
-            <NavLink to={url} className={classes.link} activeClassName="active" onClick={this.hideMobile} {...attributes}>
+            <NavLink to={url} className={classes.link} activeClassName="active" onClick={() => this.hideMobile(ref)} ref={ref} {...attributes}>
               {itemIcon}{item.name}{itemBadge}
             </NavLink>
         }
@@ -200,6 +238,45 @@ class AppSidebarNav2 extends Component {
     return link.substring(0, 4) === 'http';
   }
 
+  observeDomMutations() {
+    if (window.MutationObserver) {
+
+      // eslint-disable-next-line
+      this.changes = new MutationObserver((mutations) => {
+
+        const isSidebarMinimized = document.body.classList.contains('sidebar-minimized') || false
+        this.setState({ sidebarMinimized: isSidebarMinimized })
+
+        LayoutHelper.sidebarPSToggle(!isSidebarMinimized)
+
+      });
+      const element = document.body;
+      this.changes.observe(element, {
+        attributes: true,
+        attributeFilter: ['class']
+      });
+    }
+    window.addEventListener('resize', this.onResize);
+  }
+
+  onResize() {
+    LayoutHelper.sidebarPSToggle(true)
+  }
+
+  componentDidMount() {
+    this.observeDomMutations()
+  }
+
+  componentWillUnmount() {
+    try {
+      this.changes.disconnect()
+      window.removeEventListener('resize', this.onResize);
+    } catch (ignore) {
+      // eslint-disable-next-line
+      console.warn('CoreUI SidebarNav failed to disconnect from MutationObserver', ignore)
+    }
+  }
+
   render() {
     const { className, children, navConfig, ...attributes } = this.props;
 
@@ -208,18 +285,17 @@ class AppSidebarNav2 extends Component {
     delete attributes.Tag
     delete attributes.router
 
-    const navClasses = classNames(className, 'sidebar-nav');
+    const navClasses = classNames(className, 'sidebar-nav')
 
-    // ToDo: find better rtl fix
-    const isRtl = getComputedStyle(document.documentElement).direction === 'rtl'
+    const options = Object.assign({}, { suppressScrollX: true, suppressScrollY: this.state.sidebarMinimized })
 
     // sidebar-nav root
     return (
-      <PerfectScrollbar className={navClasses} {...attributes} options={{ suppressScrollX: !isRtl }} >
-        <Nav>
-          {children || this.navList(navConfig.items)}
-        </Nav>
-      </PerfectScrollbar>
+        <PerfectScrollbar className={navClasses} {...attributes} options={options} ref = {(ref) => { this._scrollBarRef = ref; }} >
+          <Nav>
+            {children || this.navList(navConfig.items)}
+          </Nav>
+        </PerfectScrollbar>
     );
   }
 }

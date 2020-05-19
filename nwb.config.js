@@ -5,7 +5,9 @@ module.exports = {
     umd: {
       global: 'CoreUIReact',
       externals: {
-        react: 'React'
+        react: 'React',
+        'react-router': 'ReactRouter',
+        'react-router-dom': 'ReactRouterDom'
       }
     }
   }
