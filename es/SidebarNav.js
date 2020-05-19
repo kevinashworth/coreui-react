@@ -54,7 +54,7 @@ var AppSidebarNav = function (_Component) {
 
   AppSidebarNav.prototype.handleClick = function handleClick(e) {
     e.preventDefault();
-    e.target.parentElement.classList.toggle('open');
+    e.currentTarget.parentElement.classList.toggle('open');
   };
 
   AppSidebarNav.prototype.activeRoute = function activeRoute(routeName, props) {
@@ -130,14 +130,18 @@ var AppSidebarNav = function (_Component) {
 
   AppSidebarNav.prototype.navDropdown = function navDropdown(item, key) {
     var classIcon = classNames('nav-icon', item.icon);
+    var attributes = JSON.parse(JSON.stringify(item.attributes || {}));
+    var classes = classNames('nav-link', 'nav-dropdown-toggle', item.class, attributes.class);
+    delete attributes.class;
     return React.createElement(
       'li',
       { key: key, className: this.activeRoute(item.url, this.props) },
       React.createElement(
         'a',
-        { className: 'nav-link nav-dropdown-toggle', href: '#', onClick: this.handleClick },
+        _extends({ className: classes, href: '#', onClick: this.handleClick }, attributes),
         React.createElement('i', { className: classIcon }),
-        item.name
+        item.name,
+        this.navBadge(item.badge)
       ),
       React.createElement(
         'ul',
@@ -163,22 +167,31 @@ var AppSidebarNav = function (_Component) {
 
 
   AppSidebarNav.prototype.navLink = function navLink(item, key, classes) {
-    var url = item.url ? item.url : '';
+    var url = item.url || '';
+    var itemIcon = React.createElement('i', { className: classes.icon });
+    var itemBadge = this.navBadge(item.badge);
+    var attributes = item.attributes || {};
     return React.createElement(
       NavItem,
       { key: key, className: classes.item },
-      this.isExternal(url) ? React.createElement(
+      attributes.disabled ? React.createElement(
         RsNavLink,
-        { href: url, className: classes.link, active: true },
-        React.createElement('i', { className: classes.icon }),
+        _extends({ href: '', className: classes.link }, attributes),
+        itemIcon,
         item.name,
-        this.navBadge(item.badge)
+        itemBadge
+      ) : this.isExternal(url) ? React.createElement(
+        RsNavLink,
+        _extends({ href: url, className: classes.link, active: true }, attributes),
+        itemIcon,
+        item.name,
+        itemBadge
       ) : React.createElement(
         NavLink,
-        { to: url, className: classes.link, activeClassName: 'active', onClick: this.hideMobile },
-        React.createElement('i', { className: classes.icon }),
+        _extends({ to: url, className: classes.link, activeClassName: 'active', onClick: this.hideMobile }, attributes),
+        itemIcon,
         item.name,
-        this.navBadge(item.badge)
+        itemBadge
       )
     );
   };
@@ -216,10 +229,13 @@ var AppSidebarNav = function (_Component) {
 
     var navClasses = classNames(className, 'sidebar-nav');
 
+    // ToDo: find better rtl fix
+    var isRtl = getComputedStyle(document.documentElement).direction === 'rtl';
+
     // sidebar-nav root
     return React.createElement(
       PerfectScrollbar,
-      _extends({ className: navClasses }, attributes, { options: { suppressScrollX: true } }),
+      _extends({ className: navClasses }, attributes, { options: { suppressScrollX: !isRtl } }),
       React.createElement(
         Nav,
         null,

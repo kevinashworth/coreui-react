@@ -11,14 +11,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { asideMenuCssClasses } from './Shared';
+import { asideMenuCssClasses, checkBreakpoint, validBreakpoints } from './Shared';
+import toggleClasses from './Shared/toggle-classes';
 
 var propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
   display: PropTypes.string,
   fixed: PropTypes.bool,
-  hidden: PropTypes.bool,
   isOpen: PropTypes.bool,
   offCanvas: PropTypes.bool,
   tag: PropTypes.oneOfType([PropTypes.func, PropTypes.string])
@@ -28,7 +28,6 @@ var defaultProps = {
   tag: 'aside',
   display: '',
   fixed: false,
-  hidden: false,
   isOpen: false,
   offCanvas: true
 };
@@ -42,7 +41,6 @@ var AppAside = function (_Component) {
     var _this = _possibleConstructorReturn(this, _Component.call(this, props));
 
     _this.isFixed = _this.isFixed.bind(_this);
-    _this.isHidden = _this.isHidden.bind(_this);
     _this.isOffCanvas = _this.isOffCanvas.bind(_this);
     _this.displayBreakpoint = _this.displayBreakpoint.bind(_this);
     return _this;
@@ -50,15 +48,8 @@ var AppAside = function (_Component) {
 
   AppAside.prototype.componentDidMount = function componentDidMount() {
     this.isFixed(this.props.fixed);
-    this.isHidden(this.props.hidden);
     this.isOffCanvas(this.props.offCanvas);
     this.displayBreakpoint(this.props.display);
-  };
-
-  AppAside.prototype.isHidden = function isHidden(hidden) {
-    if (hidden) {
-      document.body.classList.add('aside-menu-hidden');
-    }
   };
 
   AppAside.prototype.isFixed = function isFixed(fixed) {
@@ -74,14 +65,10 @@ var AppAside = function (_Component) {
   };
 
   AppAside.prototype.displayBreakpoint = function displayBreakpoint(display) {
-    var cssTemplate = 'aside-menu-' + display + '-show';
-    var _asideMenuCssClasses$ = asideMenuCssClasses[0],
-        cssClass = _asideMenuCssClasses$[0];
-
-    if (display && asideMenuCssClasses.indexOf(cssTemplate) > -1) {
-      cssClass = cssTemplate;
+    if (display && checkBreakpoint(display, validBreakpoints)) {
+      var cssClass = 'aside-menu-' + display + '-show';
+      toggleClasses(cssClass, asideMenuCssClasses, true);
     }
-    document.body.classList.add(cssClass);
   };
 
   AppAside.prototype.render = function render() {
@@ -93,7 +80,6 @@ var AppAside = function (_Component) {
 
     delete attributes.display;
     delete attributes.fixed;
-    delete attributes.hidden;
     delete attributes.offCanvas;
     delete attributes.isOpen;
 

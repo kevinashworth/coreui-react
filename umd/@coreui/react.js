@@ -1,17 +1,17 @@
 /*!
- * @coreui/react v2.0.6-v8-alba - https://coreui.io
+ * @coreui/react v2.5.8-v8-alba-alpha - https://coreui.io
  * MIT Licensed
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("react"));
+		module.exports = factory(require("react"), require("react-router-dom"));
 	else if(typeof define === 'function' && define.amd)
-		define(["react"], factory);
+		define(["react", "react-router-dom"], factory);
 	else if(typeof exports === 'object')
-		exports["CoreUIReact"] = factory(require("react"));
+		exports["CoreUIReact"] = factory(require("react"), require("react-router-dom"));
 	else
-		root["CoreUIReact"] = factory(root["React"]);
-})(window, function(__WEBPACK_EXTERNAL_MODULE__1__) {
+		root["CoreUIReact"] = factory(root["React"], root["ReactRouterDom"]);
+})(window, function(__WEBPACK_EXTERNAL_MODULE__1__, __WEBPACK_EXTERNAL_MODULE__4__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -80,7 +80,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 25);
+/******/ 	return __webpack_require__(__webpack_require__.s = 26);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -97,7 +97,7 @@ return /******/ (function(modules) { // webpackBootstrap
 if (false) { var throwOnDirectAccess, ReactIs; } else {
   // By explicitly using `prop-types` you are opting into new production behavior.
   // http://fb.me/prop-types-in-prod
-  module.exports = __webpack_require__(24)();
+  module.exports = __webpack_require__(25)();
 }
 
 
@@ -194,130 +194,35 @@ if (true) {
   // DCE check should happen before ReactDOM bundle executes so that
   // DevTools can report bad minification during injection.
   checkDCE();
-  module.exports = __webpack_require__(21);
+  module.exports = __webpack_require__(23);
 } else {}
 
 
 /***/ }),
 /* 4 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-/**
- * Copyright (c) 2014-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-
-
-/**
- * Similar to invariant but only logs a warning if the condition is not met.
- * This can be used to log issues in development environments in critical
- * paths. Removing the logging code for production environments will keep the
- * same logic and follow the same code paths.
- */
-
-var __DEV__ = "production" !== 'production';
-
-var warning = function() {};
-
-if (__DEV__) {
-  var printWarning = function printWarning(format, args) {
-    var len = arguments.length;
-    args = new Array(len > 1 ? len - 1 : 0);
-    for (var key = 1; key < len; key++) {
-      args[key - 1] = arguments[key];
-    }
-    var argIndex = 0;
-    var message = 'Warning: ' +
-      format.replace(/%s/g, function() {
-        return args[argIndex++];
-      });
-    if (typeof console !== 'undefined') {
-      console.error(message);
-    }
-    try {
-      // --- Welcome to debugging React ---
-      // This error was thrown as a convenience so that you can use this stack
-      // to find the callsite that caused this warning to fire.
-      throw new Error(message);
-    } catch (x) {}
-  }
-
-  warning = function(condition, format, args) {
-    var len = arguments.length;
-    args = new Array(len > 2 ? len - 2 : 0);
-    for (var key = 2; key < len; key++) {
-      args[key - 2] = arguments[key];
-    }
-    if (format === undefined) {
-      throw new Error(
-          '`warning(condition, format, ...args)` requires a warning ' +
-          'message argument'
-      );
-    }
-    if (!condition) {
-      printWarning.apply(null, [format].concat(args));
-    }
-  };
-}
-
-module.exports = warning;
-
+module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
 
 /***/ }),
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
 
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-/**
- * Use invariant() to assert state which your program assumes to be true.
- *
- * Provide sprintf-style format (only %s is supported) and arguments
- * to provide information about what broke and what you were
- * expecting.
- *
- * The invariant message will be stripped in production, but the invariant
- * will remain to ensure logic does not differ in production.
- */
+var _scrollbar = __webpack_require__(18);
 
-var invariant = function(condition, format, a, b, c, d, e, f) {
-  if (false) {}
+var _scrollbar2 = _interopRequireDefault(_scrollbar);
 
-  if (!condition) {
-    var error;
-    if (format === undefined) {
-      error = new Error(
-        'Minified exception occurred; use the non-minified dev environment ' +
-        'for the full error message and additional helpful warnings.'
-      );
-    } else {
-      var args = [a, b, c, d, e, f];
-      var argIndex = 0;
-      error = new Error(
-        format.replace(/%s/g, function() { return args[argIndex++]; })
-      );
-      error.name = 'Invariant Violation';
-    }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-    error.framesToPop = 1; // we don't care about invariant's own frame
-    throw error;
-  }
-};
-
-module.exports = invariant;
-
+exports.default = _scrollbar2.default;
+module.exports = exports['default'];
 
 /***/ }),
 /* 6 */
@@ -566,26 +471,6 @@ module.exports = g;
 "use strict";
 
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _scrollbar = __webpack_require__(16);
-
-var _scrollbar2 = _interopRequireDefault(_scrollbar);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = _scrollbar2.default;
-module.exports = exports['default'];
-
-/***/ }),
-/* 10 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -696,7 +581,7 @@ module.exports = ClickOutComponent;
 
 
 /***/ }),
-/* 11 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
@@ -858,439 +743,7 @@ module.exports = isFunction;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(8)))
 
 /***/ }),
-/* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var isarray = __webpack_require__(22)
-
-/**
- * Expose `pathToRegexp`.
- */
-module.exports = pathToRegexp
-module.exports.parse = parse
-module.exports.compile = compile
-module.exports.tokensToFunction = tokensToFunction
-module.exports.tokensToRegExp = tokensToRegExp
-
-/**
- * The main path matching regexp utility.
- *
- * @type {RegExp}
- */
-var PATH_REGEXP = new RegExp([
-  // Match escaped characters that would otherwise appear in future matches.
-  // This allows the user to escape special characters that won't transform.
-  '(\\\\.)',
-  // Match Express-style parameters and un-named parameters with a prefix
-  // and optional suffixes. Matches appear as:
-  //
-  // "/:test(\\d+)?" => ["/", "test", "\d+", undefined, "?", undefined]
-  // "/route(\\d+)"  => [undefined, undefined, undefined, "\d+", undefined, undefined]
-  // "/*"            => ["/", undefined, undefined, undefined, undefined, "*"]
-  '([\\/.])?(?:(?:\\:(\\w+)(?:\\(((?:\\\\.|[^\\\\()])+)\\))?|\\(((?:\\\\.|[^\\\\()])+)\\))([+*?])?|(\\*))'
-].join('|'), 'g')
-
-/**
- * Parse a string for the raw tokens.
- *
- * @param  {string}  str
- * @param  {Object=} options
- * @return {!Array}
- */
-function parse (str, options) {
-  var tokens = []
-  var key = 0
-  var index = 0
-  var path = ''
-  var defaultDelimiter = options && options.delimiter || '/'
-  var res
-
-  while ((res = PATH_REGEXP.exec(str)) != null) {
-    var m = res[0]
-    var escaped = res[1]
-    var offset = res.index
-    path += str.slice(index, offset)
-    index = offset + m.length
-
-    // Ignore already escaped sequences.
-    if (escaped) {
-      path += escaped[1]
-      continue
-    }
-
-    var next = str[index]
-    var prefix = res[2]
-    var name = res[3]
-    var capture = res[4]
-    var group = res[5]
-    var modifier = res[6]
-    var asterisk = res[7]
-
-    // Push the current path onto the tokens.
-    if (path) {
-      tokens.push(path)
-      path = ''
-    }
-
-    var partial = prefix != null && next != null && next !== prefix
-    var repeat = modifier === '+' || modifier === '*'
-    var optional = modifier === '?' || modifier === '*'
-    var delimiter = res[2] || defaultDelimiter
-    var pattern = capture || group
-
-    tokens.push({
-      name: name || key++,
-      prefix: prefix || '',
-      delimiter: delimiter,
-      optional: optional,
-      repeat: repeat,
-      partial: partial,
-      asterisk: !!asterisk,
-      pattern: pattern ? escapeGroup(pattern) : (asterisk ? '.*' : '[^' + escapeString(delimiter) + ']+?')
-    })
-  }
-
-  // Match any characters still remaining.
-  if (index < str.length) {
-    path += str.substr(index)
-  }
-
-  // If the path exists, push it onto the end.
-  if (path) {
-    tokens.push(path)
-  }
-
-  return tokens
-}
-
-/**
- * Compile a string to a template function for the path.
- *
- * @param  {string}             str
- * @param  {Object=}            options
- * @return {!function(Object=, Object=)}
- */
-function compile (str, options) {
-  return tokensToFunction(parse(str, options), options)
-}
-
-/**
- * Prettier encoding of URI path segments.
- *
- * @param  {string}
- * @return {string}
- */
-function encodeURIComponentPretty (str) {
-  return encodeURI(str).replace(/[\/?#]/g, function (c) {
-    return '%' + c.charCodeAt(0).toString(16).toUpperCase()
-  })
-}
-
-/**
- * Encode the asterisk parameter. Similar to `pretty`, but allows slashes.
- *
- * @param  {string}
- * @return {string}
- */
-function encodeAsterisk (str) {
-  return encodeURI(str).replace(/[?#]/g, function (c) {
-    return '%' + c.charCodeAt(0).toString(16).toUpperCase()
-  })
-}
-
-/**
- * Expose a method for transforming tokens into the path function.
- */
-function tokensToFunction (tokens, options) {
-  // Compile all the tokens into regexps.
-  var matches = new Array(tokens.length)
-
-  // Compile all the patterns before compilation.
-  for (var i = 0; i < tokens.length; i++) {
-    if (typeof tokens[i] === 'object') {
-      matches[i] = new RegExp('^(?:' + tokens[i].pattern + ')$', flags(options))
-    }
-  }
-
-  return function (obj, opts) {
-    var path = ''
-    var data = obj || {}
-    var options = opts || {}
-    var encode = options.pretty ? encodeURIComponentPretty : encodeURIComponent
-
-    for (var i = 0; i < tokens.length; i++) {
-      var token = tokens[i]
-
-      if (typeof token === 'string') {
-        path += token
-
-        continue
-      }
-
-      var value = data[token.name]
-      var segment
-
-      if (value == null) {
-        if (token.optional) {
-          // Prepend partial segment prefixes.
-          if (token.partial) {
-            path += token.prefix
-          }
-
-          continue
-        } else {
-          throw new TypeError('Expected "' + token.name + '" to be defined')
-        }
-      }
-
-      if (isarray(value)) {
-        if (!token.repeat) {
-          throw new TypeError('Expected "' + token.name + '" to not repeat, but received `' + JSON.stringify(value) + '`')
-        }
-
-        if (value.length === 0) {
-          if (token.optional) {
-            continue
-          } else {
-            throw new TypeError('Expected "' + token.name + '" to not be empty')
-          }
-        }
-
-        for (var j = 0; j < value.length; j++) {
-          segment = encode(value[j])
-
-          if (!matches[i].test(segment)) {
-            throw new TypeError('Expected all "' + token.name + '" to match "' + token.pattern + '", but received `' + JSON.stringify(segment) + '`')
-          }
-
-          path += (j === 0 ? token.prefix : token.delimiter) + segment
-        }
-
-        continue
-      }
-
-      segment = token.asterisk ? encodeAsterisk(value) : encode(value)
-
-      if (!matches[i].test(segment)) {
-        throw new TypeError('Expected "' + token.name + '" to match "' + token.pattern + '", but received "' + segment + '"')
-      }
-
-      path += token.prefix + segment
-    }
-
-    return path
-  }
-}
-
-/**
- * Escape a regular expression string.
- *
- * @param  {string} str
- * @return {string}
- */
-function escapeString (str) {
-  return str.replace(/([.+*?=^!:${}()[\]|\/\\])/g, '\\$1')
-}
-
-/**
- * Escape the capturing group by escaping special characters and meaning.
- *
- * @param  {string} group
- * @return {string}
- */
-function escapeGroup (group) {
-  return group.replace(/([=!:$\/()])/g, '\\$1')
-}
-
-/**
- * Attach the keys as a property of the regexp.
- *
- * @param  {!RegExp} re
- * @param  {Array}   keys
- * @return {!RegExp}
- */
-function attachKeys (re, keys) {
-  re.keys = keys
-  return re
-}
-
-/**
- * Get the flags for a regexp from the options.
- *
- * @param  {Object} options
- * @return {string}
- */
-function flags (options) {
-  return options && options.sensitive ? '' : 'i'
-}
-
-/**
- * Pull out keys from a regexp.
- *
- * @param  {!RegExp} path
- * @param  {!Array}  keys
- * @return {!RegExp}
- */
-function regexpToRegexp (path, keys) {
-  // Use a negative lookahead to match only capturing groups.
-  var groups = path.source.match(/\((?!\?)/g)
-
-  if (groups) {
-    for (var i = 0; i < groups.length; i++) {
-      keys.push({
-        name: i,
-        prefix: null,
-        delimiter: null,
-        optional: false,
-        repeat: false,
-        partial: false,
-        asterisk: false,
-        pattern: null
-      })
-    }
-  }
-
-  return attachKeys(path, keys)
-}
-
-/**
- * Transform an array into a regexp.
- *
- * @param  {!Array}  path
- * @param  {Array}   keys
- * @param  {!Object} options
- * @return {!RegExp}
- */
-function arrayToRegexp (path, keys, options) {
-  var parts = []
-
-  for (var i = 0; i < path.length; i++) {
-    parts.push(pathToRegexp(path[i], keys, options).source)
-  }
-
-  var regexp = new RegExp('(?:' + parts.join('|') + ')', flags(options))
-
-  return attachKeys(regexp, keys)
-}
-
-/**
- * Create a path regexp from string input.
- *
- * @param  {string}  path
- * @param  {!Array}  keys
- * @param  {!Object} options
- * @return {!RegExp}
- */
-function stringToRegexp (path, keys, options) {
-  return tokensToRegExp(parse(path, options), keys, options)
-}
-
-/**
- * Expose a function for taking tokens and returning a RegExp.
- *
- * @param  {!Array}          tokens
- * @param  {(Array|Object)=} keys
- * @param  {Object=}         options
- * @return {!RegExp}
- */
-function tokensToRegExp (tokens, keys, options) {
-  if (!isarray(keys)) {
-    options = /** @type {!Object} */ (keys || options)
-    keys = []
-  }
-
-  options = options || {}
-
-  var strict = options.strict
-  var end = options.end !== false
-  var route = ''
-
-  // Iterate over the tokens and create our regexp string.
-  for (var i = 0; i < tokens.length; i++) {
-    var token = tokens[i]
-
-    if (typeof token === 'string') {
-      route += escapeString(token)
-    } else {
-      var prefix = escapeString(token.prefix)
-      var capture = '(?:' + token.pattern + ')'
-
-      keys.push(token)
-
-      if (token.repeat) {
-        capture += '(?:' + prefix + capture + ')*'
-      }
-
-      if (token.optional) {
-        if (!token.partial) {
-          capture = '(?:' + prefix + '(' + capture + '))?'
-        } else {
-          capture = prefix + '(' + capture + ')?'
-        }
-      } else {
-        capture = prefix + '(' + capture + ')'
-      }
-
-      route += capture
-    }
-  }
-
-  var delimiter = escapeString(options.delimiter || '/')
-  var endsWithDelimiter = route.slice(-delimiter.length) === delimiter
-
-  // In non-strict mode we allow a slash at the end of match. If the path to
-  // match already ends with a slash, we remove it for consistency. The slash
-  // is valid at the end of a path match, not in the middle. This is important
-  // in non-ending mode, where "/test/" shouldn't match "/test//route".
-  if (!strict) {
-    route = (endsWithDelimiter ? route.slice(0, -delimiter.length) : route) + '(?:' + delimiter + '(?=$))?'
-  }
-
-  if (end) {
-    route += '$'
-  } else {
-    // In non-ending mode, we need the capturing groups to match as much as
-    // possible by using a positive lookahead to the end or next path segment.
-    route += strict && endsWithDelimiter ? '' : '(?=' + delimiter + '|$)'
-  }
-
-  return attachKeys(new RegExp('^' + route, flags(options)), keys)
-}
-
-/**
- * Normalize the given path string, returning a regular expression.
- *
- * An empty array can be passed in for the keys, which will hold the
- * placeholder key descriptions. For example, using `/user/:id`, `keys` will
- * contain `[{ name: 'id', delimiter: '/', optional: false, repeat: false }]`.
- *
- * @param  {(string|RegExp|Array)} path
- * @param  {(Array|Object)=}       keys
- * @param  {Object=}               options
- * @return {!RegExp}
- */
-function pathToRegexp (path, keys, options) {
-  if (!isarray(keys)) {
-    options = /** @type {!Object} */ (keys || options)
-    keys = []
-  }
-
-  options = options || {}
-
-  if (path instanceof RegExp) {
-    return regexpToRegexp(path, /** @type {!Array} */ (keys))
-  }
-
-  if (isarray(path)) {
-    return arrayToRegexp(/** @type {!Array} */ (path), /** @type {!Array} */ (keys), options)
-  }
-
-  return stringToRegexp(/** @type {string} */ (path), /** @type {!Array} */ (keys), options)
-}
-
-
-/***/ }),
-/* 13 */
+/* 11 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3914,7 +3367,7 @@ Popper.Defaults = Defaults;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(8)))
 
 /***/ }),
-/* 14 */
+/* 12 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3946,6 +3399,22 @@ function checkBreakpoint(breakpoint, list) {
 
 
 
+// CONCATENATED MODULE: ./src/Shared/toggle-classes.js
+function toggleClasses(toggleClass, classList, force) {
+  var level = classList.indexOf(toggleClass);
+  var removeClassList = classList.slice(0, level);
+  removeClassList.map(function (className) {
+    return document.body.classList.remove(className);
+  });
+  if (force === true) {
+    document.body.classList.add(toggleClass);
+  } else if (force === false) {
+    document.body.classList.remove(toggleClass);
+  } else {
+    document.body.classList.toggle(toggleClass);
+  }
+  return document.body.classList.contains(toggleClass);
+}
 // CONCATENATED MODULE: ./src/Aside.js
 var Aside_extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -3962,12 +3431,12 @@ function Aside_inherits(subClass, superClass) { if (typeof superClass !== "funct
 
 
 
+
 var Aside_propTypes = {
   children: prop_types_default.a.node,
   className: prop_types_default.a.string,
   display: prop_types_default.a.string,
   fixed: prop_types_default.a.bool,
-  hidden: prop_types_default.a.bool,
   isOpen: prop_types_default.a.bool,
   offCanvas: prop_types_default.a.bool,
   tag: prop_types_default.a.oneOfType([prop_types_default.a.func, prop_types_default.a.string])
@@ -3977,7 +3446,6 @@ var Aside_defaultProps = {
   tag: 'aside',
   display: '',
   fixed: false,
-  hidden: false,
   isOpen: false,
   offCanvas: true
 };
@@ -3991,7 +3459,6 @@ var Aside_AppAside = function (_Component) {
     var _this = Aside_possibleConstructorReturn(this, _Component.call(this, props));
 
     _this.isFixed = _this.isFixed.bind(_this);
-    _this.isHidden = _this.isHidden.bind(_this);
     _this.isOffCanvas = _this.isOffCanvas.bind(_this);
     _this.displayBreakpoint = _this.displayBreakpoint.bind(_this);
     return _this;
@@ -3999,15 +3466,8 @@ var Aside_AppAside = function (_Component) {
 
   AppAside.prototype.componentDidMount = function componentDidMount() {
     this.isFixed(this.props.fixed);
-    this.isHidden(this.props.hidden);
     this.isOffCanvas(this.props.offCanvas);
     this.displayBreakpoint(this.props.display);
-  };
-
-  AppAside.prototype.isHidden = function isHidden(hidden) {
-    if (hidden) {
-      document.body.classList.add('aside-menu-hidden');
-    }
   };
 
   AppAside.prototype.isFixed = function isFixed(fixed) {
@@ -4023,14 +3483,10 @@ var Aside_AppAside = function (_Component) {
   };
 
   AppAside.prototype.displayBreakpoint = function displayBreakpoint(display) {
-    var cssTemplate = 'aside-menu-' + display + '-show';
-    var _asideMenuCssClasses$ = asideMenuCssClasses[0],
-        cssClass = _asideMenuCssClasses$[0];
-
-    if (display && asideMenuCssClasses.indexOf(cssTemplate) > -1) {
-      cssClass = cssTemplate;
+    if (display && checkBreakpoint(display, validBreakpoints)) {
+      var cssClass = 'aside-menu-' + display + '-show';
+      toggleClasses(cssClass, asideMenuCssClasses, true);
     }
-    document.body.classList.add(cssClass);
   };
 
   AppAside.prototype.render = function render() {
@@ -4042,7 +3498,6 @@ var Aside_AppAside = function (_Component) {
 
     delete attributes.display;
     delete attributes.fixed;
-    delete attributes.hidden;
     delete attributes.offCanvas;
     delete attributes.isOpen;
 
@@ -4062,15 +3517,6 @@ Aside_AppAside.propTypes = Aside_propTypes;
 Aside_AppAside.defaultProps = Aside_defaultProps;
 
 /* harmony default export */ var Aside = (Aside_AppAside);
-// CONCATENATED MODULE: ./src/Shared/toggle-classes.js
-function toggleClasses(toggleClass, classList, force) {
-  var level = classList.indexOf(toggleClass);
-  var removeClassList = classList.slice(0, level);
-  removeClassList.map(function (className) {
-    return document.body.classList.remove(className);
-  });
-  document.body.classList.toggle(toggleClass, force);
-}
 // CONCATENATED MODULE: ./src/AsideToggler.js
 var AsideToggler_extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -4091,6 +3537,7 @@ function AsideToggler_inherits(subClass, superClass) { if (typeof superClass !==
 var AsideToggler_propTypes = {
   children: prop_types_default.a.node,
   className: prop_types_default.a.string,
+  defaultOpen: prop_types_default.a.bool,
   display: prop_types_default.a.any,
   mobile: prop_types_default.a.bool,
   tag: prop_types_default.a.oneOfType([prop_types_default.a.func, prop_types_default.a.string]),
@@ -4098,6 +3545,7 @@ var AsideToggler_propTypes = {
 };
 
 var AsideToggler_defaultProps = {
+  defaultOpen: false,
   display: 'lg',
   mobile: false,
   tag: 'button',
@@ -4118,22 +3566,25 @@ var AsideToggler_AppAsideToggler = function (_Component) {
     return _this;
   }
 
+  AppAsideToggler.prototype.componentDidMount = function componentDidMount() {
+    this.toggle(this.props.defaultOpen);
+  };
+
+  AppAsideToggler.prototype.toggle = function toggle(force) {
+    var _ref = [this.props.display, this.props.mobile],
+        display = _ref[0],
+        mobile = _ref[1];
+
+    var cssClass = asideMenuCssClasses[0];
+    if (!mobile && display && checkBreakpoint(display, validBreakpoints)) {
+      cssClass = 'aside-menu-' + display + '-show';
+    }
+    toggleClasses(cssClass, asideMenuCssClasses, force);
+  };
+
   AppAsideToggler.prototype.asideToggle = function asideToggle(e) {
     e.preventDefault();
-
-    if (this.props.mobile) {
-      document.body.classList.toggle('aside-menu-show');
-    } else {
-      var display = this.props.display;
-      var cssTemplate = 'aside-menu-' + display + '-show';
-      var _asideMenuCssClasses$ = asideMenuCssClasses[0],
-          cssClass = _asideMenuCssClasses$[0];
-
-      if (display && asideMenuCssClasses.indexOf(cssTemplate) > -1) {
-        cssClass = cssTemplate;
-      }
-      toggleClasses(cssClass, asideMenuCssClasses);
-    }
+    this.toggle();
   };
 
   AppAsideToggler.prototype.render = function render() {
@@ -4146,6 +3597,7 @@ var AsideToggler_AppAsideToggler = function (_Component) {
         Tag = _props.tag,
         attributes = AsideToggler_objectWithoutProperties(_props, ['className', 'children', 'type', 'tag']);
 
+    delete attributes.defaultOpen;
     delete attributes.display;
     delete attributes.mobile;
 
@@ -4172,1419 +3624,11 @@ AsideToggler_AppAsideToggler.propTypes = AsideToggler_propTypes;
 AsideToggler_AppAsideToggler.defaultProps = AsideToggler_defaultProps;
 
 /* harmony default export */ var AsideToggler = (AsideToggler_AppAsideToggler);
-// EXTERNAL MODULE: ./node_modules/invariant/browser.js
-var browser = __webpack_require__(5);
-var browser_default = /*#__PURE__*/__webpack_require__.n(browser);
+// EXTERNAL MODULE: external {"root":"ReactRouterDom","commonjs2":"react-router-dom","commonjs":"react-router-dom","amd":"react-router-dom"}
+var external_root_ReactRouterDom_commonjs2_react_router_dom_commonjs_react_router_dom_amd_react_router_dom_ = __webpack_require__(4);
 
-// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/extends.js
-function extends_extends() {
-  extends_extends = Object.assign || function (target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
-
-      for (var key in source) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-          target[key] = source[key];
-        }
-      }
-    }
-
-    return target;
-  };
-
-  return extends_extends.apply(this, arguments);
-}
-// CONCATENATED MODULE: ./node_modules/resolve-pathname/esm/resolve-pathname.js
-function isAbsolute(pathname) {
-  return pathname.charAt(0) === '/';
-}
-
-// About 1.5x faster than the two-arg version of Array#splice()
-function spliceOne(list, index) {
-  for (var i = index, k = i + 1, n = list.length; k < n; i += 1, k += 1) {
-    list[i] = list[k];
-  }
-
-  list.pop();
-}
-
-// This implementation is based heavily on node's url.parse
-function resolvePathname(to, from) {
-  if (from === undefined) from = '';
-
-  var toParts = (to && to.split('/')) || [];
-  var fromParts = (from && from.split('/')) || [];
-
-  var isToAbs = to && isAbsolute(to);
-  var isFromAbs = from && isAbsolute(from);
-  var mustEndAbs = isToAbs || isFromAbs;
-
-  if (to && isAbsolute(to)) {
-    // to is absolute
-    fromParts = toParts;
-  } else if (toParts.length) {
-    // to is relative, drop the filename
-    fromParts.pop();
-    fromParts = fromParts.concat(toParts);
-  }
-
-  if (!fromParts.length) return '/';
-
-  var hasTrailingSlash;
-  if (fromParts.length) {
-    var last = fromParts[fromParts.length - 1];
-    hasTrailingSlash = last === '.' || last === '..' || last === '';
-  } else {
-    hasTrailingSlash = false;
-  }
-
-  var up = 0;
-  for (var i = fromParts.length; i >= 0; i--) {
-    var part = fromParts[i];
-
-    if (part === '.') {
-      spliceOne(fromParts, i);
-    } else if (part === '..') {
-      spliceOne(fromParts, i);
-      up++;
-    } else if (up) {
-      spliceOne(fromParts, i);
-      up--;
-    }
-  }
-
-  if (!mustEndAbs) for (; up--; up) fromParts.unshift('..');
-
-  if (
-    mustEndAbs &&
-    fromParts[0] !== '' &&
-    (!fromParts[0] || !isAbsolute(fromParts[0]))
-  )
-    fromParts.unshift('');
-
-  var result = fromParts.join('/');
-
-  if (hasTrailingSlash && result.substr(-1) !== '/') result += '/';
-
-  return result;
-}
-
-/* harmony default export */ var resolve_pathname = (resolvePathname);
-
-// CONCATENATED MODULE: ./node_modules/value-equal/esm/value-equal.js
-function value_equal_valueOf(obj) {
-  return obj.valueOf ? obj.valueOf() : Object.prototype.valueOf.call(obj);
-}
-
-function valueEqual(a, b) {
-  // Test for strict equality first.
-  if (a === b) return true;
-
-  // Otherwise, if either of them == null they are not equal.
-  if (a == null || b == null) return false;
-
-  if (Array.isArray(a)) {
-    return (
-      Array.isArray(b) &&
-      a.length === b.length &&
-      a.every(function(item, index) {
-        return valueEqual(item, b[index]);
-      })
-    );
-  }
-
-  if (typeof a === 'object' || typeof b === 'object') {
-    var aValue = value_equal_valueOf(a);
-    var bValue = value_equal_valueOf(b);
-
-    if (aValue !== a || bValue !== b) return valueEqual(aValue, bValue);
-
-    return Object.keys(Object.assign({}, a, b)).every(function(key) {
-      return valueEqual(a[key], b[key]);
-    });
-  }
-
-  return false;
-}
-
-/* harmony default export */ var value_equal = (valueEqual);
-
-// CONCATENATED MODULE: ./node_modules/tiny-invariant/dist/tiny-invariant.esm.js
-var isProduction = "production" === 'production';
-var prefix = 'Invariant failed';
-function invariant(condition, message) {
-  if (condition) {
-    return;
-  }
-
-  if (isProduction) {
-    throw new Error(prefix);
-  } else {
-    throw new Error(prefix + ": " + (message || ''));
-  }
-}
-
-/* harmony default export */ var tiny_invariant_esm = (invariant);
-
-// CONCATENATED MODULE: ./node_modules/history/esm/history.js
-
-
-
-
-
-
-function history_addLeadingSlash(path) {
-  return path.charAt(0) === '/' ? path : '/' + path;
-}
-function history_stripLeadingSlash(path) {
-  return path.charAt(0) === '/' ? path.substr(1) : path;
-}
-function history_hasBasename(path, prefix) {
-  return path.toLowerCase().indexOf(prefix.toLowerCase()) === 0 && '/?#'.indexOf(path.charAt(prefix.length)) !== -1;
-}
-function history_stripBasename(path, prefix) {
-  return history_hasBasename(path, prefix) ? path.substr(prefix.length) : path;
-}
-function history_stripTrailingSlash(path) {
-  return path.charAt(path.length - 1) === '/' ? path.slice(0, -1) : path;
-}
-function history_parsePath(path) {
-  var pathname = path || '/';
-  var search = '';
-  var hash = '';
-  var hashIndex = pathname.indexOf('#');
-
-  if (hashIndex !== -1) {
-    hash = pathname.substr(hashIndex);
-    pathname = pathname.substr(0, hashIndex);
-  }
-
-  var searchIndex = pathname.indexOf('?');
-
-  if (searchIndex !== -1) {
-    search = pathname.substr(searchIndex);
-    pathname = pathname.substr(0, searchIndex);
-  }
-
-  return {
-    pathname: pathname,
-    search: search === '?' ? '' : search,
-    hash: hash === '#' ? '' : hash
-  };
-}
-function history_createPath(location) {
-  var pathname = location.pathname,
-      search = location.search,
-      hash = location.hash;
-  var path = pathname || '/';
-  if (search && search !== '?') path += search.charAt(0) === '?' ? search : "?" + search;
-  if (hash && hash !== '#') path += hash.charAt(0) === '#' ? hash : "#" + hash;
-  return path;
-}
-
-function history_createLocation(path, state, key, currentLocation) {
-  var location;
-
-  if (typeof path === 'string') {
-    // Two-arg form: push(path, state)
-    location = history_parsePath(path);
-    location.state = state;
-  } else {
-    // One-arg form: push(location)
-    location = extends_extends({}, path);
-    if (location.pathname === undefined) location.pathname = '';
-
-    if (location.search) {
-      if (location.search.charAt(0) !== '?') location.search = '?' + location.search;
-    } else {
-      location.search = '';
-    }
-
-    if (location.hash) {
-      if (location.hash.charAt(0) !== '#') location.hash = '#' + location.hash;
-    } else {
-      location.hash = '';
-    }
-
-    if (state !== undefined && location.state === undefined) location.state = state;
-  }
-
-  try {
-    location.pathname = decodeURI(location.pathname);
-  } catch (e) {
-    if (e instanceof URIError) {
-      throw new URIError('Pathname "' + location.pathname + '" could not be decoded. ' + 'This is likely caused by an invalid percent-encoding.');
-    } else {
-      throw e;
-    }
-  }
-
-  if (key) location.key = key;
-
-  if (currentLocation) {
-    // Resolve incomplete/relative pathname relative to current location.
-    if (!location.pathname) {
-      location.pathname = currentLocation.pathname;
-    } else if (location.pathname.charAt(0) !== '/') {
-      location.pathname = resolve_pathname(location.pathname, currentLocation.pathname);
-    }
-  } else {
-    // When there is no prior location and pathname is empty, set it to /
-    if (!location.pathname) {
-      location.pathname = '/';
-    }
-  }
-
-  return location;
-}
-function history_locationsAreEqual(a, b) {
-  return a.pathname === b.pathname && a.search === b.search && a.hash === b.hash && a.key === b.key && value_equal(a.state, b.state);
-}
-
-function history_createTransitionManager() {
-  var prompt = null;
-
-  function setPrompt(nextPrompt) {
-     false ? undefined : void 0;
-    prompt = nextPrompt;
-    return function () {
-      if (prompt === nextPrompt) prompt = null;
-    };
-  }
-
-  function confirmTransitionTo(location, action, getUserConfirmation, callback) {
-    // TODO: If another transition starts while we're still confirming
-    // the previous one, we may end up in a weird state. Figure out the
-    // best way to handle this.
-    if (prompt != null) {
-      var result = typeof prompt === 'function' ? prompt(location, action) : prompt;
-
-      if (typeof result === 'string') {
-        if (typeof getUserConfirmation === 'function') {
-          getUserConfirmation(result, callback);
-        } else {
-           false ? undefined : void 0;
-          callback(true);
-        }
-      } else {
-        // Return false from a transition hook to cancel the transition.
-        callback(result !== false);
-      }
-    } else {
-      callback(true);
-    }
-  }
-
-  var listeners = [];
-
-  function appendListener(fn) {
-    var isActive = true;
-
-    function listener() {
-      if (isActive) fn.apply(void 0, arguments);
-    }
-
-    listeners.push(listener);
-    return function () {
-      isActive = false;
-      listeners = listeners.filter(function (item) {
-        return item !== listener;
-      });
-    };
-  }
-
-  function notifyListeners() {
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    listeners.forEach(function (listener) {
-      return listener.apply(void 0, args);
-    });
-  }
-
-  return {
-    setPrompt: setPrompt,
-    confirmTransitionTo: confirmTransitionTo,
-    appendListener: appendListener,
-    notifyListeners: notifyListeners
-  };
-}
-
-var history_canUseDOM = !!(typeof window !== 'undefined' && window.document && window.document.createElement);
-function history_getConfirmation(message, callback) {
-  callback(window.confirm(message)); // eslint-disable-line no-alert
-}
-/**
- * Returns true if the HTML5 history API is supported. Taken from Modernizr.
- *
- * https://github.com/Modernizr/Modernizr/blob/master/LICENSE
- * https://github.com/Modernizr/Modernizr/blob/master/feature-detects/history.js
- * changed to avoid false negatives for Windows Phones: https://github.com/reactjs/react-router/issues/586
- */
-
-function history_supportsHistory() {
-  var ua = window.navigator.userAgent;
-  if ((ua.indexOf('Android 2.') !== -1 || ua.indexOf('Android 4.0') !== -1) && ua.indexOf('Mobile Safari') !== -1 && ua.indexOf('Chrome') === -1 && ua.indexOf('Windows Phone') === -1) return false;
-  return window.history && 'pushState' in window.history;
-}
-/**
- * Returns true if browser fires popstate on hash change.
- * IE10 and IE11 do not.
- */
-
-function history_supportsPopStateOnHashChange() {
-  return window.navigator.userAgent.indexOf('Trident') === -1;
-}
-/**
- * Returns false if using go(n) with hash history causes a full page reload.
- */
-
-function history_supportsGoWithoutReloadUsingHash() {
-  return window.navigator.userAgent.indexOf('Firefox') === -1;
-}
-/**
- * Returns true if a given popstate event is an extraneous WebKit event.
- * Accounts for the fact that Chrome on iOS fires real popstate events
- * containing undefined state when pressing the back button.
- */
-
-function history_isExtraneousPopstateEvent(event) {
-  return event.state === undefined && navigator.userAgent.indexOf('CriOS') === -1;
-}
-
-var history_PopStateEvent = 'popstate';
-var history_HashChangeEvent = 'hashchange';
-
-function history_getHistoryState() {
-  try {
-    return window.history.state || {};
-  } catch (e) {
-    // IE 11 sometimes throws when accessing window.history.state
-    // See https://github.com/ReactTraining/history/pull/289
-    return {};
-  }
-}
-/**
- * Creates a history object that uses the HTML5 history API including
- * pushState, replaceState, and the popstate event.
- */
-
-
-function history_createBrowserHistory(props) {
-  if (props === void 0) {
-    props = {};
-  }
-
-  !history_canUseDOM ?  false ? undefined : tiny_invariant_esm(false) : void 0;
-  var globalHistory = window.history;
-  var canUseHistory = history_supportsHistory();
-  var needsHashChangeListener = !history_supportsPopStateOnHashChange();
-  var _props = props,
-      _props$forceRefresh = _props.forceRefresh,
-      forceRefresh = _props$forceRefresh === void 0 ? false : _props$forceRefresh,
-      _props$getUserConfirm = _props.getUserConfirmation,
-      getUserConfirmation = _props$getUserConfirm === void 0 ? history_getConfirmation : _props$getUserConfirm,
-      _props$keyLength = _props.keyLength,
-      keyLength = _props$keyLength === void 0 ? 6 : _props$keyLength;
-  var basename = props.basename ? history_stripTrailingSlash(history_addLeadingSlash(props.basename)) : '';
-
-  function getDOMLocation(historyState) {
-    var _ref = historyState || {},
-        key = _ref.key,
-        state = _ref.state;
-
-    var _window$location = window.location,
-        pathname = _window$location.pathname,
-        search = _window$location.search,
-        hash = _window$location.hash;
-    var path = pathname + search + hash;
-     false ? undefined : void 0;
-    if (basename) path = history_stripBasename(path, basename);
-    return history_createLocation(path, state, key);
-  }
-
-  function createKey() {
-    return Math.random().toString(36).substr(2, keyLength);
-  }
-
-  var transitionManager = history_createTransitionManager();
-
-  function setState(nextState) {
-    extends_extends(history, nextState);
-
-    history.length = globalHistory.length;
-    transitionManager.notifyListeners(history.location, history.action);
-  }
-
-  function handlePopState(event) {
-    // Ignore extraneous popstate events in WebKit.
-    if (history_isExtraneousPopstateEvent(event)) return;
-    handlePop(getDOMLocation(event.state));
-  }
-
-  function handleHashChange() {
-    handlePop(getDOMLocation(history_getHistoryState()));
-  }
-
-  var forceNextPop = false;
-
-  function handlePop(location) {
-    if (forceNextPop) {
-      forceNextPop = false;
-      setState();
-    } else {
-      var action = 'POP';
-      transitionManager.confirmTransitionTo(location, action, getUserConfirmation, function (ok) {
-        if (ok) {
-          setState({
-            action: action,
-            location: location
-          });
-        } else {
-          revertPop(location);
-        }
-      });
-    }
-  }
-
-  function revertPop(fromLocation) {
-    var toLocation = history.location; // TODO: We could probably make this more reliable by
-    // keeping a list of keys we've seen in sessionStorage.
-    // Instead, we just default to 0 for keys we don't know.
-
-    var toIndex = allKeys.indexOf(toLocation.key);
-    if (toIndex === -1) toIndex = 0;
-    var fromIndex = allKeys.indexOf(fromLocation.key);
-    if (fromIndex === -1) fromIndex = 0;
-    var delta = toIndex - fromIndex;
-
-    if (delta) {
-      forceNextPop = true;
-      go(delta);
-    }
-  }
-
-  var initialLocation = getDOMLocation(history_getHistoryState());
-  var allKeys = [initialLocation.key]; // Public interface
-
-  function createHref(location) {
-    return basename + history_createPath(location);
-  }
-
-  function push(path, state) {
-     false ? undefined : void 0;
-    var action = 'PUSH';
-    var location = history_createLocation(path, state, createKey(), history.location);
-    transitionManager.confirmTransitionTo(location, action, getUserConfirmation, function (ok) {
-      if (!ok) return;
-      var href = createHref(location);
-      var key = location.key,
-          state = location.state;
-
-      if (canUseHistory) {
-        globalHistory.pushState({
-          key: key,
-          state: state
-        }, null, href);
-
-        if (forceRefresh) {
-          window.location.href = href;
-        } else {
-          var prevIndex = allKeys.indexOf(history.location.key);
-          var nextKeys = allKeys.slice(0, prevIndex + 1);
-          nextKeys.push(location.key);
-          allKeys = nextKeys;
-          setState({
-            action: action,
-            location: location
-          });
-        }
-      } else {
-         false ? undefined : void 0;
-        window.location.href = href;
-      }
-    });
-  }
-
-  function replace(path, state) {
-     false ? undefined : void 0;
-    var action = 'REPLACE';
-    var location = history_createLocation(path, state, createKey(), history.location);
-    transitionManager.confirmTransitionTo(location, action, getUserConfirmation, function (ok) {
-      if (!ok) return;
-      var href = createHref(location);
-      var key = location.key,
-          state = location.state;
-
-      if (canUseHistory) {
-        globalHistory.replaceState({
-          key: key,
-          state: state
-        }, null, href);
-
-        if (forceRefresh) {
-          window.location.replace(href);
-        } else {
-          var prevIndex = allKeys.indexOf(history.location.key);
-          if (prevIndex !== -1) allKeys[prevIndex] = location.key;
-          setState({
-            action: action,
-            location: location
-          });
-        }
-      } else {
-         false ? undefined : void 0;
-        window.location.replace(href);
-      }
-    });
-  }
-
-  function go(n) {
-    globalHistory.go(n);
-  }
-
-  function goBack() {
-    go(-1);
-  }
-
-  function goForward() {
-    go(1);
-  }
-
-  var listenerCount = 0;
-
-  function checkDOMListeners(delta) {
-    listenerCount += delta;
-
-    if (listenerCount === 1 && delta === 1) {
-      window.addEventListener(history_PopStateEvent, handlePopState);
-      if (needsHashChangeListener) window.addEventListener(history_HashChangeEvent, handleHashChange);
-    } else if (listenerCount === 0) {
-      window.removeEventListener(history_PopStateEvent, handlePopState);
-      if (needsHashChangeListener) window.removeEventListener(history_HashChangeEvent, handleHashChange);
-    }
-  }
-
-  var isBlocked = false;
-
-  function block(prompt) {
-    if (prompt === void 0) {
-      prompt = false;
-    }
-
-    var unblock = transitionManager.setPrompt(prompt);
-
-    if (!isBlocked) {
-      checkDOMListeners(1);
-      isBlocked = true;
-    }
-
-    return function () {
-      if (isBlocked) {
-        isBlocked = false;
-        checkDOMListeners(-1);
-      }
-
-      return unblock();
-    };
-  }
-
-  function listen(listener) {
-    var unlisten = transitionManager.appendListener(listener);
-    checkDOMListeners(1);
-    return function () {
-      checkDOMListeners(-1);
-      unlisten();
-    };
-  }
-
-  var history = {
-    length: globalHistory.length,
-    action: 'POP',
-    location: initialLocation,
-    createHref: createHref,
-    push: push,
-    replace: replace,
-    go: go,
-    goBack: goBack,
-    goForward: goForward,
-    block: block,
-    listen: listen
-  };
-  return history;
-}
-
-var history_HashChangeEvent$1 = 'hashchange';
-var history_HashPathCoders = {
-  hashbang: {
-    encodePath: function encodePath(path) {
-      return path.charAt(0) === '!' ? path : '!/' + history_stripLeadingSlash(path);
-    },
-    decodePath: function decodePath(path) {
-      return path.charAt(0) === '!' ? path.substr(1) : path;
-    }
-  },
-  noslash: {
-    encodePath: history_stripLeadingSlash,
-    decodePath: history_addLeadingSlash
-  },
-  slash: {
-    encodePath: history_addLeadingSlash,
-    decodePath: history_addLeadingSlash
-  }
-};
-
-function history_stripHash(url) {
-  var hashIndex = url.indexOf('#');
-  return hashIndex === -1 ? url : url.slice(0, hashIndex);
-}
-
-function history_getHashPath() {
-  // We can't use window.location.hash here because it's not
-  // consistent across browsers - Firefox will pre-decode it!
-  var href = window.location.href;
-  var hashIndex = href.indexOf('#');
-  return hashIndex === -1 ? '' : href.substring(hashIndex + 1);
-}
-
-function history_pushHashPath(path) {
-  window.location.hash = path;
-}
-
-function history_replaceHashPath(path) {
-  window.location.replace(history_stripHash(window.location.href) + '#' + path);
-}
-
-function history_createHashHistory(props) {
-  if (props === void 0) {
-    props = {};
-  }
-
-  !history_canUseDOM ?  false ? undefined : tiny_invariant_esm(false) : void 0;
-  var globalHistory = window.history;
-  var canGoWithoutReload = history_supportsGoWithoutReloadUsingHash();
-  var _props = props,
-      _props$getUserConfirm = _props.getUserConfirmation,
-      getUserConfirmation = _props$getUserConfirm === void 0 ? history_getConfirmation : _props$getUserConfirm,
-      _props$hashType = _props.hashType,
-      hashType = _props$hashType === void 0 ? 'slash' : _props$hashType;
-  var basename = props.basename ? history_stripTrailingSlash(history_addLeadingSlash(props.basename)) : '';
-  var _HashPathCoders$hashT = history_HashPathCoders[hashType],
-      encodePath = _HashPathCoders$hashT.encodePath,
-      decodePath = _HashPathCoders$hashT.decodePath;
-
-  function getDOMLocation() {
-    var path = decodePath(history_getHashPath());
-     false ? undefined : void 0;
-    if (basename) path = history_stripBasename(path, basename);
-    return history_createLocation(path);
-  }
-
-  var transitionManager = history_createTransitionManager();
-
-  function setState(nextState) {
-    extends_extends(history, nextState);
-
-    history.length = globalHistory.length;
-    transitionManager.notifyListeners(history.location, history.action);
-  }
-
-  var forceNextPop = false;
-  var ignorePath = null;
-
-  function locationsAreEqual$$1(a, b) {
-    return a.pathname === b.pathname && a.search === b.search && a.hash === b.hash;
-  }
-
-  function handleHashChange() {
-    var path = history_getHashPath();
-    var encodedPath = encodePath(path);
-
-    if (path !== encodedPath) {
-      // Ensure we always have a properly-encoded hash.
-      history_replaceHashPath(encodedPath);
-    } else {
-      var location = getDOMLocation();
-      var prevLocation = history.location;
-      if (!forceNextPop && locationsAreEqual$$1(prevLocation, location)) return; // A hashchange doesn't always == location change.
-
-      if (ignorePath === history_createPath(location)) return; // Ignore this change; we already setState in push/replace.
-
-      ignorePath = null;
-      handlePop(location);
-    }
-  }
-
-  function handlePop(location) {
-    if (forceNextPop) {
-      forceNextPop = false;
-      setState();
-    } else {
-      var action = 'POP';
-      transitionManager.confirmTransitionTo(location, action, getUserConfirmation, function (ok) {
-        if (ok) {
-          setState({
-            action: action,
-            location: location
-          });
-        } else {
-          revertPop(location);
-        }
-      });
-    }
-  }
-
-  function revertPop(fromLocation) {
-    var toLocation = history.location; // TODO: We could probably make this more reliable by
-    // keeping a list of paths we've seen in sessionStorage.
-    // Instead, we just default to 0 for paths we don't know.
-
-    var toIndex = allPaths.lastIndexOf(history_createPath(toLocation));
-    if (toIndex === -1) toIndex = 0;
-    var fromIndex = allPaths.lastIndexOf(history_createPath(fromLocation));
-    if (fromIndex === -1) fromIndex = 0;
-    var delta = toIndex - fromIndex;
-
-    if (delta) {
-      forceNextPop = true;
-      go(delta);
-    }
-  } // Ensure the hash is encoded properly before doing anything else.
-
-
-  var path = history_getHashPath();
-  var encodedPath = encodePath(path);
-  if (path !== encodedPath) history_replaceHashPath(encodedPath);
-  var initialLocation = getDOMLocation();
-  var allPaths = [history_createPath(initialLocation)]; // Public interface
-
-  function createHref(location) {
-    var baseTag = document.querySelector('base');
-    var href = '';
-
-    if (baseTag && baseTag.getAttribute('href')) {
-      href = history_stripHash(window.location.href);
-    }
-
-    return href + '#' + encodePath(basename + history_createPath(location));
-  }
-
-  function push(path, state) {
-     false ? undefined : void 0;
-    var action = 'PUSH';
-    var location = history_createLocation(path, undefined, undefined, history.location);
-    transitionManager.confirmTransitionTo(location, action, getUserConfirmation, function (ok) {
-      if (!ok) return;
-      var path = history_createPath(location);
-      var encodedPath = encodePath(basename + path);
-      var hashChanged = history_getHashPath() !== encodedPath;
-
-      if (hashChanged) {
-        // We cannot tell if a hashchange was caused by a PUSH, so we'd
-        // rather setState here and ignore the hashchange. The caveat here
-        // is that other hash histories in the page will consider it a POP.
-        ignorePath = path;
-        history_pushHashPath(encodedPath);
-        var prevIndex = allPaths.lastIndexOf(history_createPath(history.location));
-        var nextPaths = allPaths.slice(0, prevIndex + 1);
-        nextPaths.push(path);
-        allPaths = nextPaths;
-        setState({
-          action: action,
-          location: location
-        });
-      } else {
-         false ? undefined : void 0;
-        setState();
-      }
-    });
-  }
-
-  function replace(path, state) {
-     false ? undefined : void 0;
-    var action = 'REPLACE';
-    var location = history_createLocation(path, undefined, undefined, history.location);
-    transitionManager.confirmTransitionTo(location, action, getUserConfirmation, function (ok) {
-      if (!ok) return;
-      var path = history_createPath(location);
-      var encodedPath = encodePath(basename + path);
-      var hashChanged = history_getHashPath() !== encodedPath;
-
-      if (hashChanged) {
-        // We cannot tell if a hashchange was caused by a REPLACE, so we'd
-        // rather setState here and ignore the hashchange. The caveat here
-        // is that other hash histories in the page will consider it a POP.
-        ignorePath = path;
-        history_replaceHashPath(encodedPath);
-      }
-
-      var prevIndex = allPaths.indexOf(history_createPath(history.location));
-      if (prevIndex !== -1) allPaths[prevIndex] = path;
-      setState({
-        action: action,
-        location: location
-      });
-    });
-  }
-
-  function go(n) {
-     false ? undefined : void 0;
-    globalHistory.go(n);
-  }
-
-  function goBack() {
-    go(-1);
-  }
-
-  function goForward() {
-    go(1);
-  }
-
-  var listenerCount = 0;
-
-  function checkDOMListeners(delta) {
-    listenerCount += delta;
-
-    if (listenerCount === 1 && delta === 1) {
-      window.addEventListener(history_HashChangeEvent$1, handleHashChange);
-    } else if (listenerCount === 0) {
-      window.removeEventListener(history_HashChangeEvent$1, handleHashChange);
-    }
-  }
-
-  var isBlocked = false;
-
-  function block(prompt) {
-    if (prompt === void 0) {
-      prompt = false;
-    }
-
-    var unblock = transitionManager.setPrompt(prompt);
-
-    if (!isBlocked) {
-      checkDOMListeners(1);
-      isBlocked = true;
-    }
-
-    return function () {
-      if (isBlocked) {
-        isBlocked = false;
-        checkDOMListeners(-1);
-      }
-
-      return unblock();
-    };
-  }
-
-  function listen(listener) {
-    var unlisten = transitionManager.appendListener(listener);
-    checkDOMListeners(1);
-    return function () {
-      checkDOMListeners(-1);
-      unlisten();
-    };
-  }
-
-  var history = {
-    length: globalHistory.length,
-    action: 'POP',
-    location: initialLocation,
-    createHref: createHref,
-    push: push,
-    replace: replace,
-    go: go,
-    goBack: goBack,
-    goForward: goForward,
-    block: block,
-    listen: listen
-  };
-  return history;
-}
-
-function history_clamp(n, lowerBound, upperBound) {
-  return Math.min(Math.max(n, lowerBound), upperBound);
-}
-/**
- * Creates a history object that stores locations in memory.
- */
-
-
-function history_createMemoryHistory(props) {
-  if (props === void 0) {
-    props = {};
-  }
-
-  var _props = props,
-      getUserConfirmation = _props.getUserConfirmation,
-      _props$initialEntries = _props.initialEntries,
-      initialEntries = _props$initialEntries === void 0 ? ['/'] : _props$initialEntries,
-      _props$initialIndex = _props.initialIndex,
-      initialIndex = _props$initialIndex === void 0 ? 0 : _props$initialIndex,
-      _props$keyLength = _props.keyLength,
-      keyLength = _props$keyLength === void 0 ? 6 : _props$keyLength;
-  var transitionManager = history_createTransitionManager();
-
-  function setState(nextState) {
-    extends_extends(history, nextState);
-
-    history.length = history.entries.length;
-    transitionManager.notifyListeners(history.location, history.action);
-  }
-
-  function createKey() {
-    return Math.random().toString(36).substr(2, keyLength);
-  }
-
-  var index = history_clamp(initialIndex, 0, initialEntries.length - 1);
-  var entries = initialEntries.map(function (entry) {
-    return typeof entry === 'string' ? history_createLocation(entry, undefined, createKey()) : history_createLocation(entry, undefined, entry.key || createKey());
-  }); // Public interface
-
-  var createHref = history_createPath;
-
-  function push(path, state) {
-     false ? undefined : void 0;
-    var action = 'PUSH';
-    var location = history_createLocation(path, state, createKey(), history.location);
-    transitionManager.confirmTransitionTo(location, action, getUserConfirmation, function (ok) {
-      if (!ok) return;
-      var prevIndex = history.index;
-      var nextIndex = prevIndex + 1;
-      var nextEntries = history.entries.slice(0);
-
-      if (nextEntries.length > nextIndex) {
-        nextEntries.splice(nextIndex, nextEntries.length - nextIndex, location);
-      } else {
-        nextEntries.push(location);
-      }
-
-      setState({
-        action: action,
-        location: location,
-        index: nextIndex,
-        entries: nextEntries
-      });
-    });
-  }
-
-  function replace(path, state) {
-     false ? undefined : void 0;
-    var action = 'REPLACE';
-    var location = history_createLocation(path, state, createKey(), history.location);
-    transitionManager.confirmTransitionTo(location, action, getUserConfirmation, function (ok) {
-      if (!ok) return;
-      history.entries[history.index] = location;
-      setState({
-        action: action,
-        location: location
-      });
-    });
-  }
-
-  function go(n) {
-    var nextIndex = history_clamp(history.index + n, 0, history.entries.length - 1);
-    var action = 'POP';
-    var location = history.entries[nextIndex];
-    transitionManager.confirmTransitionTo(location, action, getUserConfirmation, function (ok) {
-      if (ok) {
-        setState({
-          action: action,
-          location: location,
-          index: nextIndex
-        });
-      } else {
-        // Mimic the behavior of DOM histories by
-        // causing a render after a cancelled POP.
-        setState();
-      }
-    });
-  }
-
-  function goBack() {
-    go(-1);
-  }
-
-  function goForward() {
-    go(1);
-  }
-
-  function canGo(n) {
-    var nextIndex = history.index + n;
-    return nextIndex >= 0 && nextIndex < history.entries.length;
-  }
-
-  function block(prompt) {
-    if (prompt === void 0) {
-      prompt = false;
-    }
-
-    return transitionManager.setPrompt(prompt);
-  }
-
-  function listen(listener) {
-    return transitionManager.appendListener(listener);
-  }
-
-  var history = {
-    length: entries.length,
-    action: 'POP',
-    location: entries[index],
-    index: index,
-    entries: entries,
-    createHref: createHref,
-    push: push,
-    replace: replace,
-    go: go,
-    goBack: goBack,
-    goForward: goForward,
-    canGo: canGo,
-    block: block,
-    listen: listen
-  };
-  return history;
-}
-
-
-
-// CONCATENATED MODULE: ./node_modules/react-router-dom/es/Link.js
-var Link_extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-function Link_objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-
-function Link_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function Link_possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function Link_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-
-
-
-
-
-var Link_isModifiedEvent = function isModifiedEvent(event) {
-  return !!(event.metaKey || event.altKey || event.ctrlKey || event.shiftKey);
-};
-
-/**
- * The public API for rendering a history-aware <a>.
- */
-
-var Link_Link = function (_React$Component) {
-  Link_inherits(Link, _React$Component);
-
-  function Link() {
-    var _temp, _this, _ret;
-
-    Link_classCallCheck(this, Link);
-
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    return _ret = (_temp = (_this = Link_possibleConstructorReturn(this, _React$Component.call.apply(_React$Component, [this].concat(args))), _this), _this.handleClick = function (event) {
-      if (_this.props.onClick) _this.props.onClick(event);
-
-      if (!event.defaultPrevented && // onClick prevented default
-      event.button === 0 && // ignore everything but left clicks
-      !_this.props.target && // let browser handle "target=_blank" etc.
-      !Link_isModifiedEvent(event) // ignore clicks with modifier keys
-      ) {
-          event.preventDefault();
-
-          var history = _this.context.router.history;
-          var _this$props = _this.props,
-              replace = _this$props.replace,
-              to = _this$props.to;
-
-
-          if (replace) {
-            history.replace(to);
-          } else {
-            history.push(to);
-          }
-        }
-    }, _temp), Link_possibleConstructorReturn(_this, _ret);
-  }
-
-  Link.prototype.render = function render() {
-    var _props = this.props,
-        replace = _props.replace,
-        to = _props.to,
-        innerRef = _props.innerRef,
-        props = Link_objectWithoutProperties(_props, ["replace", "to", "innerRef"]); // eslint-disable-line no-unused-vars
-
-    browser_default()(this.context.router, "You should not use <Link> outside a <Router>");
-
-    browser_default()(to !== undefined, 'You must specify the "to" property');
-
-    var history = this.context.router.history;
-
-    var location = typeof to === "string" ? history_createLocation(to, null, null, history.location) : to;
-
-    var href = history.createHref(location);
-    return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("a", Link_extends({}, props, { onClick: this.handleClick, href: href, ref: innerRef }));
-  };
-
-  return Link;
-}(external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.Component);
-
-Link_Link.propTypes = {
-  onClick: prop_types_default.a.func,
-  target: prop_types_default.a.string,
-  replace: prop_types_default.a.bool,
-  to: prop_types_default.a.oneOfType([prop_types_default.a.string, prop_types_default.a.object]).isRequired,
-  innerRef: prop_types_default.a.oneOfType([prop_types_default.a.string, prop_types_default.a.func])
-};
-Link_Link.defaultProps = {
-  replace: false
-};
-Link_Link.contextTypes = {
-  router: prop_types_default.a.shape({
-    history: prop_types_default.a.shape({
-      push: prop_types_default.a.func.isRequired,
-      replace: prop_types_default.a.func.isRequired,
-      createHref: prop_types_default.a.func.isRequired
-    }).isRequired
-  }).isRequired
-};
-
-
-/* harmony default export */ var es_Link = (Link_Link);
-// EXTERNAL MODULE: ./node_modules/warning/warning.js
-var warning = __webpack_require__(4);
-var warning_default = /*#__PURE__*/__webpack_require__.n(warning);
-
-// EXTERNAL MODULE: ./node_modules/path-to-regexp/index.js
-var path_to_regexp = __webpack_require__(12);
-var path_to_regexp_default = /*#__PURE__*/__webpack_require__.n(path_to_regexp);
-
-// CONCATENATED MODULE: ./node_modules/react-router/es/matchPath.js
-
-
-var matchPath_patternCache = {};
-var matchPath_cacheLimit = 10000;
-var matchPath_cacheCount = 0;
-
-var matchPath_compilePath = function compilePath(pattern, options) {
-  var cacheKey = "" + options.end + options.strict + options.sensitive;
-  var cache = matchPath_patternCache[cacheKey] || (matchPath_patternCache[cacheKey] = {});
-
-  if (cache[pattern]) return cache[pattern];
-
-  var keys = [];
-  var re = path_to_regexp_default()(pattern, keys, options);
-  var compiledPattern = { re: re, keys: keys };
-
-  if (matchPath_cacheCount < matchPath_cacheLimit) {
-    cache[pattern] = compiledPattern;
-    matchPath_cacheCount++;
-  }
-
-  return compiledPattern;
-};
-
-/**
- * Public API for matching a URL pathname to a path pattern.
- */
-var matchPath_matchPath = function matchPath(pathname) {
-  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-  var parent = arguments[2];
-
-  if (typeof options === "string") options = { path: options };
-
-  var _options = options,
-      path = _options.path,
-      _options$exact = _options.exact,
-      exact = _options$exact === undefined ? false : _options$exact,
-      _options$strict = _options.strict,
-      strict = _options$strict === undefined ? false : _options$strict,
-      _options$sensitive = _options.sensitive,
-      sensitive = _options$sensitive === undefined ? false : _options$sensitive;
-
-
-  if (path == null) return parent;
-
-  var _compilePath = matchPath_compilePath(path, { end: exact, strict: strict, sensitive: sensitive }),
-      re = _compilePath.re,
-      keys = _compilePath.keys;
-
-  var match = re.exec(pathname);
-
-  if (!match) return null;
-
-  var url = match[0],
-      values = match.slice(1);
-
-  var isExact = pathname === url;
-
-  if (exact && !isExact) return null;
-
-  return {
-    path: path, // the path pattern used to match
-    url: path === "/" && url === "" ? "/" : url, // the matched portion of the URL
-    isExact: isExact, // whether or not we matched exactly
-    params: keys.reduce(function (memo, key, index) {
-      memo[key.name] = values[index];
-      return memo;
-    }, {})
-  };
-};
-
-/* harmony default export */ var es_matchPath = (matchPath_matchPath);
-// CONCATENATED MODULE: ./node_modules/react-router/es/Route.js
-var Route_extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-function Route_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function Route_possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function Route_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-
-
-
-
-
-
-var Route_isEmptyChildren = function isEmptyChildren(children) {
-  return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.Children.count(children) === 0;
-};
-
-/**
- * The public API for matching a single path and rendering.
- */
-
-var Route_Route = function (_React$Component) {
-  Route_inherits(Route, _React$Component);
-
-  function Route() {
-    var _temp, _this, _ret;
-
-    Route_classCallCheck(this, Route);
-
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    return _ret = (_temp = (_this = Route_possibleConstructorReturn(this, _React$Component.call.apply(_React$Component, [this].concat(args))), _this), _this.state = {
-      match: _this.computeMatch(_this.props, _this.context.router)
-    }, _temp), Route_possibleConstructorReturn(_this, _ret);
-  }
-
-  Route.prototype.getChildContext = function getChildContext() {
-    return {
-      router: Route_extends({}, this.context.router, {
-        route: {
-          location: this.props.location || this.context.router.route.location,
-          match: this.state.match
-        }
-      })
-    };
-  };
-
-  Route.prototype.computeMatch = function computeMatch(_ref, router) {
-    var computedMatch = _ref.computedMatch,
-        location = _ref.location,
-        path = _ref.path,
-        strict = _ref.strict,
-        exact = _ref.exact,
-        sensitive = _ref.sensitive;
-
-    if (computedMatch) return computedMatch; // <Switch> already computed the match for us
-
-    browser_default()(router, "You should not use <Route> or withRouter() outside a <Router>");
-
-    var route = router.route;
-
-    var pathname = (location || route.location).pathname;
-
-    return es_matchPath(pathname, { path: path, strict: strict, exact: exact, sensitive: sensitive }, route.match);
-  };
-
-  Route.prototype.componentWillMount = function componentWillMount() {
-    warning_default()(!(this.props.component && this.props.render), "You should not use <Route component> and <Route render> in the same route; <Route render> will be ignored");
-
-    warning_default()(!(this.props.component && this.props.children && !Route_isEmptyChildren(this.props.children)), "You should not use <Route component> and <Route children> in the same route; <Route children> will be ignored");
-
-    warning_default()(!(this.props.render && this.props.children && !Route_isEmptyChildren(this.props.children)), "You should not use <Route render> and <Route children> in the same route; <Route children> will be ignored");
-  };
-
-  Route.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps, nextContext) {
-    warning_default()(!(nextProps.location && !this.props.location), '<Route> elements should not change from uncontrolled to controlled (or vice versa). You initially used no "location" prop and then provided one on a subsequent render.');
-
-    warning_default()(!(!nextProps.location && this.props.location), '<Route> elements should not change from controlled to uncontrolled (or vice versa). You provided a "location" prop initially but omitted it on a subsequent render.');
-
-    this.setState({
-      match: this.computeMatch(nextProps, nextContext.router)
-    });
-  };
-
-  Route.prototype.render = function render() {
-    var match = this.state.match;
-    var _props = this.props,
-        children = _props.children,
-        component = _props.component,
-        render = _props.render;
-    var _context$router = this.context.router,
-        history = _context$router.history,
-        route = _context$router.route,
-        staticContext = _context$router.staticContext;
-
-    var location = this.props.location || route.location;
-    var props = { match: match, location: location, history: history, staticContext: staticContext };
-
-    if (component) return match ? external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(component, props) : null;
-
-    if (render) return match ? render(props) : null;
-
-    if (typeof children === "function") return children(props);
-
-    if (children && !Route_isEmptyChildren(children)) return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.Children.only(children);
-
-    return null;
-  };
-
-  return Route;
-}(external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.Component);
-
-Route_Route.propTypes = {
-  computedMatch: prop_types_default.a.object, // private, from <Switch>
-  path: prop_types_default.a.string,
-  exact: prop_types_default.a.bool,
-  strict: prop_types_default.a.bool,
-  sensitive: prop_types_default.a.bool,
-  component: prop_types_default.a.func,
-  render: prop_types_default.a.func,
-  children: prop_types_default.a.oneOfType([prop_types_default.a.func, prop_types_default.a.node]),
-  location: prop_types_default.a.object
-};
-Route_Route.contextTypes = {
-  router: prop_types_default.a.shape({
-    history: prop_types_default.a.object.isRequired,
-    route: prop_types_default.a.object.isRequired,
-    staticContext: prop_types_default.a.object
-  })
-};
-Route_Route.childContextTypes = {
-  router: prop_types_default.a.object.isRequired
-};
-
-
-/* harmony default export */ var es_Route = (Route_Route);
-// CONCATENATED MODULE: ./node_modules/react-router-dom/es/Route.js
-// Written in this round about way for babel-transform-imports
-
-
-/* harmony default export */ var react_router_dom_es_Route = (es_Route);
-// CONCATENATED MODULE: ./node_modules/react-router-dom/es/matchPath.js
-// Written in this round about way for babel-transform-imports
-
-
-/* harmony default export */ var react_router_dom_es_matchPath = (es_matchPath);
 // EXTERNAL MODULE: ./node_modules/lodash.isfunction/index.js
-var lodash_isfunction = __webpack_require__(11);
+var lodash_isfunction = __webpack_require__(10);
 var lodash_isfunction_default = /*#__PURE__*/__webpack_require__.n(lodash_isfunction);
 
 // EXTERNAL MODULE: ./node_modules/lodash.isobject/index.js
@@ -5724,7 +3768,7 @@ Target_Target.propTypes = {
 
 /* harmony default export */ var lib_Target = (Target_Target);
 // EXTERNAL MODULE: ./node_modules/popper.js/dist/esm/popper.js
-var esm_popper = __webpack_require__(13);
+var esm_popper = __webpack_require__(11);
 
 // CONCATENATED MODULE: ./node_modules/react-popper/lib/Popper.js
 var Popper_extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -6051,7 +4095,7 @@ var lodash_tonumber_default = /*#__PURE__*/__webpack_require__.n(lodash_tonumber
  * LICENSE file in the root directory of this source tree.
  */
 
-function react_lifecycles_compat_es_componentWillMount() {
+function componentWillMount() {
   // Call this.constructor.gDSFP to support sub-classes.
   var state = this.constructor.getDerivedStateFromProps(this.props, this.state);
   if (state !== null && state !== undefined) {
@@ -6059,7 +4103,7 @@ function react_lifecycles_compat_es_componentWillMount() {
   }
 }
 
-function react_lifecycles_compat_es_componentWillReceiveProps(nextProps) {
+function componentWillReceiveProps(nextProps) {
   // Call this.constructor.gDSFP to support sub-classes.
   // Use the setState() updater to ensure state isn't stale in certain edge cases.
   function updater(prevState) {
@@ -6089,8 +4133,8 @@ function componentWillUpdate(nextProps, nextState) {
 
 // React may warn about cWM/cWRP/cWU methods being deprecated.
 // Add a flag to suppress these warnings for this special case.
-react_lifecycles_compat_es_componentWillMount.__suppressDeprecationWarning = true;
-react_lifecycles_compat_es_componentWillReceiveProps.__suppressDeprecationWarning = true;
+componentWillMount.__suppressDeprecationWarning = true;
+componentWillReceiveProps.__suppressDeprecationWarning = true;
 componentWillUpdate.__suppressDeprecationWarning = true;
 
 function polyfill(Component) {
@@ -6159,8 +4203,8 @@ function polyfill(Component) {
   // As a workaround, use cWM and cWRP to invoke the new static lifecycle.
   // Newer versions of React will ignore these lifecycles if gDSFP exists.
   if (typeof Component.getDerivedStateFromProps === 'function') {
-    prototype.componentWillMount = react_lifecycles_compat_es_componentWillMount;
-    prototype.componentWillReceiveProps = react_lifecycles_compat_es_componentWillReceiveProps;
+    prototype.componentWillMount = componentWillMount;
+    prototype.componentWillReceiveProps = componentWillReceiveProps;
   }
 
   // React <= 16.2 does not support getSnapshotBeforeUpdate.
@@ -12291,7 +10335,7 @@ var Breadcrumb_getPaths = function getPaths(pathname) {
 
 var Breadcrumb_findRouteName = function findRouteName(url) {
   var aroute = Breadcrumb_routes.find(function (route) {
-    return react_router_dom_es_matchPath(url, { path: route.path, exact: route.exact });
+    return Object(external_root_ReactRouterDom_commonjs2_react_router_dom_commonjs_react_router_dom_amd_react_router_dom_["matchPath"])(url, { path: route.path, exact: route.exact });
   });
   return aroute && aroute.name ? aroute.name : null;
 };
@@ -12301,17 +10345,20 @@ var Breadcrumb_BreadcrumbsItem = function BreadcrumbsItem(_ref) {
 
   var routeName = Breadcrumb_findRouteName(match.url);
   if (routeName) {
-    return match.isExact ? external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-      reactstrap_es_BreadcrumbItem,
-      { active: true },
-      routeName
-    ) : external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-      reactstrap_es_BreadcrumbItem,
-      null,
-      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-        es_Link,
-        { to: match.url || '' },
+    return (
+      // eslint-disable-next-line react/prop-types
+      match.isExact ? external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+        reactstrap_es_BreadcrumbItem,
+        { active: true },
         routeName
+      ) : external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+        reactstrap_es_BreadcrumbItem,
+        null,
+        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+          external_root_ReactRouterDom_commonjs2_react_router_dom_commonjs_react_router_dom_amd_react_router_dom_["Link"],
+          { to: match.url || '' },
+          routeName
+        )
       )
     );
   }
@@ -12327,7 +10374,7 @@ Breadcrumb_BreadcrumbsItem.propTypes = {
 var Breadcrumb_Breadcrumbs = function Breadcrumbs(args) {
   var paths = Breadcrumb_getPaths(args.location.pathname);
   var items = paths.map(function (path, i) {
-    return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(react_router_dom_es_Route, { key: i.toString(), path: path, component: Breadcrumb_BreadcrumbsItem });
+    return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(external_root_ReactRouterDom_commonjs2_react_router_dom_commonjs_react_router_dom_amd_react_router_dom_["Route"], { key: i.toString(), path: path, component: Breadcrumb_BreadcrumbsItem });
   });
   return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
     reactstrap_es_Breadcrumb,
@@ -12376,7 +10423,7 @@ var Breadcrumb_AppBreadcrumb = function (_Component) {
     return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
       Tag,
       { className: classes },
-      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(react_router_dom_es_Route, Breadcrumb_extends({ path: '/:path', component: Breadcrumb_Breadcrumbs }, attributes))
+      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(external_root_ReactRouterDom_commonjs2_react_router_dom_commonjs_react_router_dom_amd_react_router_dom_["Route"], Breadcrumb_extends({ path: '/:path', component: Breadcrumb_Breadcrumbs }, attributes))
     );
   };
 
@@ -12387,6 +10434,147 @@ Breadcrumb_AppBreadcrumb.propTypes = Breadcrumb_propTypes;
 Breadcrumb_AppBreadcrumb.defaultProps = Breadcrumb_defaultProps;
 
 /* harmony default export */ var src_Breadcrumb = (Breadcrumb_AppBreadcrumb);
+// CONCATENATED MODULE: ./src/Breadcrumb2.js
+var Breadcrumb2_extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+function Breadcrumb2_objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+function Breadcrumb2_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function Breadcrumb2_possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function Breadcrumb2_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+
+
+var Breadcrumb2_routes = void 0;
+var Breadcrumb2_router = void 0;
+
+var Breadcrumb2_getPaths = function getPaths(pathname) {
+  var paths = ['/'];
+
+  if (pathname === '/') return paths;
+
+  pathname.split('/').reduce(function (prev, curr) {
+    var currPath = prev + '/' + curr;
+    paths.push(currPath);
+    return currPath;
+  });
+  return paths;
+};
+
+var Breadcrumb2_findRouteName2 = function findRouteName2(url) {
+  var matchPath = Breadcrumb2_router.matchPath;
+  var aroute = Breadcrumb2_routes.find(function (route) {
+    return matchPath(url, { path: route.path, exact: route.exact });
+  });
+  return aroute && aroute.name ? aroute.name : null;
+};
+
+var Breadcrumb2_BreadcrumbsItem2 = function BreadcrumbsItem2(_ref) {
+  var match = _ref.match;
+
+  var routeName = Breadcrumb2_findRouteName2(match.url);
+  var Link = Breadcrumb2_router.Link;
+  if (routeName) {
+    return (
+      // eslint-disable-next-line react/prop-types
+      match.isExact ? external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+        reactstrap_es_BreadcrumbItem,
+        { active: true },
+        routeName
+      ) : external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+        reactstrap_es_BreadcrumbItem,
+        null,
+        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+          Link,
+          { to: match.url || '' },
+          routeName
+        )
+      )
+    );
+  }
+  return null;
+};
+
+Breadcrumb2_BreadcrumbsItem2.propTypes = {
+  match: prop_types_default.a.shape({
+    url: prop_types_default.a.string
+  })
+};
+
+var Breadcrumb2_Breadcrumbs2 = function Breadcrumbs2(args) {
+  var Route = Breadcrumb2_router.Route;
+  var paths = Breadcrumb2_getPaths(args.location.pathname);
+  var items = paths.map(function (path, i) {
+    return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Route, { key: i.toString(), path: path, component: Breadcrumb2_BreadcrumbsItem2 });
+  });
+  return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+    reactstrap_es_Breadcrumb,
+    null,
+    items
+  );
+};
+
+var Breadcrumb2_propTypes = {
+  children: prop_types_default.a.node,
+  className: prop_types_default.a.string,
+  appRoutes: prop_types_default.a.any,
+  tag: prop_types_default.a.oneOfType([prop_types_default.a.func, prop_types_default.a.string]),
+  router: prop_types_default.a.any
+};
+
+var Breadcrumb2_defaultProps = {
+  tag: 'div',
+  className: '',
+  appRoutes: [{ path: '/', exact: true, name: 'Home', component: null }]
+};
+
+var Breadcrumb2_AppBreadcrumb2 = function (_Component) {
+  Breadcrumb2_inherits(AppBreadcrumb2, _Component);
+
+  function AppBreadcrumb2(props) {
+    Breadcrumb2_classCallCheck(this, AppBreadcrumb2);
+
+    var _this = Breadcrumb2_possibleConstructorReturn(this, _Component.call(this, props));
+
+    _this.state = { routes: props.appRoutes };
+    Breadcrumb2_routes = _this.state.routes;
+    Breadcrumb2_router = props.router;
+    return _this;
+  }
+
+  AppBreadcrumb2.prototype.render = function render() {
+    var _props = this.props,
+        className = _props.className,
+        Tag = _props.tag,
+        attributes = Breadcrumb2_objectWithoutProperties(_props, ['className', 'tag']);
+
+    delete attributes.children;
+    delete attributes.appRoutes;
+    delete attributes.router;
+
+    var classes = classnames_default()(className);
+
+    var Route = Breadcrumb2_router.Route;
+
+    return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+      Tag,
+      { className: classes },
+      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Route, Breadcrumb2_extends({ path: '/:path', component: Breadcrumb2_Breadcrumbs2 }, attributes))
+    );
+  };
+
+  return AppBreadcrumb2;
+}(external_root_React_commonjs2_react_commonjs_react_amd_react_["Component"]);
+
+Breadcrumb2_AppBreadcrumb2.propTypes = Breadcrumb2_propTypes;
+Breadcrumb2_AppBreadcrumb2.defaultProps = Breadcrumb2_defaultProps;
+
+/* harmony default export */ var Breadcrumb2 = (Breadcrumb2_AppBreadcrumb2);
 // CONCATENATED MODULE: ./src/Footer.js
 var Footer_extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -12551,10 +10739,10 @@ function HeaderDropdown_inherits(subClass, superClass) { if (typeof superClass !
 
 
 
-var HeaderDropdown_propTypes = {
+var HeaderDropdown_propTypes = HeaderDropdown_extends({
   children: prop_types_default.a.node,
   direction: prop_types_default.a.string
-};
+}, reactstrap_es_Dropdown.propTypes);
 
 var HeaderDropdown_defaultProps = {
   direction: 'down'
@@ -12705,12 +10893,125 @@ NavbarBrand_AppNavbarBrand.defaultProps = NavbarBrand_defaultProps;
 
 /* harmony default export */ var src_NavbarBrand = (NavbarBrand_AppNavbarBrand);
 // EXTERNAL MODULE: ./node_modules/react-onclickout/index.js
-var react_onclickout = __webpack_require__(10);
+var react_onclickout = __webpack_require__(9);
 var react_onclickout_default = /*#__PURE__*/__webpack_require__.n(react_onclickout);
 
 // EXTERNAL MODULE: ./src/Shared/element-closest.js
-var element_closest = __webpack_require__(17);
+var element_closest = __webpack_require__(19);
 
+// CONCATENATED MODULE: ./src/Shared/layout/layout.js
+var _class, _temp;
+
+function layout_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var LayoutHelper = (_temp = _class = function () {
+  function LayoutHelper() {
+    layout_classCallCheck(this, LayoutHelper);
+  }
+
+  LayoutHelper.sidebarToggle = function sidebarToggle(toggle) {
+    var minimize = arguments.length ? toggle : !this.elClassList.contains('sidebar-minimized');
+    this.sidebarMinimize(minimize);
+    this.brandMinimize(minimize);
+    this.sidebarPSToggle(!minimize); /*remove PS on sidebar minimized*/
+  };
+
+  LayoutHelper.sidebarMinimize = function sidebarMinimize(force) {
+    return this.toggleClass('sidebar-minimized', force);
+  };
+
+  LayoutHelper.brandMinimize = function brandMinimize(force) {
+    this.toggleClass('brand-minimized', force);
+  };
+
+  //  sidebar perfect scrollbar ugly hack
+
+
+  LayoutHelper.sidebarPSToggle = function sidebarPSToggle(toggle) {
+
+    if (this.isOnMobile()) {
+      toggle = true;
+    } else {
+      var isSidebarMinimized = document.body.classList.contains('sidebar-minimized') || false;
+      toggle = !isSidebarMinimized;
+    }
+
+    var ps = { y: { rail: {}, thumb: {} } };
+    var isRtl = getComputedStyle(document.documentElement).direction === 'rtl';
+    var sidebar = document.querySelector('.sidebar-nav');
+    ps.y.rail.on = document.querySelector('.sidebar-nav .ps__rail-y');
+    ps.y.rail.off = document.querySelector('.sidebar-nav .ps__rail-y-off');
+    ps.y.thumb.on = document.querySelector('.sidebar-nav .ps__thumb-y');
+    ps.y.thumb.off = document.querySelector('.sidebar-nav .ps__thumb-y-off');
+    if (sidebar) {
+      if (toggle) {
+        sidebar.classList.add('ps');
+        sidebar.classList.add('ps-container');
+        sidebar.classList.add('ps--active-y');
+        if (ps.y.rail.off) {
+          ps.y.rail.off.classList.add('ps__rail-y');
+          ps.y.rail.off.removeAttribute('style');
+          ps.y.rail.off.style.left = isRtl ? '0px' : 'unset';
+          ps.y.rail.off.style.right = isRtl ? 'unset' : '0px';
+          ps.y.rail.off.classList.remove('ps__rail-y-off');
+        }
+        if (ps.y.thumb.off) {
+          ps.y.thumb.off.removeAttribute('style');
+          ps.y.thumb.off.classList.add('ps__thumb-y');
+          ps.y.thumb.off.classList.remove('ps__thumb-y-off');
+        }
+      } else {
+        if (ps.y.rail.on) {
+          ps.y.rail.on.classList.add('ps__rail-y-off');
+          ps.y.rail.on.removeAttribute('style');
+          ps.y.rail.on.classList.remove('ps__rail-y');
+        }
+        if (ps.y.thumb.on) {
+          ps.y.thumb.on.classList.add('ps__thumb-y-off');
+          ps.y.thumb.on.removeAttribute('style');
+          ps.y.thumb.on.classList.remove('ps__thumb-y');
+        }
+        sidebar.classList.remove('ps');
+        sidebar.classList.remove('ps-container');
+        sidebar.classList.remove('ps--active-y');
+      }
+    }
+  };
+
+  LayoutHelper.toggleClass = function toggleClass(className, force) {
+
+    if (force === true) {
+      this.elClassList.add(className);
+    } else if (force === false) {
+      this.elClassList.remove(className);
+    } else {
+      this.elClassList.toggle(className);
+    }
+    return this.elClassList.contains(className);
+  };
+
+  LayoutHelper.isOnMobile = function isOnMobile() {
+    var onMobile = false;
+    try {
+      var minimizerElement = document.querySelector('.sidebar-minimizer');
+      if (minimizerElement) {
+        onMobile = getComputedStyle(minimizerElement).getPropertyValue('display') === 'none';
+      } else {
+        var sidebarElement = document.querySelector('.sidebar .sidebar-nav');
+        sidebarElement && (onMobile = getComputedStyle(sidebarElement).getPropertyValue('overflow-y') === 'auto');
+      }
+    } catch (ignore) {
+      // eslint-disable-next-line
+      console.warn('CoreUI isOnMobile failed to getComputedStyle', ignore);
+    }
+    return onMobile;
+  };
+
+  return LayoutHelper;
+}(), _class.elClassList = document.body.classList, _temp);
+
+
+/* harmony default export */ var layout = (LayoutHelper);
 // CONCATENATED MODULE: ./src/Sidebar.js
 var Sidebar_extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -12721,6 +11022,7 @@ function Sidebar_classCallCheck(instance, Constructor) { if (!(instance instance
 function Sidebar_possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function Sidebar_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 
 
 
@@ -12790,9 +11092,7 @@ var Sidebar_AppSidebar = function (_Component) {
   };
 
   AppSidebar.prototype.isMinimized = function isMinimized(minimized) {
-    if (minimized) {
-      document.body.classList.add('sidebar-minimized');
-    }
+    layout.sidebarToggle(minimized);
   };
 
   AppSidebar.prototype.isOffCanvas = function isOffCanvas(offCanvas) {
@@ -13055,6 +11355,8 @@ function SidebarMinimizer_inherits(subClass, superClass) { if (typeof superClass
 
 
 
+
+
 var SidebarMinimizer_propTypes = {
   children: prop_types_default.a.node,
   className: prop_types_default.a.string,
@@ -13079,23 +11381,13 @@ var SidebarMinimizer_AppSidebarMinimizer = function (_Component) {
     return _this;
   }
 
-  AppSidebarMinimizer.prototype.sidebarMinimize = function sidebarMinimize() {
-    document.body.classList.toggle('sidebar-minimized');
-    var sidebar = document.querySelector('.sidebar-nav');
-    if (sidebar) {
-      var toggleOn = sidebar.classList.toggle('ps');
-      sidebar.classList.toggle('scrollbar-container', toggleOn);
-      sidebar.classList.toggle('ps--active-y', toggleOn);
-    }
+  AppSidebarMinimizer.prototype.componentDidMount = function componentDidMount() {
+    var isMinimized = document.body.classList.contains('sidebar-minimized');
+    layout.sidebarPSToggle(!isMinimized);
   };
 
-  AppSidebarMinimizer.prototype.brandMinimize = function brandMinimize() {
-    document.body.classList.toggle('brand-minimized');
-  };
-
-  AppSidebarMinimizer.prototype.handleClick = function handleClick(e) {
-    this.sidebarMinimize(e);
-    this.brandMinimize(e);
+  AppSidebarMinimizer.prototype.handleClick = function handleClick() {
+    layout.sidebarToggle();
   };
 
   AppSidebarMinimizer.prototype.render = function render() {
@@ -13126,83 +11418,8 @@ SidebarMinimizer_AppSidebarMinimizer.propTypes = SidebarMinimizer_propTypes;
 SidebarMinimizer_AppSidebarMinimizer.defaultProps = SidebarMinimizer_defaultProps;
 
 /* harmony default export */ var SidebarMinimizer = (SidebarMinimizer_AppSidebarMinimizer);
-// CONCATENATED MODULE: ./node_modules/react-router-dom/es/NavLink.js
-var NavLink_extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-var NavLink_typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-function NavLink_objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-
-
-
-
-
-
-/**
- * A <Link> wrapper that knows if it's "active" or not.
- */
-var NavLink_NavLink = function NavLink(_ref) {
-  var to = _ref.to,
-      exact = _ref.exact,
-      strict = _ref.strict,
-      location = _ref.location,
-      activeClassName = _ref.activeClassName,
-      className = _ref.className,
-      activeStyle = _ref.activeStyle,
-      style = _ref.style,
-      getIsActive = _ref.isActive,
-      ariaCurrent = _ref["aria-current"],
-      rest = NavLink_objectWithoutProperties(_ref, ["to", "exact", "strict", "location", "activeClassName", "className", "activeStyle", "style", "isActive", "aria-current"]);
-
-  var path = (typeof to === "undefined" ? "undefined" : NavLink_typeof(to)) === "object" ? to.pathname : to;
-
-  // Regex taken from: https://github.com/pillarjs/path-to-regexp/blob/master/index.js#L202
-  var escapedPath = path && path.replace(/([.+*?=^!:${}()[\]|/\\])/g, "\\$1");
-
-  return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(react_router_dom_es_Route, {
-    path: escapedPath,
-    exact: exact,
-    strict: strict,
-    location: location,
-    children: function children(_ref2) {
-      var location = _ref2.location,
-          match = _ref2.match;
-
-      var isActive = !!(getIsActive ? getIsActive(match, location) : match);
-
-      return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(es_Link, NavLink_extends({
-        to: to,
-        className: isActive ? [className, activeClassName].filter(function (i) {
-          return i;
-        }).join(" ") : className,
-        style: isActive ? NavLink_extends({}, style, activeStyle) : style,
-        "aria-current": isActive && ariaCurrent || null
-      }, rest));
-    }
-  });
-};
-
-NavLink_NavLink.propTypes = {
-  to: es_Link.propTypes.to,
-  exact: prop_types_default.a.bool,
-  strict: prop_types_default.a.bool,
-  location: prop_types_default.a.object,
-  activeClassName: prop_types_default.a.string,
-  className: prop_types_default.a.string,
-  activeStyle: prop_types_default.a.object,
-  style: prop_types_default.a.object,
-  isActive: prop_types_default.a.func,
-  "aria-current": prop_types_default.a.oneOf(["page", "step", "location", "date", "time", "true"])
-};
-
-NavLink_NavLink.defaultProps = {
-  activeClassName: "active",
-  "aria-current": "page"
-};
-
-/* harmony default export */ var es_NavLink = (NavLink_NavLink);
 // EXTERNAL MODULE: ./node_modules/react-perfect-scrollbar/lib/index.js
-var lib = __webpack_require__(9);
+var lib = __webpack_require__(5);
 var lib_default = /*#__PURE__*/__webpack_require__.n(lib);
 
 // CONCATENATED MODULE: ./src/SidebarNav.js
@@ -13262,7 +11479,7 @@ var SidebarNav_AppSidebarNav = function (_Component) {
 
   AppSidebarNav.prototype.handleClick = function handleClick(e) {
     e.preventDefault();
-    e.target.parentElement.classList.toggle('open');
+    e.currentTarget.parentElement.classList.toggle('open');
   };
 
   AppSidebarNav.prototype.activeRoute = function activeRoute(routeName, props) {
@@ -13338,14 +11555,18 @@ var SidebarNav_AppSidebarNav = function (_Component) {
 
   AppSidebarNav.prototype.navDropdown = function navDropdown(item, key) {
     var classIcon = classnames_default()('nav-icon', item.icon);
+    var attributes = JSON.parse(JSON.stringify(item.attributes || {}));
+    var classes = classnames_default()('nav-link', 'nav-dropdown-toggle', item.class, attributes.class);
+    delete attributes.class;
     return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
       'li',
       { key: key, className: this.activeRoute(item.url, this.props) },
       external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
         'a',
-        { className: 'nav-link nav-dropdown-toggle', href: '#', onClick: this.handleClick },
+        SidebarNav_extends({ className: classes, href: '#', onClick: this.handleClick }, attributes),
         external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement('i', { className: classIcon }),
-        item.name
+        item.name,
+        this.navBadge(item.badge)
       ),
       external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
         'ul',
@@ -13371,22 +11592,31 @@ var SidebarNav_AppSidebarNav = function (_Component) {
 
 
   AppSidebarNav.prototype.navLink = function navLink(item, key, classes) {
-    var url = item.url ? item.url : '';
+    var url = item.url || '';
+    var itemIcon = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement('i', { className: classes.icon });
+    var itemBadge = this.navBadge(item.badge);
+    var attributes = item.attributes || {};
     return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
       reactstrap_es_NavItem,
       { key: key, className: classes.item },
-      this.isExternal(url) ? external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+      attributes.disabled ? external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
         reactstrap_es_NavLink,
-        { href: url, className: classes.link, active: true },
-        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement('i', { className: classes.icon }),
+        SidebarNav_extends({ href: '', className: classes.link }, attributes),
+        itemIcon,
         item.name,
-        this.navBadge(item.badge)
+        itemBadge
+      ) : this.isExternal(url) ? external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+        reactstrap_es_NavLink,
+        SidebarNav_extends({ href: url, className: classes.link, active: true }, attributes),
+        itemIcon,
+        item.name,
+        itemBadge
       ) : external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
-        es_NavLink,
-        { to: url, className: classes.link, activeClassName: 'active', onClick: this.hideMobile },
-        external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement('i', { className: classes.icon }),
+        external_root_ReactRouterDom_commonjs2_react_router_dom_commonjs_react_router_dom_amd_react_router_dom_["NavLink"],
+        SidebarNav_extends({ to: url, className: classes.link, activeClassName: 'active', onClick: this.hideMobile }, attributes),
+        itemIcon,
         item.name,
-        this.navBadge(item.badge)
+        itemBadge
       )
     );
   };
@@ -13424,10 +11654,13 @@ var SidebarNav_AppSidebarNav = function (_Component) {
 
     var navClasses = classnames_default()(className, 'sidebar-nav');
 
+    // ToDo: find better rtl fix
+    var isRtl = getComputedStyle(document.documentElement).direction === 'rtl';
+
     // sidebar-nav root
     return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
       lib_default.a,
-      SidebarNav_extends({ className: navClasses }, attributes, { options: { suppressScrollX: true } }),
+      SidebarNav_extends({ className: navClasses }, attributes, { options: { suppressScrollX: !isRtl } }),
       external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
         reactstrap_es_Nav,
         null,
@@ -13443,6 +11676,389 @@ SidebarNav_AppSidebarNav.propTypes = SidebarNav_propTypes;
 SidebarNav_AppSidebarNav.defaultProps = SidebarNav_defaultProps;
 
 /* harmony default export */ var SidebarNav = (SidebarNav_AppSidebarNav);
+// EXTERNAL MODULE: ./node_modules/react-perfect-scrollbar/dist/css/styles.css
+var styles = __webpack_require__(16);
+
+// EXTERNAL MODULE: ./css/scrollbar.css
+var scrollbar = __webpack_require__(14);
+
+// CONCATENATED MODULE: ./src/SidebarNav2.js
+var SidebarNav2_typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var SidebarNav2_extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+function SidebarNav2_objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+function SidebarNav2_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function SidebarNav2_possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function SidebarNav2_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+
+
+
+
+
+
+
+var SidebarNav2_propTypes = {
+  children: prop_types_default.a.node,
+  className: prop_types_default.a.string,
+  navConfig: prop_types_default.a.any,
+  navFunc: prop_types_default.a.oneOfType([prop_types_default.a.func, prop_types_default.a.string]),
+  isOpen: prop_types_default.a.bool,
+  staticContext: prop_types_default.a.any,
+  tag: prop_types_default.a.oneOfType([prop_types_default.a.func, prop_types_default.a.string]),
+  router: prop_types_default.a.any,
+  props: prop_types_default.a.any
+};
+
+var SidebarNav2_defaultProps = {
+  tag: 'nav',
+  navConfig: {
+    items: [{
+      name: 'Dashboard',
+      url: '/dashboard',
+      icon: 'icon-speedometer',
+      badge: { variant: 'info', text: 'NEW' }
+    }]
+  },
+  isOpen: false,
+  router: { RsNavLink: reactstrap_es_NavLink }
+};
+
+var SidebarNav2_AppSidebarNav2 = function (_Component) {
+  SidebarNav2_inherits(AppSidebarNav2, _Component);
+
+  function AppSidebarNav2(props) {
+    SidebarNav2_classCallCheck(this, AppSidebarNav2);
+
+    var _this = SidebarNav2_possibleConstructorReturn(this, _Component.call(this, props));
+
+    _this._scrollBarRef = null;
+
+
+    _this.handleClick = _this.handleClick.bind(_this);
+    _this.activeRoute = _this.activeRoute.bind(_this);
+    _this.hideMobile = _this.hideMobile.bind(_this);
+
+    _this.changes = null;
+    _this.state = { sidebarMinimized: false };
+    return _this;
+  }
+
+  AppSidebarNav2.prototype.handleClick = function handleClick(e, item) {
+    if (item.attributes && typeof item.attributes.onClick === 'function' && !this.isActiveRoute(item.url, this.props)) {
+      item.attributes.onClick(e, item);
+    } else {
+      e.preventDefault();
+    }
+    e.currentTarget.parentElement.classList.toggle('open');
+  };
+
+  AppSidebarNav2.prototype.isActiveRoute = function isActiveRoute(routeName, props) {
+    return props.location.pathname.indexOf(routeName) > -1;
+  };
+
+  AppSidebarNav2.prototype.activeRoute = function activeRoute(routeName, props) {
+    return this.isActiveRoute(routeName, props) ? 'nav-item nav-dropdown open' : 'nav-item nav-dropdown';
+  };
+
+  AppSidebarNav2.prototype.hideMobile = function hideMobile() {
+    if (document.body.classList.contains('sidebar-show')) {
+      document.body.classList.toggle('sidebar-show');
+    }
+  };
+
+  AppSidebarNav2.prototype.getAttribs = function getAttribs(attributes) {
+    return SidebarNav2_extends({}, attributes);
+  };
+
+  // nav list
+
+
+  AppSidebarNav2.prototype.navList = function navList(items) {
+    var _this2 = this;
+
+    return items.map(function (item, index) {
+      return _this2.navType(item, index);
+    });
+  };
+
+  // nav type
+
+
+  AppSidebarNav2.prototype.navType = function navType(item, idx) {
+    return item.title ? this.navTitle(item, idx) : item.divider ? this.navDivider(item, idx) : item.label ? this.navLabel(item, idx) : item.children ? this.navDropdown(item, idx) : this.navItem(item, idx);
+  };
+
+  // nav list section title
+
+
+  AppSidebarNav2.prototype.navTitle = function navTitle(title, key) {
+    var classes = classnames_default()('nav-title', title.class, title.className);
+    return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+      'li',
+      { key: key, className: classes },
+      this.navWrapper(title),
+      ' '
+    );
+  };
+
+  // simple wrapper for nav-title item
+
+
+  AppSidebarNav2.prototype.navWrapper = function navWrapper(item) {
+    return item.wrapper && item.wrapper.element ? external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(item.wrapper.element, item.wrapper.attributes, item.name) : item.name;
+  };
+
+  // nav list divider
+
+
+  AppSidebarNav2.prototype.navDivider = function navDivider(divider, key) {
+    var classes = classnames_default()('divider', divider.class, divider.className);
+    return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement('li', { key: key, className: classes });
+  };
+
+  // nav label with nav link
+
+
+  AppSidebarNav2.prototype.navLabel = function navLabel(item, key) {
+    var classes = {
+      item: classnames_default()('hidden-cn', item.class),
+      link: classnames_default()('nav-label', item.class ? item.class : ''),
+      icon: classnames_default()('nav-icon', !item.icon ? 'fa fa-circle' : item.icon, item.label.variant ? 'text-' + item.label.variant : '', item.label.class ? item.label.class : '')
+    };
+    return this.navLink(item, key, classes);
+  };
+
+  // nav dropdown
+
+
+  AppSidebarNav2.prototype.navDropdown = function navDropdown(item, key) {
+    var _this3 = this;
+
+    var itemIcon = this.navIcon(item);
+    var attributes = this.getAttribs(item.attributes);
+    var classes = classnames_default()('nav-link', 'nav-dropdown-toggle', item.class, attributes.class, attributes.className);
+    delete attributes.class;
+    delete attributes.className;
+    var itemAttr = this.getAttribs(item.itemAttr);
+    var liClasses = classnames_default()('nav-item', 'nav-dropdown', itemAttr.class, itemAttr.className);
+    delete itemAttr.class;
+    delete itemAttr.className;
+    var NavLink = this.props.router.NavLink || reactstrap_es_NavLink;
+
+    return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+      'li',
+      SidebarNav2_extends({ key: key, className: classnames_default()(liClasses, { 'open': this.isActiveRoute(item.url, this.props) }) }, itemAttr),
+      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+        NavLink,
+        SidebarNav2_extends({ activeClassName: 'open',
+          className: classes,
+          to: item.url || ''
+        }, attributes, {
+          onClick: function onClick(e) {
+            return _this3.handleClick(e, item);
+          } }),
+        itemIcon,
+        item.name,
+        this.navBadge(item.badge)
+      ),
+      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+        'ul',
+        { className: 'nav-dropdown-items' },
+        this.navList(item.children)
+      )
+    );
+  };
+
+  // nav item with nav link
+
+
+  AppSidebarNav2.prototype.navItem = function navItem(item, key) {
+    var classes = {
+      item: classnames_default()(item.class),
+      link: classnames_default()('nav-link', item.variant ? 'nav-link-' + item.variant : ''),
+      icon: classnames_default()('nav-icon', item.icon)
+    };
+    return this.navLink(item, key, classes);
+  };
+
+  AppSidebarNav2.prototype.navIcon = function navIcon(item) {
+    var icon = item.icon;
+    var iconObject = (typeof icon === 'undefined' ? 'undefined' : SidebarNav2_typeof(icon)) === 'object' && icon !== null ? SidebarNav2_extends({ iconClass: icon.class, iconClassName: icon.className }, icon) : { iconClass: icon };
+    var iconClass = iconObject.iconClass,
+        iconClassName = iconObject.iconClassName,
+        innerText = iconObject.innerText,
+        img = iconObject.img,
+        attributes = iconObject.attributes;
+
+    var iconAttr = SidebarNav2_extends({}, attributes);
+    delete iconAttr.class;
+    delete iconAttr.className;
+    delete iconAttr.img;
+    var iconImg = img && img.src ? img : null;
+    var iconInner = innerText || null;
+    var classIcon = classnames_default()('nav-icon', iconClass, iconClassName);
+    var iconComponent = iconImg ? external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement('img', SidebarNav2_extends({}, iconAttr, { className: classIcon, src: iconImg.src })) : external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+      'i',
+      SidebarNav2_extends({}, iconAttr, { className: classIcon }),
+      iconInner
+    );
+    return iconComponent;
+  };
+
+  // nav link
+
+
+  AppSidebarNav2.prototype.navLink = function navLink(item, key, classes) {
+    var _this4 = this;
+
+    var ref = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createRef();
+    var url = item.url || '';
+    var itemIcon = this.navIcon(item);
+    var itemBadge = this.navBadge(item.badge);
+    var attributes = this.getAttribs(item.attributes);
+    classes.link = classnames_default()(classes.link, attributes.class, attributes.className);
+    delete attributes.class;
+    delete attributes.className;
+    var itemAttr = this.getAttribs(item.itemAttr);
+    classes.item = classnames_default()(classes.item, itemAttr.class, itemAttr.className);
+    delete itemAttr.class;
+    delete itemAttr.className;
+    var NavLink = this.props.router.NavLink || reactstrap_es_NavLink;
+    return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+      reactstrap_es_NavItem,
+      SidebarNav2_extends({ key: key, className: classes.item }, itemAttr),
+      attributes.disabled ? external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+        reactstrap_es_NavLink,
+        SidebarNav2_extends({ href: '', className: classes.link }, attributes),
+        itemIcon,
+        item.name,
+        itemBadge
+      ) : this.isExternal(url, this.props) || NavLink === reactstrap_es_NavLink ? external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+        reactstrap_es_NavLink,
+        SidebarNav2_extends({ href: url, className: classes.link, active: true }, attributes),
+        itemIcon,
+        item.name,
+        itemBadge
+      ) : external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+        NavLink,
+        SidebarNav2_extends({ to: url, className: classes.link, activeClassName: 'active', onClick: function onClick() {
+            return _this4.hideMobile(ref);
+          }, ref: ref }, attributes),
+        itemIcon,
+        item.name,
+        itemBadge
+      )
+    );
+  };
+
+  // badge addon to NavItem
+
+
+  AppSidebarNav2.prototype.navBadge = function navBadge(badge) {
+    if (badge) {
+      var classes = classnames_default()(badge.class, badge.className);
+      return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+        reactstrap_es_Badge,
+        { className: classes, color: badge.variant },
+        badge.text
+      );
+    }
+    return null;
+  };
+
+  AppSidebarNav2.prototype.isExternal = function isExternal(url, props) {
+    var linkType = typeof url === 'undefined' ? 'undefined' : SidebarNav2_typeof(url);
+    var link = linkType === 'string' ? url : linkType === 'object' && url.pathname ? url.pathname : linkType === 'function' && typeof url(props.location) === 'string' ? url(props.location) : linkType === 'function' && SidebarNav2_typeof(url(props.location)) === 'object' ? url(props.location).pathname : '';
+    return link.substring(0, 4) === 'http';
+  };
+
+  AppSidebarNav2.prototype.observeDomMutations = function observeDomMutations() {
+    var _this5 = this;
+
+    if (window.MutationObserver) {
+
+      // eslint-disable-next-line
+      this.changes = new MutationObserver(function (mutations) {
+
+        var isSidebarMinimized = document.body.classList.contains('sidebar-minimized') || false;
+        _this5.setState({ sidebarMinimized: isSidebarMinimized });
+
+        layout.sidebarPSToggle(!isSidebarMinimized);
+      });
+      var element = document.body;
+      this.changes.observe(element, {
+        attributes: true,
+        attributeFilter: ['class']
+      });
+    }
+    window.addEventListener('resize', this.onResize);
+  };
+
+  AppSidebarNav2.prototype.onResize = function onResize() {
+    layout.sidebarPSToggle(true);
+  };
+
+  AppSidebarNav2.prototype.componentDidMount = function componentDidMount() {
+    this.observeDomMutations();
+  };
+
+  AppSidebarNav2.prototype.componentWillUnmount = function componentWillUnmount() {
+    try {
+      this.changes.disconnect();
+      window.removeEventListener('resize', this.onResize);
+    } catch (ignore) {
+      // eslint-disable-next-line
+      console.warn('CoreUI SidebarNav failed to disconnect from MutationObserver', ignore);
+    }
+  };
+
+  AppSidebarNav2.prototype.render = function render() {
+    var _this6 = this;
+
+    var _props = this.props,
+        className = _props.className,
+        children = _props.children,
+        navConfig = _props.navConfig,
+        attributes = SidebarNav2_objectWithoutProperties(_props, ['className', 'children', 'navConfig']);
+
+    delete attributes.isOpen;
+    delete attributes.staticContext;
+    delete attributes.Tag;
+    delete attributes.router;
+
+    var navClasses = classnames_default()(className, 'sidebar-nav');
+
+    var options = Object.assign({}, { suppressScrollX: true, suppressScrollY: this.state.sidebarMinimized });
+
+    // sidebar-nav root
+    return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+      lib_default.a,
+      SidebarNav2_extends({ className: navClasses }, attributes, { options: options, ref: function ref(_ref) {
+          _this6._scrollBarRef = _ref;
+        } }),
+      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
+        reactstrap_es_Nav,
+        null,
+        children || this.navList(navConfig.items)
+      )
+    );
+  };
+
+  return AppSidebarNav2;
+}(external_root_React_commonjs2_react_commonjs_react_amd_react_["Component"]);
+
+SidebarNav2_AppSidebarNav2.propTypes = SidebarNav2_propTypes;
+SidebarNav2_AppSidebarNav2.defaultProps = SidebarNav2_defaultProps;
+
+/* harmony default export */ var SidebarNav2 = (SidebarNav2_AppSidebarNav2);
 // CONCATENATED MODULE: ./src/SidebarToggler.js
 var SidebarToggler_extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -13577,9 +12193,9 @@ var Switch_defaultProps = {
   outline: false,
   size: '',
   checked: false,
-  defaultChecked: false,
-  disabled: false,
-  required: false,
+  defaultChecked: undefined,
+  disabled: undefined,
+  required: undefined,
   type: 'checkbox',
   variant: '',
   dataOn: 'On',
@@ -13594,30 +12210,47 @@ var Switch_AppSwitch = function (_Component) {
 
     var _this = Switch_possibleConstructorReturn(this, _Component.call(this, props));
 
-    _this.onChange = _this.onChange.bind(_this);
+    _this.handleChange = _this.handleChange.bind(_this);
+    _this.handleKeyDown = _this.handleKeyDown.bind(_this);
+    _this.handleKeyUp = _this.handleKeyUp.bind(_this);
     _this.state = {
+      uncontrolled: !!_this.props.defaultChecked,
       checked: _this.props.defaultChecked || _this.props.checked,
       selected: []
     };
     return _this;
   }
 
-  AppSwitch.prototype.onChange = function onChange(event) {
-    var target = event.target;
+  AppSwitch.prototype.toggleState = function toggleState(check) {
     this.setState({
-      checked: target.checked
+      checked: check
     });
+  };
+
+  AppSwitch.prototype.handleChange = function handleChange(event) {
+    var target = event.target;
+    this.toggleState(target.checked);
 
     if (this.props.onChange) {
       this.props.onChange(event);
     }
   };
 
-  AppSwitch.prototype.componentDidUpdate = function componentDidUpdate(prevProps) {
-    if (this.props.checked !== prevProps.checked) {
-      this.setState({
-        checked: this.props.checked
-      });
+  AppSwitch.prototype.handleKeyDown = function handleKeyDown(event) {
+    if (event.key === ' ') {
+      event.preventDefault();
+    }
+  };
+
+  AppSwitch.prototype.handleKeyUp = function handleKeyUp(event) {
+    if (event.key === 'Enter' || event.key === ' ') {
+      this.toggleState(!this.state.checked);
+    }
+  };
+
+  AppSwitch.prototype.componentDidUpdate = function componentDidUpdate(prevProps, prevState) {
+    if (!this.state.uncontrolled && this.props.checked !== prevState.checked) {
+      this.toggleState(this.props.checked);
     }
   };
 
@@ -13638,6 +12271,8 @@ var Switch_AppSwitch = function (_Component) {
         variant = _props.variant,
         attributes = Switch_objectWithoutProperties(_props, ['className', 'disabled', 'color', 'name', 'label', 'outline', 'size', 'required', 'type', 'value', 'dataOn', 'dataOff', 'variant']);
 
+    var tabindex = attributes.tabIndex;
+    delete attributes.tabIndex;
     delete attributes.checked;
     delete attributes.defaultChecked;
     delete attributes.onChange;
@@ -13650,8 +12285,19 @@ var Switch_AppSwitch = function (_Component) {
 
     return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(
       'label',
-      { className: classes },
-      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement('input', Switch_extends({ type: type, className: inputClasses, onChange: this.onChange, checked: this.state.checked, name: name, required: required, disabled: disabled, value: value }, attributes)),
+      { className: classes, tabIndex: tabindex, onKeyUp: this.handleKeyUp, onKeyDown: this.handleKeyDown },
+      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement('input', Switch_extends({ type: type,
+        className: inputClasses,
+        onChange: this.handleChange,
+        checked: this.state.checked,
+        name: name,
+        required: required,
+        disabled: disabled,
+        value: value,
+        'aria-checked': this.state.checked,
+        'aria-disabled': disabled,
+        'aria-readonly': disabled
+      }, attributes)),
       external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement('span', { className: sliderClasses, 'data-checked': dataOn, 'data-unchecked': dataOff })
     );
   };
@@ -13667,6 +12313,7 @@ Switch_AppSwitch.defaultProps = Switch_defaultProps;
 /* concated harmony reexport */__webpack_require__.d(__webpack_exports__, "AppAside", function() { return Aside; });
 /* concated harmony reexport */__webpack_require__.d(__webpack_exports__, "AppAsideToggler", function() { return AsideToggler; });
 /* concated harmony reexport */__webpack_require__.d(__webpack_exports__, "AppBreadcrumb", function() { return src_Breadcrumb; });
+/* concated harmony reexport */__webpack_require__.d(__webpack_exports__, "AppBreadcrumb2", function() { return Breadcrumb2; });
 /* concated harmony reexport */__webpack_require__.d(__webpack_exports__, "AppFooter", function() { return Footer; });
 /* concated harmony reexport */__webpack_require__.d(__webpack_exports__, "AppHeader", function() { return Header; });
 /* concated harmony reexport */__webpack_require__.d(__webpack_exports__, "AppHeaderDropdown", function() { return HeaderDropdown; });
@@ -13677,6 +12324,7 @@ Switch_AppSwitch.defaultProps = Switch_defaultProps;
 /* concated harmony reexport */__webpack_require__.d(__webpack_exports__, "AppSidebarHeader", function() { return SidebarHeader; });
 /* concated harmony reexport */__webpack_require__.d(__webpack_exports__, "AppSidebarMinimizer", function() { return SidebarMinimizer; });
 /* concated harmony reexport */__webpack_require__.d(__webpack_exports__, "AppSidebarNav", function() { return SidebarNav; });
+/* concated harmony reexport */__webpack_require__.d(__webpack_exports__, "AppSidebarNav2", function() { return SidebarNav2; });
 /* concated harmony reexport */__webpack_require__.d(__webpack_exports__, "AppSidebarToggler", function() { return SidebarToggler; });
 /* concated harmony reexport */__webpack_require__.d(__webpack_exports__, "AppSwitch", function() { return Switch; });
 
@@ -13709,10 +12357,27 @@ Switch_AppSwitch.defaultProps = Switch_defaultProps;
 
 
 
-// export AppLayout from './Shared';
+
+
+
+
 
 /***/ }),
-/* 15 */
+/* 13 */,
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+/* 15 */,
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+/* 17 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15036,7 +13701,7 @@ PerfectScrollbar.prototype.removePsClasses = function removePsClasses () {
 
 
 /***/ }),
-/* 16 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15054,7 +13719,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _propTypes = __webpack_require__(0);
 
-var _perfectScrollbar = __webpack_require__(15);
+var _perfectScrollbar = __webpack_require__(17);
 
 var _perfectScrollbar2 = _interopRequireDefault(_perfectScrollbar);
 
@@ -15231,7 +13896,7 @@ ScrollBar.propTypes = {
 module.exports = exports['default'];
 
 /***/ }),
-/* 17 */
+/* 19 */
 /***/ (function(module, exports) {
 
 (function (ElementProto) {
@@ -15269,7 +13934,7 @@ module.exports = exports['default'];
 })(typeof window !== 'undefined' && window.Element.prototype);
 
 /***/ }),
-/* 18 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15298,19 +13963,19 @@ exports.unstable_pauseExecution=function(){};exports.unstable_getFirstCallbackNo
 
 
 /***/ }),
-/* 19 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 if (true) {
-  module.exports = __webpack_require__(18);
+  module.exports = __webpack_require__(20);
 } else {}
 
 
 /***/ }),
-/* 20 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15407,7 +14072,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 
 /***/ }),
-/* 21 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15423,7 +14088,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 /*
  Modernizr 3.0.0pre (Custom Build) | MIT
 */
-var aa=__webpack_require__(1),n=__webpack_require__(20),q=__webpack_require__(19);function u(a){for(var b="https://reactjs.org/docs/error-decoder.html?invariant="+a,c=1;c<arguments.length;c++)b+="&args[]="+encodeURIComponent(arguments[c]);return"Minified React error #"+a+"; visit "+b+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings."}if(!aa)throw Error(u(227));var ba=null,ca={};
+var aa=__webpack_require__(1),n=__webpack_require__(22),q=__webpack_require__(21);function u(a){for(var b="https://reactjs.org/docs/error-decoder.html?invariant="+a,c=1;c<arguments.length;c++)b+="&args[]="+encodeURIComponent(arguments[c]);return"Minified React error #"+a+"; visit "+b+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings."}if(!aa)throw Error(u(227));var ba=null,ca={};
 function da(){if(ba)for(var a in ca){var b=ca[a],c=ba.indexOf(a);if(!(-1<c))throw Error(u(96,a));if(!ea[c]){if(!b.extractEvents)throw Error(u(97,a));ea[c]=b;c=b.eventTypes;for(var d in c){var e=void 0;var f=c[d],g=b,h=d;if(fa.hasOwnProperty(h))throw Error(u(99,h));fa[h]=f;var k=f.phasedRegistrationNames;if(k){for(e in k)k.hasOwnProperty(e)&&ha(k[e],g,h);e=!0}else f.registrationName?(ha(f.registrationName,g,h),e=!0):e=!1;if(!e)throw Error(u(98,d,a));}}}}
 function ha(a,b,c){if(ia[a])throw Error(u(100,a));ia[a]=b;ja[a]=b.eventTypes[c].dependencies}var ea=[],fa={},ia={},ja={};function ka(a,b,c,d,e,f,g,h,k){var l=Array.prototype.slice.call(arguments,3);try{b.apply(c,l)}catch(m){this.onError(m)}}var la=!1,ma=null,na=!1,oa=null,pa={onError:function(a){la=!0;ma=a}};function qa(a,b,c,d,e,f,g,h,k){la=!1;ma=null;ka.apply(pa,arguments)}
 function ra(a,b,c,d,e,f,g,h,k){qa.apply(this,arguments);if(la){if(la){var l=ma;la=!1;ma=null}else throw Error(u(198));na||(na=!0,oa=l)}}var sa=null,ua=null,va=null;function wa(a,b,c){var d=a.type||"unknown-event";a.currentTarget=va(c);ra(d,b,void 0,a);a.currentTarget=null}function xa(a,b){if(null==b)throw Error(u(30));if(null==a)return b;if(Array.isArray(a)){if(Array.isArray(b))return a.push.apply(a,b),a;a.push(b);return a}return Array.isArray(b)?[a].concat(b):[a,b]}
@@ -15704,16 +14369,7 @@ rendererPackageName:"react-dom"});var Dk={default:Ck},Ek=Dk&&Ck||Dk;module.expor
 
 
 /***/ }),
-/* 22 */
-/***/ (function(module, exports) {
-
-module.exports = Array.isArray || function (arr) {
-  return Object.prototype.toString.call(arr) == '[object Array]';
-};
-
-
-/***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15732,7 +14388,7 @@ module.exports = ReactPropTypesSecret;
 
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15745,7 +14401,7 @@ module.exports = ReactPropTypesSecret;
 
 
 
-var ReactPropTypesSecret = __webpack_require__(23);
+var ReactPropTypesSecret = __webpack_require__(24);
 
 function emptyFunction() {}
 function emptyFunctionWithReset() {}
@@ -15803,10 +14459,10 @@ module.exports = function() {
 
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(14);
+module.exports = __webpack_require__(12);
 
 
 /***/ })

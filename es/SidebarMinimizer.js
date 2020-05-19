@@ -12,6 +12,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
+import LayoutHelper from './Shared/layout/layout';
+
 var propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
@@ -36,23 +38,13 @@ var AppSidebarMinimizer = function (_Component) {
     return _this;
   }
 
-  AppSidebarMinimizer.prototype.sidebarMinimize = function sidebarMinimize() {
-    document.body.classList.toggle('sidebar-minimized');
-    var sidebar = document.querySelector('.sidebar-nav');
-    if (sidebar) {
-      var toggleOn = sidebar.classList.toggle('ps');
-      sidebar.classList.toggle('scrollbar-container', toggleOn);
-      sidebar.classList.toggle('ps--active-y', toggleOn);
-    }
+  AppSidebarMinimizer.prototype.componentDidMount = function componentDidMount() {
+    var isMinimized = document.body.classList.contains('sidebar-minimized');
+    LayoutHelper.sidebarPSToggle(!isMinimized);
   };
 
-  AppSidebarMinimizer.prototype.brandMinimize = function brandMinimize() {
-    document.body.classList.toggle('brand-minimized');
-  };
-
-  AppSidebarMinimizer.prototype.handleClick = function handleClick(e) {
-    this.sidebarMinimize(e);
-    this.brandMinimize(e);
+  AppSidebarMinimizer.prototype.handleClick = function handleClick() {
+    LayoutHelper.sidebarToggle();
   };
 
   AppSidebarMinimizer.prototype.render = function render() {

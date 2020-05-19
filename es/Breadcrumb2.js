@@ -1,26 +1,4 @@
-'use strict';
-
-exports.__esModule = true;
-
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-var _react = require('react');
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactRouterDom = require('react-router-dom');
-
-var _reactstrap = require('reactstrap');
-
-var _propTypes = require('prop-types');
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _classnames = require('classnames');
-
-var _classnames2 = _interopRequireDefault(_classnames);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
@@ -30,7 +8,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+import React, { Component } from 'react';
+import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import PropTypes from 'prop-types';
+import classNames from 'classnames';
+
 var routes = void 0;
+var router = void 0;
 
 var getPaths = function getPaths(pathname) {
   var paths = ['/'];
@@ -45,29 +29,31 @@ var getPaths = function getPaths(pathname) {
   return paths;
 };
 
-var findRouteName = function findRouteName(url) {
+var findRouteName2 = function findRouteName2(url) {
+  var matchPath = router.matchPath;
   var aroute = routes.find(function (route) {
-    return (0, _reactRouterDom.matchPath)(url, { path: route.path, exact: route.exact });
+    return matchPath(url, { path: route.path, exact: route.exact });
   });
   return aroute && aroute.name ? aroute.name : null;
 };
 
-var BreadcrumbsItem = function BreadcrumbsItem(_ref) {
+var BreadcrumbsItem2 = function BreadcrumbsItem2(_ref) {
   var match = _ref.match;
 
-  var routeName = findRouteName(match.url);
+  var routeName = findRouteName2(match.url);
+  var Link = router.Link;
   if (routeName) {
     return (
       // eslint-disable-next-line react/prop-types
-      match.isExact ? _react2.default.createElement(
-        _reactstrap.BreadcrumbItem,
+      match.isExact ? React.createElement(
+        BreadcrumbItem,
         { active: true },
         routeName
-      ) : _react2.default.createElement(
-        _reactstrap.BreadcrumbItem,
+      ) : React.createElement(
+        BreadcrumbItem,
         null,
-        _react2.default.createElement(
-          _reactRouterDom.Link,
+        React.createElement(
+          Link,
           { to: match.url || '' },
           routeName
         )
@@ -77,29 +63,31 @@ var BreadcrumbsItem = function BreadcrumbsItem(_ref) {
   return null;
 };
 
-BreadcrumbsItem.propTypes = process.env.NODE_ENV !== "production" ? {
-  match: _propTypes2.default.shape({
-    url: _propTypes2.default.string
+BreadcrumbsItem2.propTypes = process.env.NODE_ENV !== "production" ? {
+  match: PropTypes.shape({
+    url: PropTypes.string
   })
 } : {};
 
-var Breadcrumbs = function Breadcrumbs(args) {
+var Breadcrumbs2 = function Breadcrumbs2(args) {
+  var Route = router.Route;
   var paths = getPaths(args.location.pathname);
   var items = paths.map(function (path, i) {
-    return _react2.default.createElement(_reactRouterDom.Route, { key: i.toString(), path: path, component: BreadcrumbsItem });
+    return React.createElement(Route, { key: i.toString(), path: path, component: BreadcrumbsItem2 });
   });
-  return _react2.default.createElement(
-    _reactstrap.Breadcrumb,
+  return React.createElement(
+    Breadcrumb,
     null,
     items
   );
 };
 
 var propTypes = {
-  children: _propTypes2.default.node,
-  className: _propTypes2.default.string,
-  appRoutes: _propTypes2.default.any,
-  tag: _propTypes2.default.oneOfType([_propTypes2.default.func, _propTypes2.default.string])
+  children: PropTypes.node,
+  className: PropTypes.string,
+  appRoutes: PropTypes.any,
+  tag: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
+  router: PropTypes.any
 };
 
 var defaultProps = {
@@ -108,20 +96,21 @@ var defaultProps = {
   appRoutes: [{ path: '/', exact: true, name: 'Home', component: null }]
 };
 
-var AppBreadcrumb = function (_Component) {
-  _inherits(AppBreadcrumb, _Component);
+var AppBreadcrumb2 = function (_Component) {
+  _inherits(AppBreadcrumb2, _Component);
 
-  function AppBreadcrumb(props) {
-    _classCallCheck(this, AppBreadcrumb);
+  function AppBreadcrumb2(props) {
+    _classCallCheck(this, AppBreadcrumb2);
 
     var _this = _possibleConstructorReturn(this, _Component.call(this, props));
 
     _this.state = { routes: props.appRoutes };
     routes = _this.state.routes;
+    router = props.router;
     return _this;
   }
 
-  AppBreadcrumb.prototype.render = function render() {
+  AppBreadcrumb2.prototype.render = function render() {
     var _props = this.props,
         className = _props.className,
         Tag = _props.tag,
@@ -129,21 +118,23 @@ var AppBreadcrumb = function (_Component) {
 
     delete attributes.children;
     delete attributes.appRoutes;
+    delete attributes.router;
 
-    var classes = (0, _classnames2.default)(className);
+    var classes = classNames(className);
 
-    return _react2.default.createElement(
+    var Route = router.Route;
+
+    return React.createElement(
       Tag,
       { className: classes },
-      _react2.default.createElement(_reactRouterDom.Route, _extends({ path: '/:path', component: Breadcrumbs }, attributes))
+      React.createElement(Route, _extends({ path: '/:path', component: Breadcrumbs2 }, attributes))
     );
   };
 
-  return AppBreadcrumb;
-}(_react.Component);
+  return AppBreadcrumb2;
+}(Component);
 
-AppBreadcrumb.propTypes = process.env.NODE_ENV !== "production" ? propTypes : {};
-AppBreadcrumb.defaultProps = defaultProps;
+AppBreadcrumb2.propTypes = process.env.NODE_ENV !== "production" ? propTypes : {};
+AppBreadcrumb2.defaultProps = defaultProps;
 
-exports.default = AppBreadcrumb;
-module.exports = exports['default'];
+export default AppBreadcrumb2;

@@ -11,12 +11,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { asideMenuCssClasses } from './Shared/index';
+import { asideMenuCssClasses, validBreakpoints, checkBreakpoint } from './Shared/index';
 import toggleClasses from './Shared/toggle-classes';
 
 var propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
+  defaultOpen: PropTypes.bool,
   display: PropTypes.any,
   mobile: PropTypes.bool,
   tag: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
@@ -24,6 +25,7 @@ var propTypes = {
 };
 
 var defaultProps = {
+  defaultOpen: false,
   display: 'lg',
   mobile: false,
   tag: 'button',
@@ -44,22 +46,25 @@ var AppAsideToggler = function (_Component) {
     return _this;
   }
 
+  AppAsideToggler.prototype.componentDidMount = function componentDidMount() {
+    this.toggle(this.props.defaultOpen);
+  };
+
+  AppAsideToggler.prototype.toggle = function toggle(force) {
+    var _ref = [this.props.display, this.props.mobile],
+        display = _ref[0],
+        mobile = _ref[1];
+
+    var cssClass = asideMenuCssClasses[0];
+    if (!mobile && display && checkBreakpoint(display, validBreakpoints)) {
+      cssClass = 'aside-menu-' + display + '-show';
+    }
+    toggleClasses(cssClass, asideMenuCssClasses, force);
+  };
+
   AppAsideToggler.prototype.asideToggle = function asideToggle(e) {
     e.preventDefault();
-
-    if (this.props.mobile) {
-      document.body.classList.toggle('aside-menu-show');
-    } else {
-      var display = this.props.display;
-      var cssTemplate = 'aside-menu-' + display + '-show';
-      var _asideMenuCssClasses$ = asideMenuCssClasses[0],
-          cssClass = _asideMenuCssClasses$[0];
-
-      if (display && asideMenuCssClasses.indexOf(cssTemplate) > -1) {
-        cssClass = cssTemplate;
-      }
-      toggleClasses(cssClass, asideMenuCssClasses);
-    }
+    this.toggle();
   };
 
   AppAsideToggler.prototype.render = function render() {
@@ -72,6 +77,7 @@ var AppAsideToggler = function (_Component) {
         Tag = _props.tag,
         attributes = _objectWithoutProperties(_props, ['className', 'children', 'type', 'tag']);
 
+    delete attributes.defaultOpen;
     delete attributes.display;
     delete attributes.mobile;
 
