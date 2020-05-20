@@ -34,16 +34,21 @@ function isOnMobile() {
 }
 
 export function sidebarToggle(toggle) {
+  // eslint-disable-next-line no-console
+  console.log('my-helpers sidebarToggle toggle:', toggle);
   if (document.body) {
-    var minimize = typeof toggle !== 'undefined' ? toggle : !document.body.classList.contains('sidebar-minimized');
+    var minimize = arguments.length ? toggle : !document.body.classList.contains('sidebar-minimized');
+    // eslint-disable-next-line no-console
+    console.log('my-helpers sidebarToggle minimize:', minimize);
     sidebarMinimize(minimize);
     brandMinimize(minimize);
     sidebarPSToggle(!minimize);
   }
 }
 
-export function sidebarPSToggle() {
-  var toggle;
+export function sidebarPSToggle(toggle) {
+  // eslint-disable-next-line no-console
+  console.log('my-helpers sidebarPSToggle toggle 1:', toggle);
   if (document.body) {
     if (isOnMobile()) {
       toggle = true;
@@ -51,6 +56,8 @@ export function sidebarPSToggle() {
       var isSidebarMinimized = document.body.classList.contains('sidebar-minimized') || false;
       toggle = !isSidebarMinimized;
     }
+    // eslint-disable-next-line no-console
+    console.log('my-helpers sidebarPSToggle toggle 2:', toggle);
 
     var ps = { y: { rail: {}, thumb: {} } };
     var isRtl = getComputedStyle(document.documentElement).direction === 'rtl';
