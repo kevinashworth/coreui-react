@@ -29,6 +29,7 @@ class AppSidebarMinimizer extends Component {
   }
 
   handleClick() {
+    console.log('SidebarMinimizer handleClick!')
     sidebarToggle()
   }
 

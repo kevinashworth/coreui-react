@@ -72,6 +72,9 @@ class AppSidebarNav2 extends Component {
     if (document.body.classList.contains('sidebar-show')) {
       document.body.classList.toggle('sidebar-show');
     }
+    if (document.body.classList.contains('sidebar-lg-show')) {
+      document.body.classList.toggle('sidebar-lg-show');
+    }
   }
 
   getAttribs(attributes) {

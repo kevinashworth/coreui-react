@@ -3,7 +3,7 @@ const removeBodyClass = className => document.body.classList.remove(className);
 const toggle = className => document.body.classList.toggle(className);
 
 function sidebarMinimize(force) {
-  toggleClass('sidebar-minimized', force);
+  return toggleClass('sidebar-minimized', force);
 }
 
 function brandMinimize(force) {
@@ -19,6 +19,7 @@ function toggleClass(className, force) {
     } else {
       toggle(className);
     }
+    return document.body.classList.contains(className);
   }
 }
 

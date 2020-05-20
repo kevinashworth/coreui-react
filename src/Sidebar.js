@@ -78,10 +78,13 @@ class AppSidebar extends Component {
     if (document.body.classList.contains('sidebar-show')) {
       document.body.classList.remove('sidebar-show');
     }
+    if (document.body.classList.contains('sidebar-lg-show')) {
+      document.body.classList.remove('sidebar-lg-show');
+    }
   }
 
   onClickOut(e) {
-    if (typeof window !== 'undefined' && document.body.classList.contains('sidebar-show')) {
+    if (typeof window !== 'undefined' && (document.body.classList.contains('sidebar-show') || document.body.classList.contains('sidebar-lg-show'))) {
       if (!e.target.closest('[data-sidebar-toggler]')) {
         this.hideMobile();
       }

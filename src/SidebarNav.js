@@ -50,8 +50,12 @@ class AppSidebarNav extends Component {
   }
 
   hideMobile() {
+    console.log('SidebarNav hideMobile!')
     if (document.body.classList.contains('sidebar-show')) {
       document.body.classList.toggle('sidebar-show');
+    }
+    if (document.body.classList.contains('sidebar-lg-show')) {
+      document.body.classList.toggle('sidebar-lg-show');
     }
   }
 
