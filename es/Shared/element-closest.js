@@ -2,6 +2,7 @@
   if (!ElementProto) {
     return;
   }
+
   if (typeof ElementProto.matches !== 'function') {
     ElementProto.matches = ElementProto.msMatchesSelector || ElementProto.mozMatchesSelector || ElementProto.webkitMatchesSelector || function matches(selector) {
       var element = this;
@@ -24,6 +25,7 @@
         if (element.matches(selector)) {
           return element;
         }
+
         element = element.parentNode;
       }
 

@@ -1,12 +1,10 @@
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
 
-function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
@@ -14,8 +12,7 @@ import { Badge, Nav, NavItem, NavLink as RsNavLink } from 'reactstrap';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import PerfectScrollbar from 'react-perfect-scrollbar';
-
-var propTypes = {
+var propTypes = process.env.NODE_ENV !== "production" ? {
   children: PropTypes.node,
   className: PropTypes.string,
   navConfig: PropTypes.any,
@@ -23,8 +20,7 @@ var propTypes = {
   isOpen: PropTypes.bool,
   staticContext: PropTypes.any,
   tag: PropTypes.oneOfType([PropTypes.func, PropTypes.string])
-};
-
+} : {};
 var defaultProps = {
   tag: 'nav',
   navConfig: {
@@ -32,216 +28,193 @@ var defaultProps = {
       name: 'Dashboard',
       url: '/dashboard',
       icon: 'icon-speedometer',
-      badge: { variant: 'info', text: 'NEW' }
+      badge: {
+        variant: 'info',
+        text: 'NEW'
+      }
     }]
   },
   isOpen: false
 };
 
-var AppSidebarNav = function (_Component) {
-  _inherits(AppSidebarNav, _Component);
+var AppSidebarNav = /*#__PURE__*/function (_Component) {
+  _inheritsLoose(AppSidebarNav, _Component);
 
   function AppSidebarNav(props) {
-    _classCallCheck(this, AppSidebarNav);
+    var _this;
 
-    var _this = _possibleConstructorReturn(this, _Component.call(this, props));
-
-    _this.handleClick = _this.handleClick.bind(_this);
-    _this.activeRoute = _this.activeRoute.bind(_this);
-    _this.hideMobile = _this.hideMobile.bind(_this);
+    _this = _Component.call(this, props) || this;
+    _this.handleClick = _this.handleClick.bind(_assertThisInitialized(_this));
+    _this.activeRoute = _this.activeRoute.bind(_assertThisInitialized(_this));
+    _this.hideMobile = _this.hideMobile.bind(_assertThisInitialized(_this));
     return _this;
   }
 
-  AppSidebarNav.prototype.handleClick = function handleClick(e) {
+  var _proto = AppSidebarNav.prototype;
+
+  _proto.handleClick = function handleClick(e) {
     e.preventDefault();
     e.currentTarget.parentElement.classList.toggle('open');
   };
 
-  AppSidebarNav.prototype.activeRoute = function activeRoute(routeName, props) {
+  _proto.activeRoute = function activeRoute(routeName, props) {
     return props.location.pathname.indexOf(routeName) > -1 ? 'nav-item nav-dropdown open' : 'nav-item nav-dropdown';
   };
 
-  AppSidebarNav.prototype.hideMobile = function hideMobile() {
+  _proto.hideMobile = function hideMobile() {
+    console.log('SidebarNav hideMobile!');
+
     if (document.body.classList.contains('sidebar-show')) {
       document.body.classList.toggle('sidebar-show');
     }
-  };
 
-  // nav list
+    if (document.body.classList.contains('sidebar-lg-show')) {
+      document.body.classList.toggle('sidebar-lg-show');
+    }
+  } // nav list
+  ;
 
-
-  AppSidebarNav.prototype.navList = function navList(items) {
+  _proto.navList = function navList(items) {
     var _this2 = this;
 
     return items.map(function (item, index) {
       return _this2.navType(item, index);
     });
-  };
+  } // nav type
+  ;
 
-  // nav type
-
-
-  AppSidebarNav.prototype.navType = function navType(item, idx) {
+  _proto.navType = function navType(item, idx) {
     return item.title ? this.navTitle(item, idx) : item.divider ? this.navDivider(item, idx) : item.label ? this.navLabel(item, idx) : item.children ? this.navDropdown(item, idx) : this.navItem(item, idx);
-  };
+  } // nav list section title
+  ;
 
-  // nav list section title
+  _proto.navTitle = function navTitle(title, key) {
+    var classes = classNames('nav-title', title["class"]);
+    return /*#__PURE__*/React.createElement("li", {
+      key: key,
+      className: classes
+    }, this.navWrapper(title), " ");
+  } // simple wrapper for nav-title item
+  ;
 
-
-  AppSidebarNav.prototype.navTitle = function navTitle(title, key) {
-    var classes = classNames('nav-title', title.class);
-    return React.createElement(
-      'li',
-      { key: key, className: classes },
-      this.navWrapper(title),
-      ' '
-    );
-  };
-
-  // simple wrapper for nav-title item
-
-
-  AppSidebarNav.prototype.navWrapper = function navWrapper(item) {
+  _proto.navWrapper = function navWrapper(item) {
     return item.wrapper && item.wrapper.element ? React.createElement(item.wrapper.element, item.wrapper.attributes, item.name) : item.name;
-  };
+  } // nav list divider
+  ;
 
-  // nav list divider
+  _proto.navDivider = function navDivider(divider, key) {
+    var classes = classNames('divider', divider["class"]);
+    return /*#__PURE__*/React.createElement("li", {
+      key: key,
+      className: classes
+    });
+  } // nav label with nav link
+  ;
 
-
-  AppSidebarNav.prototype.navDivider = function navDivider(divider, key) {
-    var classes = classNames('divider', divider.class);
-    return React.createElement('li', { key: key, className: classes });
-  };
-
-  // nav label with nav link
-
-
-  AppSidebarNav.prototype.navLabel = function navLabel(item, key) {
+  _proto.navLabel = function navLabel(item, key) {
     var classes = {
-      item: classNames('hidden-cn', item.class),
-      link: classNames('nav-label', item.class ? item.class : ''),
-      icon: classNames('nav-icon', !item.icon ? 'fa fa-circle' : item.icon, item.label.variant ? 'text-' + item.label.variant : '', item.label.class ? item.label.class : '')
+      item: classNames('hidden-cn', item["class"]),
+      link: classNames('nav-label', item["class"] ? item["class"] : ''),
+      icon: classNames('nav-icon', !item.icon ? 'fa fa-circle' : item.icon, item.label.variant ? "text-" + item.label.variant : '', item.label["class"] ? item.label["class"] : '')
     };
     return this.navLink(item, key, classes);
-  };
+  } // nav dropdown
+  ;
 
-  // nav dropdown
-
-
-  AppSidebarNav.prototype.navDropdown = function navDropdown(item, key) {
+  _proto.navDropdown = function navDropdown(item, key) {
     var classIcon = classNames('nav-icon', item.icon);
     var attributes = JSON.parse(JSON.stringify(item.attributes || {}));
-    var classes = classNames('nav-link', 'nav-dropdown-toggle', item.class, attributes.class);
-    delete attributes.class;
-    return React.createElement(
-      'li',
-      { key: key, className: this.activeRoute(item.url, this.props) },
-      React.createElement(
-        'a',
-        _extends({ className: classes, href: '#', onClick: this.handleClick }, attributes),
-        React.createElement('i', { className: classIcon }),
-        item.name,
-        this.navBadge(item.badge)
-      ),
-      React.createElement(
-        'ul',
-        { className: 'nav-dropdown-items' },
-        this.navList(item.children)
-      )
-    );
-  };
+    var classes = classNames('nav-link', 'nav-dropdown-toggle', item["class"], attributes["class"]);
+    delete attributes["class"];
+    return /*#__PURE__*/React.createElement("li", {
+      key: key,
+      className: this.activeRoute(item.url, this.props)
+    }, /*#__PURE__*/React.createElement("a", _extends({
+      className: classes,
+      href: "#",
+      onClick: this.handleClick
+    }, attributes), /*#__PURE__*/React.createElement("i", {
+      className: classIcon
+    }), item.name, this.navBadge(item.badge)), /*#__PURE__*/React.createElement("ul", {
+      className: "nav-dropdown-items"
+    }, this.navList(item.children)));
+  } // nav item with nav link
+  ;
 
-  // nav item with nav link
-
-
-  AppSidebarNav.prototype.navItem = function navItem(item, key) {
+  _proto.navItem = function navItem(item, key) {
     var classes = {
-      item: classNames(item.class),
-      link: classNames('nav-link', item.variant ? 'nav-link-' + item.variant : ''),
+      item: classNames(item["class"]),
+      link: classNames('nav-link', item.variant ? "nav-link-" + item.variant : ''),
       icon: classNames('nav-icon', item.icon)
     };
     return this.navLink(item, key, classes);
-  };
+  } // nav link
+  ;
 
-  // nav link
-
-
-  AppSidebarNav.prototype.navLink = function navLink(item, key, classes) {
+  _proto.navLink = function navLink(item, key, classes) {
     var url = item.url || '';
-    var itemIcon = React.createElement('i', { className: classes.icon });
+    var itemIcon = /*#__PURE__*/React.createElement("i", {
+      className: classes.icon
+    });
     var itemBadge = this.navBadge(item.badge);
     var attributes = item.attributes || {};
-    return React.createElement(
-      NavItem,
-      { key: key, className: classes.item },
-      attributes.disabled ? React.createElement(
-        RsNavLink,
-        _extends({ href: '', className: classes.link }, attributes),
-        itemIcon,
-        item.name,
-        itemBadge
-      ) : this.isExternal(url) ? React.createElement(
-        RsNavLink,
-        _extends({ href: url, className: classes.link, active: true }, attributes),
-        itemIcon,
-        item.name,
-        itemBadge
-      ) : React.createElement(
-        NavLink,
-        _extends({ to: url, className: classes.link, activeClassName: 'active', onClick: this.hideMobile }, attributes),
-        itemIcon,
-        item.name,
-        itemBadge
-      )
-    );
-  };
+    return /*#__PURE__*/React.createElement(NavItem, {
+      key: key,
+      className: classes.item
+    }, attributes.disabled ? /*#__PURE__*/React.createElement(RsNavLink, _extends({
+      href: '',
+      className: classes.link
+    }, attributes), itemIcon, item.name, itemBadge) : this.isExternal(url) ? /*#__PURE__*/React.createElement(RsNavLink, _extends({
+      href: url,
+      className: classes.link,
+      active: true
+    }, attributes), itemIcon, item.name, itemBadge) : /*#__PURE__*/React.createElement(NavLink, _extends({
+      to: url,
+      className: classes.link,
+      activeClassName: "active",
+      onClick: this.hideMobile
+    }, attributes), itemIcon, item.name, itemBadge));
+  } // badge addon to NavItem
+  ;
 
-  // badge addon to NavItem
-
-
-  AppSidebarNav.prototype.navBadge = function navBadge(badge) {
+  _proto.navBadge = function navBadge(badge) {
     if (badge) {
-      var classes = classNames(badge.class);
-      return React.createElement(
-        Badge,
-        { className: classes, color: badge.variant },
-        badge.text
-      );
+      var classes = classNames(badge["class"]);
+      return /*#__PURE__*/React.createElement(Badge, {
+        className: classes,
+        color: badge.variant
+      }, badge.text);
     }
+
     return null;
   };
 
-  AppSidebarNav.prototype.isExternal = function isExternal(url) {
+  _proto.isExternal = function isExternal(url) {
     var link = url ? url.substring(0, 4) : '';
     return link === 'http';
   };
 
-  AppSidebarNav.prototype.render = function render() {
-    var _props = this.props,
-        className = _props.className,
-        children = _props.children,
-        navConfig = _props.navConfig,
-        attributes = _objectWithoutProperties(_props, ['className', 'children', 'navConfig']);
+  _proto.render = function render() {
+    var _this$props = this.props,
+        className = _this$props.className,
+        children = _this$props.children,
+        navConfig = _this$props.navConfig,
+        attributes = _objectWithoutPropertiesLoose(_this$props, ["className", "children", "navConfig"]);
 
     delete attributes.isOpen;
     delete attributes.staticContext;
     delete attributes.Tag;
+    var navClasses = classNames(className, 'sidebar-nav'); // ToDo: find better rtl fix
 
-    var navClasses = classNames(className, 'sidebar-nav');
+    var isRtl = getComputedStyle(document.documentElement).direction === 'rtl'; // sidebar-nav root
 
-    // ToDo: find better rtl fix
-    var isRtl = getComputedStyle(document.documentElement).direction === 'rtl';
-
-    // sidebar-nav root
-    return React.createElement(
-      PerfectScrollbar,
-      _extends({ className: navClasses }, attributes, { options: { suppressScrollX: !isRtl } }),
-      React.createElement(
-        Nav,
-        null,
-        children || this.navList(navConfig.items)
-      )
-    );
+    return /*#__PURE__*/React.createElement(PerfectScrollbar, _extends({
+      className: navClasses
+    }, attributes, {
+      options: {
+        suppressScrollX: !isRtl
+      }
+    }), /*#__PURE__*/React.createElement(Nav, null, children || this.navList(navConfig.items)));
   };
 
   return AppSidebarNav;
@@ -249,5 +222,4 @@ var AppSidebarNav = function (_Component) {
 
 AppSidebarNav.propTypes = process.env.NODE_ENV !== "production" ? propTypes : {};
 AppSidebarNav.defaultProps = defaultProps;
-
 export default AppSidebarNav;

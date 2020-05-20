@@ -1,12 +1,10 @@
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
-function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
 import React, { Component } from 'react';
 import classNames from 'classnames';
@@ -15,8 +13,7 @@ import { sidebarCssClasses } from './Shared';
 import ClickOutHandler from 'react-onclickout';
 import './Shared/element-closest';
 import { sidebarToggle } from './Shared/my-helpers.js';
-
-var propTypes = {
+var propTypes = process.env.NODE_ENV !== "production" ? {
   children: PropTypes.node,
   className: PropTypes.string,
   compact: PropTypes.bool,
@@ -27,8 +24,7 @@ var propTypes = {
   offCanvas: PropTypes.bool,
   staticContext: PropTypes.any,
   tag: PropTypes.oneOfType([PropTypes.func, PropTypes.string])
-};
-
+} : {};
 var defaultProps = {
   tag: 'div',
   compact: false,
@@ -39,24 +35,25 @@ var defaultProps = {
   offCanvas: false
 };
 
-var AppSidebar = function (_Component) {
-  _inherits(AppSidebar, _Component);
+var AppSidebar = /*#__PURE__*/function (_Component) {
+  _inheritsLoose(AppSidebar, _Component);
 
   function AppSidebar(props) {
-    _classCallCheck(this, AppSidebar);
+    var _this;
 
-    var _this = _possibleConstructorReturn(this, _Component.call(this, props));
-
-    _this.isCompact = _this.isCompact.bind(_this);
-    _this.isFixed = _this.isFixed.bind(_this);
-    _this.isMinimized = _this.isMinimized.bind(_this);
-    _this.isOffCanvas = _this.isOffCanvas.bind(_this);
-    _this.displayBreakpoint = _this.displayBreakpoint.bind(_this);
-    _this.hideMobile = _this.hideMobile.bind(_this);
+    _this = _Component.call(this, props) || this;
+    _this.isCompact = _this.isCompact.bind(_assertThisInitialized(_this));
+    _this.isFixed = _this.isFixed.bind(_assertThisInitialized(_this));
+    _this.isMinimized = _this.isMinimized.bind(_assertThisInitialized(_this));
+    _this.isOffCanvas = _this.isOffCanvas.bind(_assertThisInitialized(_this));
+    _this.displayBreakpoint = _this.displayBreakpoint.bind(_assertThisInitialized(_this));
+    _this.hideMobile = _this.hideMobile.bind(_assertThisInitialized(_this));
     return _this;
   }
 
-  AppSidebar.prototype.componentDidMount = function componentDidMount() {
+  var _proto = AppSidebar.prototype;
+
+  _proto.componentDidMount = function componentDidMount() {
     this.displayBreakpoint(this.props.display);
     this.isCompact(this.props.compact);
     this.isFixed(this.props.fixed);
@@ -64,61 +61,66 @@ var AppSidebar = function (_Component) {
     this.isOffCanvas(this.props.offCanvas);
   };
 
-  AppSidebar.prototype.isCompact = function isCompact(compact) {
+  _proto.isCompact = function isCompact(compact) {
     if (compact) {
       document.body.classList.add('sidebar-compact');
     }
   };
 
-  AppSidebar.prototype.isFixed = function isFixed(fixed) {
+  _proto.isFixed = function isFixed(fixed) {
     if (fixed) {
       document.body.classList.add('sidebar-fixed');
     }
   };
 
-  AppSidebar.prototype.isMinimized = function isMinimized(minimized) {
+  _proto.isMinimized = function isMinimized(minimized) {
     sidebarToggle(minimized);
   };
 
-  AppSidebar.prototype.isOffCanvas = function isOffCanvas(offCanvas) {
+  _proto.isOffCanvas = function isOffCanvas(offCanvas) {
     if (offCanvas) {
       document.body.classList.add('sidebar-off-canvas');
     }
   };
 
-  AppSidebar.prototype.displayBreakpoint = function displayBreakpoint(display) {
-    var cssTemplate = 'sidebar-' + display + '-show';
+  _proto.displayBreakpoint = function displayBreakpoint(display) {
+    var cssTemplate = "sidebar-" + display + "-show";
     var _sidebarCssClasses$ = sidebarCssClasses[0],
         cssClass = _sidebarCssClasses$[0];
 
     if (display && sidebarCssClasses.indexOf(cssTemplate) > -1) {
       cssClass = cssTemplate;
     }
+
     document.body.classList.add(cssClass);
   };
 
-  AppSidebar.prototype.hideMobile = function hideMobile() {
+  _proto.hideMobile = function hideMobile() {
     if (document.body.classList.contains('sidebar-show')) {
       document.body.classList.remove('sidebar-show');
     }
+
+    if (document.body.classList.contains('sidebar-lg-show')) {
+      document.body.classList.remove('sidebar-lg-show');
+    }
   };
 
-  AppSidebar.prototype.onClickOut = function onClickOut(e) {
-    if (typeof window !== 'undefined' && document.body.classList.contains('sidebar-show')) {
+  _proto.onClickOut = function onClickOut(e) {
+    if (typeof window !== 'undefined' && (document.body.classList.contains('sidebar-show') || document.body.classList.contains('sidebar-lg-show'))) {
       if (!e.target.closest('[data-sidebar-toggler]')) {
         this.hideMobile();
       }
     }
   };
 
-  AppSidebar.prototype.render = function render() {
+  _proto.render = function render() {
     var _this2 = this;
 
-    var _props = this.props,
-        className = _props.className,
-        children = _props.children,
-        Tag = _props.tag,
-        attributes = _objectWithoutProperties(_props, ['className', 'children', 'tag']);
+    var _this$props = this.props,
+        className = _this$props.className,
+        children = _this$props.children,
+        Tag = _this$props.tag,
+        attributes = _objectWithoutPropertiesLoose(_this$props, ["className", "children", "tag"]);
 
     delete attributes.compact;
     delete attributes.display;
@@ -127,21 +129,15 @@ var AppSidebar = function (_Component) {
     delete attributes.offCanvas;
     delete attributes.isOpen;
     delete attributes.staticContext;
+    var classes = classNames(className, 'sidebar'); // sidebar-nav root
 
-    var classes = classNames(className, 'sidebar');
-
-    // sidebar-nav root
-    return React.createElement(
-      ClickOutHandler,
-      { onClickOut: function onClickOut(e) {
-          _this2.onClickOut(e);
-        } },
-      React.createElement(
-        Tag,
-        _extends({ className: classes }, attributes),
-        children
-      )
-    );
+    return /*#__PURE__*/React.createElement(ClickOutHandler, {
+      onClickOut: function onClickOut(e) {
+        _this2.onClickOut(e);
+      }
+    }, /*#__PURE__*/React.createElement(Tag, _extends({
+      className: classes
+    }, attributes), children));
   };
 
   return AppSidebar;
@@ -149,5 +145,4 @@ var AppSidebar = function (_Component) {
 
 AppSidebar.propTypes = process.env.NODE_ENV !== "production" ? propTypes : {};
 AppSidebar.defaultProps = defaultProps;
-
 export default AppSidebar;

@@ -4,6 +4,7 @@ export default function toggleClasses(toggleClass, classList, force) {
   removeClassList.map(function (className) {
     return document.body.classList.remove(className);
   });
+
   if (force === true) {
     document.body.classList.add(toggleClass);
   } else if (force === false) {
@@ -11,5 +12,6 @@ export default function toggleClasses(toggleClass, classList, force) {
   } else {
     document.body.classList.toggle(toggleClass);
   }
+
   return document.body.classList.contains(toggleClass);
 }

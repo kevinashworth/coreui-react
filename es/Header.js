@@ -1,68 +1,57 @@
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
-function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-
-var propTypes = {
+var propTypes = process.env.NODE_ENV !== "production" ? {
   children: PropTypes.node,
   className: PropTypes.string,
   fixed: PropTypes.bool,
   tag: PropTypes.oneOfType([PropTypes.func, PropTypes.string])
-};
-
+} : {};
 var defaultProps = {
   tag: 'header',
   fixed: false
 };
 
-var AppHeader = function (_Component) {
-  _inherits(AppHeader, _Component);
+var AppHeader = /*#__PURE__*/function (_Component) {
+  _inheritsLoose(AppHeader, _Component);
 
   function AppHeader() {
-    _classCallCheck(this, AppHeader);
-
-    return _possibleConstructorReturn(this, _Component.apply(this, arguments));
+    return _Component.apply(this, arguments) || this;
   }
 
-  AppHeader.prototype.componentDidMount = function componentDidMount() {
+  var _proto = AppHeader.prototype;
+
+  _proto.componentDidMount = function componentDidMount() {
     this.isFixed(this.props.fixed);
   };
 
-  AppHeader.prototype.isFixed = function isFixed(fixed) {
+  _proto.isFixed = function isFixed(fixed) {
     if (fixed) {
       document.body.classList.add('header-fixed');
     }
-  };
-
-  // breakpoint(breakpoint) {
+  } // breakpoint(breakpoint) {
   //   return breakpoint || '';
   // }
+  ;
 
-  AppHeader.prototype.render = function render() {
-    var _props = this.props,
-        className = _props.className,
-        children = _props.children,
-        Tag = _props.tag,
-        attributes = _objectWithoutProperties(_props, ['className', 'children', 'tag']);
+  _proto.render = function render() {
+    var _this$props = this.props,
+        className = _this$props.className,
+        children = _this$props.children,
+        Tag = _this$props.tag,
+        attributes = _objectWithoutPropertiesLoose(_this$props, ["className", "children", "tag"]);
 
     delete attributes.fixed;
-
     var classes = classNames(className, 'app-header', 'navbar');
-
-    return React.createElement(
-      Tag,
-      _extends({ className: classes }, attributes),
-      children
-    );
+    return /*#__PURE__*/React.createElement(Tag, _extends({
+      className: classes
+    }, attributes), children);
   };
 
   return AppHeader;
@@ -70,5 +59,4 @@ var AppHeader = function (_Component) {
 
 AppHeader.propTypes = process.env.NODE_ENV !== "production" ? propTypes : {};
 AppHeader.defaultProps = defaultProps;
-
 export default AppHeader;

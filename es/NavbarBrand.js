@@ -1,57 +1,51 @@
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
-function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-
-var propTypes = {
+var propTypes = process.env.NODE_ENV !== "production" ? {
   tag: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
   children: PropTypes.node,
   className: PropTypes.string,
   brand: PropTypes.any,
   full: PropTypes.any,
   minimized: PropTypes.any
-};
-
+} : {};
 var defaultProps = {
   tag: 'a'
 };
 
-var AppNavbarBrand = function (_Component) {
-  _inherits(AppNavbarBrand, _Component);
+var AppNavbarBrand = /*#__PURE__*/function (_Component) {
+  _inheritsLoose(AppNavbarBrand, _Component);
 
   function AppNavbarBrand() {
-    _classCallCheck(this, AppNavbarBrand);
-
-    return _possibleConstructorReturn(this, _Component.apply(this, arguments));
+    return _Component.apply(this, arguments) || this;
   }
 
-  AppNavbarBrand.prototype.imgSrc = function imgSrc(brand) {
+  var _proto = AppNavbarBrand.prototype;
+
+  _proto.imgSrc = function imgSrc(brand) {
     return brand.src ? brand.src : '';
   };
 
-  AppNavbarBrand.prototype.imgWidth = function imgWidth(brand) {
+  _proto.imgWidth = function imgWidth(brand) {
     return brand.width ? brand.width : 'auto';
   };
 
-  AppNavbarBrand.prototype.imgHeight = function imgHeight(brand) {
+  _proto.imgHeight = function imgHeight(brand) {
     return brand.height ? brand.height : 'auto';
   };
 
-  AppNavbarBrand.prototype.imgAlt = function imgAlt(brand) {
+  _proto.imgAlt = function imgAlt(brand) {
     return brand.alt ? brand.alt : '';
   };
 
-  AppNavbarBrand.prototype.navbarBrandImg = function navbarBrandImg(props, classBrand, key) {
-    return React.createElement('img', {
+  _proto.navbarBrandImg = function navbarBrandImg(props, classBrand, key) {
+    return /*#__PURE__*/React.createElement("img", {
       src: this.imgSrc(props),
       width: this.imgWidth(props),
       height: this.imgHeight(props),
@@ -61,37 +55,37 @@ var AppNavbarBrand = function (_Component) {
     });
   };
 
-  AppNavbarBrand.prototype.render = function render() {
-    var _props = this.props,
-        className = _props.className,
-        children = _props.children,
-        Tag = _props.tag,
-        attributes = _objectWithoutProperties(_props, ['className', 'children', 'tag']);
+  _proto.render = function render() {
+    var _this$props = this.props,
+        className = _this$props.className,
+        children = _this$props.children,
+        Tag = _this$props.tag,
+        attributes = _objectWithoutPropertiesLoose(_this$props, ["className", "children", "tag"]);
 
     var classes = classNames(className, 'navbar-brand');
-
     var img = [];
+
     if (this.props.brand) {
       var props = this.props.brand;
       var classBrand = 'navbar-brand';
       img.push(this.navbarBrandImg(props, classBrand, img.length + 1));
     }
+
     if (this.props.full) {
-      var _props2 = this.props.full;
+      var _props = this.props.full;
       var _classBrand = 'navbar-brand-full';
-      img.push(this.navbarBrandImg(_props2, _classBrand, img.length + 1));
-    }
-    if (this.props.minimized) {
-      var _props3 = this.props.minimized;
-      var _classBrand2 = 'navbar-brand-minimized';
-      img.push(this.navbarBrandImg(_props3, _classBrand2, img.length + 1));
+      img.push(this.navbarBrandImg(_props, _classBrand, img.length + 1));
     }
 
-    return React.createElement(
-      Tag,
-      _extends({}, attributes, { className: classes }),
-      children || img
-    );
+    if (this.props.minimized) {
+      var _props2 = this.props.minimized;
+      var _classBrand2 = 'navbar-brand-minimized';
+      img.push(this.navbarBrandImg(_props2, _classBrand2, img.length + 1));
+    }
+
+    return /*#__PURE__*/React.createElement(Tag, _extends({}, attributes, {
+      className: classes
+    }), children || img);
   };
 
   return AppNavbarBrand;
@@ -99,5 +93,4 @@ var AppNavbarBrand = function (_Component) {
 
 AppNavbarBrand.propTypes = process.env.NODE_ENV !== "production" ? propTypes : {};
 AppNavbarBrand.defaultProps = defaultProps;
-
 export default AppNavbarBrand;
