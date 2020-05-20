@@ -16,8 +16,8 @@ import {
   AppSidebarForm,
   AppSidebarHeader,
   AppSidebarMinimizer,
-  // AppSidebarNav as AppSidebarNav,
-  AppSidebarNav2 as AppSidebarNav,
+  AppSidebarNav as AppSidebarNav,
+  // AppSidebarNav2 as AppSidebarNav,
   AppSidebarToggler,
 } from '../../../../src';
 // sidebar nav config
