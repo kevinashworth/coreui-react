@@ -28,23 +28,32 @@ function isOnMobile() {
 }
 
 export function sidebarToggle (toggle) {
+  // eslint-disable-next-line no-console
+  console.log('my-helpers sidebarToggle toggle:', toggle)
   if (document.body) {
-    const minimize = typeof toggle !== 'undefined' ? toggle : !document.body.classList.contains('sidebar-minimized');
+    const minimize = arguments.length
+      ? toggle
+      : !document.body.classList.contains('sidebar-minimized');
+    // eslint-disable-next-line no-console
+    console.log('my-helpers sidebarToggle minimize:', minimize)
     sidebarMinimize(minimize);
     brandMinimize(minimize);
     sidebarPSToggle(!minimize);
   }
 }
 
-export function sidebarPSToggle() {
-  var toggle;
+export function sidebarPSToggle(toggle) {
+  // eslint-disable-next-line no-console
+  console.log('my-helpers sidebarPSToggle toggle 1:', toggle)
   if (document.body) {
     if (isOnMobile()) {
-      toggle = true
+      toggle = true;
     } else {
-      const isSidebarMinimized = document.body.classList.contains('sidebar-minimized') || false
-      toggle = !isSidebarMinimized
+      const isSidebarMinimized = document.body.classList.contains('sidebar-minimized') || false;
+      toggle = !isSidebarMinimized;
     }
+    // eslint-disable-next-line no-console
+    console.log('my-helpers sidebarPSToggle toggle 2:', toggle)
 
     const ps = { y: { rail: {}, thumb: {} } };
     const isRtl = getComputedStyle(document.documentElement).direction === 'rtl'
