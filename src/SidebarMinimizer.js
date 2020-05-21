@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-
-import { sidebarToggle, sidebarPSToggle } from './Shared/my-helpers.js'
+import SidebarController from './Shared/my-sidebar-controller.js';
 
 const propTypes = {
   children: PropTypes.node,
@@ -19,18 +18,11 @@ const defaultProps = {
 class AppSidebarMinimizer extends Component {
   constructor(props) {
     super(props);
-
-    this.handleClick = this.handleClick.bind(this);
-  }
-
-  componentDidMount() {
-    const isMinimized = document.body.classList.contains('sidebar-minimized');
-    sidebarPSToggle(!isMinimized)
+    this.sidebarController = SidebarController;
   }
 
   handleClick() {
-    console.log('SidebarMinimizer handleClick!')
-    sidebarToggle()
+    this.sidebarController.toggleMinimized();
   }
 
   render() {

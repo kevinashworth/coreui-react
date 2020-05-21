@@ -39,7 +39,7 @@ class DefaultLayout extends Component {
             full={{ src: logo, width: 89, height: 25, alt: 'CoreUI Logo' }}
             minimized={{ src: sygnet, width: 30, height: 30, alt: 'CoreUI Logo' }}
           />
-          <AppSidebarToggler className="d-md-down-none" display="lg" />
+          <AppSidebarToggler className="d-md-down-none" display="sm" />
           <Nav className="ml-auto" navbar>
             <NavItem className="d-md-down-none">
               <NavLink href="#"><i className="cui-bell icons font-xl d-block"></i><Badge pill color="danger">5</Badge></NavLink>
@@ -63,7 +63,7 @@ class DefaultLayout extends Component {
           <AppAsideToggler className="d-lg-none" mobile />
         </AppHeader>
         <div className="app-body">
-          <AppSidebar fixed display="lg">
+          <AppSidebar fixed display="md">
             <AppSidebarHeader />
             <AppSidebarForm />
             {/*<AppSidebarNav navConfig={navigation} {...this.props} />*/}

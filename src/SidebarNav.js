@@ -4,6 +4,7 @@ import { Badge, Nav, NavItem, NavLink as RsNavLink } from 'reactstrap';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import PerfectScrollbar from 'react-perfect-scrollbar';
+import SidebarController from './Shared/my-sidebar-controller.js';
 
 const propTypes = {
   children: PropTypes.node,
@@ -32,10 +33,9 @@ const defaultProps = {
 class AppSidebarNav extends Component {
   constructor(props) {
     super(props);
-
+    this.sidebarController = SidebarController;
     this.handleClick = this.handleClick.bind(this);
     this.activeRoute = this.activeRoute.bind(this);
-    this.hideMobile = this.hideMobile.bind(this);
   }
 
   handleClick(e) {
@@ -50,13 +50,7 @@ class AppSidebarNav extends Component {
   }
 
   hideMobile() {
-    console.log('SidebarNav hideMobile!')
-    if (document.body.classList.contains('sidebar-show')) {
-      document.body.classList.toggle('sidebar-show');
-    }
-    if (document.body.classList.contains('sidebar-lg-show')) {
-      document.body.classList.toggle('sidebar-lg-show');
-    }
+    this.sidebarController.hideMobile();
   }
 
   // nav list
@@ -155,7 +149,7 @@ class AppSidebarNav extends Component {
             <RsNavLink href={url} className={classes.link} active {...attributes}>
               {itemIcon}{item.name}{itemBadge}
             </RsNavLink> :
-            <NavLink to={url} className={classes.link} activeClassName="active" onClick={this.hideMobile} {...attributes}>
+            <NavLink to={url} className={classes.link} activeClassName="active" onClick={this.hideMobile()} {...attributes}>
               {itemIcon}{item.name}{itemBadge}
             </NavLink>
         }

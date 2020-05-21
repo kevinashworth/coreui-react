@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import { sidebarCssClasses } from './Shared';
 import ClickOutHandler from 'react-onclickout'
 import './Shared/element-closest'
-import { sidebarToggle } from './Shared/my-helpers.js'
+import SidebarController from './Shared/my-sidebar-controller.js';
 
 const propTypes = {
   children: PropTypes.node,
@@ -32,21 +31,26 @@ const defaultProps = {
 class AppSidebar extends Component {
   constructor(props) {
     super(props);
-
+    this.sidebarController = SidebarController;
     this.isCompact = this.isCompact.bind(this);
     this.isFixed = this.isFixed.bind(this);
-    this.isMinimized = this.isMinimized.bind(this);
     this.isOffCanvas = this.isOffCanvas.bind(this);
-    this.displayBreakpoint = this.displayBreakpoint.bind(this);
-    this.hideMobile = this.hideMobile.bind(this);
   }
 
   componentDidMount() {
     this.displayBreakpoint(this.props.display);
     this.isCompact(this.props.compact);
     this.isFixed(this.props.fixed);
-    this.isMinimized(this.props.minimized);
     this.isOffCanvas(this.props.offCanvas);
+    this.handleSidebarMinimizer(this.props.minimized);
+  }
+
+  handleSidebarMinimizer = (shouldMinimize) => {
+    if (shouldMinimize) {
+      this.sidebarController.narrow();
+    } else {
+      this.sidebarController.wide();
+    }
   }
 
   isCompact(compact) {
@@ -57,30 +61,16 @@ class AppSidebar extends Component {
     if (fixed) { document.body.classList.add('sidebar-fixed'); }
   }
 
-  isMinimized(minimized) {
-    sidebarToggle(minimized)
-  }
-
   isOffCanvas(offCanvas) {
     if (offCanvas) { document.body.classList.add('sidebar-off-canvas'); }
   }
 
   displayBreakpoint(display) {
-    const cssTemplate = `sidebar-${display}-show`;
-    let [cssClass] = sidebarCssClasses[0];
-    if (display && sidebarCssClasses.indexOf(cssTemplate) > -1) {
-      cssClass = cssTemplate;
-    }
-    document.body.classList.add(cssClass);
+    this.sidebarController.setDisplayBreakpoint(display);
   }
 
   hideMobile() {
-    if (document.body.classList.contains('sidebar-show')) {
-      document.body.classList.remove('sidebar-show');
-    }
-    if (document.body.classList.contains('sidebar-lg-show')) {
-      document.body.classList.remove('sidebar-lg-show');
-    }
+    this.sidebarController.hideMobile();
   }
 
   onClickOut(e) {
