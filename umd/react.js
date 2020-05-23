@@ -188,26 +188,6 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__3__;
 /***/ }),
 /* 4 */,
 /* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _scrollbar = __webpack_require__(24);
-
-var _scrollbar2 = _interopRequireDefault(_scrollbar);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = _scrollbar2.default;
-module.exports = exports['default'];
-
-/***/ }),
-/* 6 */
 /***/ (function(module, exports) {
 
 function _assertThisInitialized(self) {
@@ -221,7 +201,7 @@ function _assertThisInitialized(self) {
 module.exports = _assertThisInitialized;
 
 /***/ }),
-/* 7 */
+/* 6 */
 /***/ (function(module, exports) {
 
 function _defineProperty(obj, key, value) {
@@ -242,7 +222,7 @@ function _defineProperty(obj, key, value) {
 module.exports = _defineProperty;
 
 /***/ }),
-/* 8 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -264,7 +244,7 @@ exports.default = _react2.default.createContext || _implementation2.default;
 module.exports = exports['default'];
 
 /***/ }),
-/* 9 */
+/* 8 */
 /***/ (function(module, exports) {
 
 function _inheritsLoose(subClass, superClass) {
@@ -276,7 +256,7 @@ function _inheritsLoose(subClass, superClass) {
 module.exports = _inheritsLoose;
 
 /***/ }),
-/* 10 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -390,6 +370,26 @@ var ClickOutComponent = function (_React$Component) {
 
 module.exports = ClickOutComponent;
 
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _scrollbar = __webpack_require__(24);
+
+var _scrollbar2 = _interopRequireDefault(_scrollbar);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = _scrollbar2.default;
+module.exports = exports['default'];
 
 /***/ }),
 /* 11 */
@@ -2919,7 +2919,6 @@ __webpack_require__.d(__webpack_exports__, "AppSidebarForm", function() { return
 __webpack_require__.d(__webpack_exports__, "AppSidebarHeader", function() { return /* reexport */ SidebarHeader; });
 __webpack_require__.d(__webpack_exports__, "AppSidebarMinimizer", function() { return /* reexport */ SidebarMinimizer; });
 __webpack_require__.d(__webpack_exports__, "AppSidebarNav", function() { return /* reexport */ SidebarNav; });
-__webpack_require__.d(__webpack_exports__, "AppSidebarNav2", function() { return /* reexport */ SidebarNav2; });
 __webpack_require__.d(__webpack_exports__, "AppSidebarToggler", function() { return /* reexport */ SidebarToggler; });
 __webpack_require__.d(__webpack_exports__, "AppSwitch", function() { return /* reexport */ Switch; });
 
@@ -3977,19 +3976,19 @@ function inheritsLoose_inheritsLoose(subClass, superClass) {
   subClass.__proto__ = superClass;
 }
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/assertThisInitialized.js
-var assertThisInitialized = __webpack_require__(6);
+var assertThisInitialized = __webpack_require__(5);
 var assertThisInitialized_default = /*#__PURE__*/__webpack_require__.n(assertThisInitialized);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/inheritsLoose.js
-var inheritsLoose = __webpack_require__(9);
+var inheritsLoose = __webpack_require__(8);
 var inheritsLoose_default = /*#__PURE__*/__webpack_require__.n(inheritsLoose);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/defineProperty.js
-var defineProperty = __webpack_require__(7);
+var defineProperty = __webpack_require__(6);
 var defineProperty_default = /*#__PURE__*/__webpack_require__.n(defineProperty);
 
 // EXTERNAL MODULE: ./node_modules/create-react-context/lib/index.js
-var lib = __webpack_require__(8);
+var lib = __webpack_require__(7);
 var lib_default = /*#__PURE__*/__webpack_require__.n(lib);
 
 // CONCATENATED MODULE: ./node_modules/react-popper/lib/esm/Manager.js
@@ -4474,131 +4473,271 @@ NavbarBrand_AppNavbarBrand.propTypes = NavbarBrand_propTypes;
 NavbarBrand_AppNavbarBrand.defaultProps = NavbarBrand_defaultProps;
 /* harmony default export */ var NavbarBrand = (NavbarBrand_AppNavbarBrand);
 // EXTERNAL MODULE: ./node_modules/react-onclickout/index.js
-var react_onclickout = __webpack_require__(10);
+var react_onclickout = __webpack_require__(9);
 var react_onclickout_default = /*#__PURE__*/__webpack_require__.n(react_onclickout);
 
 // EXTERNAL MODULE: ./src/Shared/element-closest.js
 var element_closest = __webpack_require__(23);
 
-// CONCATENATED MODULE: ./src/Shared/my-helpers.js
-var addBodyClass = function addBodyClass(className) {
-  return document.body.classList.add(className);
-};
+// CONCATENATED MODULE: ./src/Shared/my-sidebar-controller.js
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var removeBodyClass = function removeBodyClass(className) {
-  return document.body.classList.remove(className);
-};
+/*
 
-var my_helpers_toggle = function toggle(className) {
-  return document.body.classList.toggle(className);
-};
+The document body classList is the one source of info.
+If there is no document, do nothing.
 
-function sidebarMinimize(force) {
-  return toggleClass('sidebar-minimized', force);
-}
+Use SidebarController as a singleton across multiple components:
+  Sidebar, SidebarNav, SidebarMinimizer, SidebarToggler
 
-function brandMinimize(force) {
-  toggleClass('brand-minimized', force);
-}
+The CoreUI React Sidebar has these options that we are dealing with:
+  minimized: boolean
+    -- is it wide with text or narrow with just icons
+    -- always change `sidebar-minimized` along with `brand-minimized`
+    -- we use isMinimized herein
+  open: boolean
+    -- is it visible wide or narrow, or is not visible
+    -- we use isOpen herein
+  display: string
+    -- bootstrap breakpoint, `lg` as default
+    -- CoreUI allows Sidebar and SidebarToggler to be different; we force them to be the what Sidebar has and ignore SidebarToggler's setting
 
-function toggleClass(className, force) {
-  if (document.body) {
-    if (force === true) {
-      addBodyClass(className);
-    } else if (force === false) {
-      removeBodyClass(className);
-    } else {
-      my_helpers_toggle(className);
+The sidebar has other options that we are not using, including:
+  fixed: boolean -- do not use -- scrolls with the page or not
+  offCanvas: boolean -- do not use -- covers page content or not
+
+TODO: displayBreakpoint
+
+*/
+
+
+var my_sidebar_controller_SidebarController = function SidebarController() {
+  var _this = this;
+
+  _defineProperty(this, "add", function (className) {
+    if (document.body) {
+      document.body.classList.add(className);
     }
+  });
 
-    return document.body.classList.contains(className);
-  }
-}
+  _defineProperty(this, "remove", function (className) {
+    if (document.body) {
+      document.body.classList.remove(className);
+    }
+  });
 
-function isOnMobile() {
-  var onMobile = false;
-  return onMobile;
-}
+  _defineProperty(this, "contains", function (className) {
+    if (document.body) {
+      return document.body.classList.contains(className);
+    }
+  });
 
-function sidebarToggle(toggle) {
-  // eslint-disable-next-line no-console
-  console.log('my-helpers sidebarToggle toggle:', toggle);
+  _defineProperty(this, "close", function () {
+    if (document.body) {
+      _this.remove('sidebar-show');
 
-  if (document.body) {
-    var minimize = arguments.length ? toggle : !document.body.classList.contains('sidebar-minimized'); // eslint-disable-next-line no-console
+      _this.remove("sidebar-" + _this.display + "-show");
 
-    console.log('my-helpers sidebarToggle minimize:', minimize);
-    sidebarMinimize(minimize);
-    brandMinimize(minimize);
-    sidebarPSToggle(!minimize);
-  }
-}
-function sidebarPSToggle(toggle) {
-  // eslint-disable-next-line no-console
-  console.log('my-helpers sidebarPSToggle toggle 1:', toggle);
+      _this.isOpen = false;
+    }
+  });
 
-  if (document.body) {
-    if (isOnMobile()) {
-      toggle = true;
-    } else {
-      var isSidebarMinimized = document.body.classList.contains('sidebar-minimized') || false;
-      toggle = !isSidebarMinimized;
-    } // eslint-disable-next-line no-console
+  _defineProperty(this, "open", function () {
+    if (document.body) {
+      _this.add('sidebar-show');
 
+      _this.add("sidebar-" + _this.display + "-show");
 
-    console.log('my-helpers sidebarPSToggle toggle 2:', toggle);
-    var ps = {
-      y: {
-        rail: {},
-        thumb: {}
-      }
-    };
-    var isRtl = getComputedStyle(document.documentElement).direction === 'rtl';
-    var sidebar = document.querySelector('.sidebar-nav');
-    ps.y.rail.on = document.querySelector('.sidebar-nav .ps__rail-y');
-    ps.y.rail.off = document.querySelector('.sidebar-nav .ps__rail-y-off');
-    ps.y.thumb.on = document.querySelector('.sidebar-nav .ps__thumb-y');
-    ps.y.thumb.off = document.querySelector('.sidebar-nav .ps__thumb-y-off');
+      _this.isOpen = true;
+    }
+  });
 
-    if (sidebar) {
-      if (toggle) {
-        sidebar.classList.add('ps');
-        sidebar.classList.add('ps-container');
-        sidebar.classList.add('ps--active-y');
-
-        if (ps.y.rail.off) {
-          ps.y.rail.off.classList.add('ps__rail-y');
-          ps.y.rail.off.removeAttribute('style');
-          ps.y.rail.off.style.left = isRtl ? '0px' : 'unset';
-          ps.y.rail.off.style.right = isRtl ? 'unset' : '0px';
-          ps.y.rail.off.classList.remove('ps__rail-y-off');
-        }
-
-        if (ps.y.thumb.off) {
-          ps.y.thumb.off.removeAttribute('style');
-          ps.y.thumb.off.classList.add('ps__thumb-y');
-          ps.y.thumb.off.classList.remove('ps__thumb-y-off');
-        }
+  _defineProperty(this, "toggleOpen", function () {
+    if (document.body) {
+      if (_this.isOpen) {
+        _this.close();
       } else {
-        if (ps.y.rail.on) {
-          ps.y.rail.on.classList.add('ps__rail-y-off');
-          ps.y.rail.on.removeAttribute('style');
-          ps.y.rail.on.classList.remove('ps__rail-y');
-        }
-
-        if (ps.y.thumb.on) {
-          ps.y.thumb.on.classList.add('ps__thumb-y-off');
-          ps.y.thumb.on.removeAttribute('style');
-          ps.y.thumb.on.classList.remove('ps__thumb-y');
-        }
-
-        sidebar.classList.remove('ps');
-        sidebar.classList.remove('ps-container');
-        sidebar.classList.remove('ps--active-y');
+        _this.open();
       }
     }
-  }
-}
+  });
+
+  _defineProperty(this, "narrow", function () {
+    if (document.body) {
+      _this.add('sidebar-minimized');
+
+      _this.add('brand-minimized');
+
+      _this.isMinimized = true;
+
+      _this.sidebarPSToggle();
+    }
+  });
+
+  _defineProperty(this, "wide", function () {
+    if (document.body) {
+      _this.remove('sidebar-minimized');
+
+      _this.remove('brand-minimized');
+
+      _this.isMinimized = false;
+
+      _this.sidebarPSToggle();
+    }
+  });
+
+  _defineProperty(this, "toggleMinimized", function () {
+    if (document.body) {
+      if (_this.isMinimized) {
+        _this.wide();
+      } else {
+        _this.narrow();
+      }
+    }
+  });
+
+  _defineProperty(this, "setDisplayBreakpoint", function (display) {
+    var cssTemplate = "sidebar-" + display + "-show";
+    var _sidebarCssClasses$ = sidebarCssClasses[0],
+        cssClass = _sidebarCssClasses$[0];
+
+    if (display && sidebarCssClasses.indexOf(cssTemplate) > -1) {
+      cssClass = cssTemplate;
+    }
+
+    _this.add(cssClass);
+
+    _this.display = display; // now, to ensure that both classes are used in tandem and that sidebarPSToggle is called
+
+    if (_this.isOpen) {
+      _this.open();
+    } else {
+      _this.close();
+    }
+  });
+
+  _defineProperty(this, "hideMobile", function () {
+    _this.remove('sidebar-show');
+
+    _this.remove("sidebar-" + _this.display + "-show");
+  });
+
+  _defineProperty(this, "isOnMobile", function () {
+    var onMobile = false;
+
+    try {
+      var minimizerElement = document.querySelector('.sidebar-minimizer');
+
+      if (minimizerElement) {
+        onMobile = getComputedStyle(minimizerElement).getPropertyValue('display') === 'none';
+      } else {
+        var sidebarElement = document.querySelector('.sidebar .sidebar-nav');
+        sidebarElement && (onMobile = getComputedStyle(sidebarElement).getPropertyValue('overflow-y') === 'auto');
+      }
+    } catch (ignore) {
+      // eslint-disable-next-line
+      console.warn('CoreUI isOnMobile failed to getComputedStyle', ignore);
+    }
+
+    return onMobile;
+  });
+
+  _defineProperty(this, "sidebarPSToggle", function (toggle) {
+    if (document.body) {
+      if (_this.isOnMobile()) {
+        toggle = true;
+      } else {
+        toggle = !_this.isMinimized;
+      }
+
+      var ps = {
+        y: {
+          rail: {},
+          thumb: {}
+        }
+      };
+      var isRtl = getComputedStyle(document.documentElement).direction === 'rtl';
+      var sidebar = document.querySelector('.sidebar-nav');
+      ps.y.rail.on = document.querySelector('.sidebar-nav .ps__rail-y');
+      ps.y.rail.off = document.querySelector('.sidebar-nav .ps__rail-y-off');
+      ps.y.thumb.on = document.querySelector('.sidebar-nav .ps__thumb-y');
+      ps.y.thumb.off = document.querySelector('.sidebar-nav .ps__thumb-y-off');
+
+      if (sidebar) {
+        if (toggle) {
+          sidebar.classList.add('ps');
+          sidebar.classList.add('ps-container');
+          sidebar.classList.add('ps--active-y');
+
+          if (ps.y.rail.off) {
+            ps.y.rail.off.classList.add('ps__rail-y');
+            ps.y.rail.off.removeAttribute('style');
+            ps.y.rail.off.style.left = isRtl ? '0px' : 'unset';
+            ps.y.rail.off.style.right = isRtl ? 'unset' : '0px';
+            ps.y.rail.off.classList.remove('ps__rail-y-off');
+          }
+
+          if (ps.y.thumb.off) {
+            ps.y.thumb.off.removeAttribute('style');
+            ps.y.thumb.off.classList.add('ps__thumb-y');
+            ps.y.thumb.off.classList.remove('ps__thumb-y-off');
+          }
+        } else {
+          if (ps.y.rail.on) {
+            ps.y.rail.on.classList.add('ps__rail-y-off');
+            ps.y.rail.on.removeAttribute('style');
+            ps.y.rail.on.classList.remove('ps__rail-y');
+          }
+
+          if (ps.y.thumb.on) {
+            ps.y.thumb.on.classList.add('ps__thumb-y-off');
+            ps.y.thumb.on.removeAttribute('style');
+            ps.y.thumb.on.classList.remove('ps__thumb-y');
+          }
+
+          sidebar.classList.remove('ps');
+          sidebar.classList.remove('ps-container');
+          sidebar.classList.remove('ps--active-y');
+        }
+      }
+    }
+  });
+
+  console.log('Hello from SidebarController!'); // if (document) {
+  //   this.isMinimized = this.contains('sidebar-minimized') || this.contains('brand-minimized');
+  //   // now, to ensure that both classes are used in tandem and that sidebarPSToggle is called
+  //   if (this.isMinimized) {
+  //     this.narrow();
+  //   } else {
+  //     this.wide();
+  //   }
+  //   this.display = null;
+  //   this.setDisplayBreakpoint('lg');
+  //   this.isOpen = true;
+  //   // now, to ensure that both plain and breakpoint classes are used together
+  //   if (this.isOpen) {
+  //     this.open();
+  //   } else {
+  //     this.close();
+  //   }
+  // } else {
+
+  this.display = 'lg';
+  this.isMinimized = false;
+  this.isOpen = true; // }
+} // isItOpen = () => {
+//   let itIsOpen = false;
+//   sidebarCssClasses.forEach((cssClass) => {
+//     if (document.body.classList.contains(cssClass)) {
+//       itIsOpen = true;
+//     }
+//   });
+//   return itIsOpen;
+// }
+; // export it as a singleton
+
+
+/* harmony default export */ var my_sidebar_controller = (new my_sidebar_controller_SidebarController());
 // CONCATENATED MODULE: ./src/Sidebar.js
 function Sidebar_extends() { Sidebar_extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return Sidebar_extends.apply(this, arguments); }
 
@@ -4608,6 +4747,7 @@ function Sidebar_assertThisInitialized(self) { if (self === void 0) { throw new 
 
 function Sidebar_inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
+function Sidebar_defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
 
@@ -4644,12 +4784,19 @@ var Sidebar_AppSidebar = /*#__PURE__*/function (_Component) {
     var _this;
 
     _this = _Component.call(this, props) || this;
+
+    Sidebar_defineProperty(Sidebar_assertThisInitialized(_this), "handleSidebarMinimizer", function (shouldMinimize) {
+      if (shouldMinimize) {
+        _this.sidebarController.narrow();
+      } else {
+        _this.sidebarController.wide();
+      }
+    });
+
+    _this.sidebarController = my_sidebar_controller;
     _this.isCompact = _this.isCompact.bind(Sidebar_assertThisInitialized(_this));
     _this.isFixed = _this.isFixed.bind(Sidebar_assertThisInitialized(_this));
-    _this.isMinimized = _this.isMinimized.bind(Sidebar_assertThisInitialized(_this));
     _this.isOffCanvas = _this.isOffCanvas.bind(Sidebar_assertThisInitialized(_this));
-    _this.displayBreakpoint = _this.displayBreakpoint.bind(Sidebar_assertThisInitialized(_this));
-    _this.hideMobile = _this.hideMobile.bind(Sidebar_assertThisInitialized(_this));
     return _this;
   }
 
@@ -4659,8 +4806,8 @@ var Sidebar_AppSidebar = /*#__PURE__*/function (_Component) {
     this.displayBreakpoint(this.props.display);
     this.isCompact(this.props.compact);
     this.isFixed(this.props.fixed);
-    this.isMinimized(this.props.minimized);
     this.isOffCanvas(this.props.offCanvas);
+    this.handleSidebarMinimizer(this.props.minimized);
   };
 
   _proto.isCompact = function isCompact(compact) {
@@ -4675,10 +4822,6 @@ var Sidebar_AppSidebar = /*#__PURE__*/function (_Component) {
     }
   };
 
-  _proto.isMinimized = function isMinimized(minimized) {
-    sidebarToggle(minimized);
-  };
-
   _proto.isOffCanvas = function isOffCanvas(offCanvas) {
     if (offCanvas) {
       document.body.classList.add('sidebar-off-canvas');
@@ -4686,25 +4829,11 @@ var Sidebar_AppSidebar = /*#__PURE__*/function (_Component) {
   };
 
   _proto.displayBreakpoint = function displayBreakpoint(display) {
-    var cssTemplate = "sidebar-" + display + "-show";
-    var _sidebarCssClasses$ = sidebarCssClasses[0],
-        cssClass = _sidebarCssClasses$[0];
-
-    if (display && sidebarCssClasses.indexOf(cssTemplate) > -1) {
-      cssClass = cssTemplate;
-    }
-
-    document.body.classList.add(cssClass);
+    this.sidebarController.setDisplayBreakpoint(display);
   };
 
   _proto.hideMobile = function hideMobile() {
-    if (document.body.classList.contains('sidebar-show')) {
-      document.body.classList.remove('sidebar-show');
-    }
-
-    if (document.body.classList.contains('sidebar-lg-show')) {
-      document.body.classList.remove('sidebar-lg-show');
-    }
+    this.sidebarController.hideMobile();
   };
 
   _proto.onClickOut = function onClickOut(e) {
@@ -4897,8 +5026,6 @@ function SidebarMinimizer_extends() { SidebarMinimizer_extends = Object.assign |
 
 function SidebarMinimizer_objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
 
-function SidebarMinimizer_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function SidebarMinimizer_inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
 
@@ -4923,20 +5050,14 @@ var SidebarMinimizer_AppSidebarMinimizer = /*#__PURE__*/function (_Component) {
     var _this;
 
     _this = _Component.call(this, props) || this;
-    _this.handleClick = _this.handleClick.bind(SidebarMinimizer_assertThisInitialized(_this));
+    _this.sidebarController = my_sidebar_controller;
     return _this;
   }
 
   var _proto = AppSidebarMinimizer.prototype;
 
-  _proto.componentDidMount = function componentDidMount() {
-    var isMinimized = document.body.classList.contains('sidebar-minimized');
-    sidebarPSToggle(!isMinimized);
-  };
-
   _proto.handleClick = function handleClick() {
-    console.log('SidebarMinimizer handleClick!');
-    sidebarToggle();
+    this.sidebarController.toggleMinimized();
   };
 
   _proto.render = function render() {
@@ -5190,7 +5311,7 @@ Nav_Nav.propTypes = Nav_propTypes;
 Nav_Nav.defaultProps = Nav_defaultProps;
 /* harmony default export */ var es_Nav = (Nav_Nav);
 // EXTERNAL MODULE: ./node_modules/react-perfect-scrollbar/lib/index.js
-var react_perfect_scrollbar_lib = __webpack_require__(5);
+var react_perfect_scrollbar_lib = __webpack_require__(10);
 var react_perfect_scrollbar_lib_default = /*#__PURE__*/__webpack_require__.n(react_perfect_scrollbar_lib);
 
 // CONCATENATED MODULE: ./src/SidebarNav.js
@@ -5201,6 +5322,7 @@ function SidebarNav_extends() { SidebarNav_extends = Object.assign || function (
 function SidebarNav_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function SidebarNav_inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
 
 
 
@@ -5240,6 +5362,7 @@ var SidebarNav_AppSidebarNav = /*#__PURE__*/function (_Component) {
     var _this;
 
     _this = _Component.call(this, props) || this;
+    _this.sidebarController = my_sidebar_controller;
     _this.handleClick = _this.handleClick.bind(SidebarNav_assertThisInitialized(_this));
     _this.activeRoute = _this.activeRoute.bind(SidebarNav_assertThisInitialized(_this));
     _this.hideMobile = _this.hideMobile.bind(SidebarNav_assertThisInitialized(_this));
@@ -5258,15 +5381,7 @@ var SidebarNav_AppSidebarNav = /*#__PURE__*/function (_Component) {
   };
 
   _proto.hideMobile = function hideMobile() {
-    console.log('SidebarNav hideMobile!');
-
-    if (document.body.classList.contains('sidebar-show')) {
-      document.body.classList.toggle('sidebar-show');
-    }
-
-    if (document.body.classList.contains('sidebar-lg-show')) {
-      document.body.classList.toggle('sidebar-lg-show');
-    }
+    this.sidebarController.hideMobile();
   } // nav list
   ;
 
@@ -5419,375 +5534,17 @@ var SidebarNav_AppSidebarNav = /*#__PURE__*/function (_Component) {
 SidebarNav_AppSidebarNav.propTypes = SidebarNav_propTypes;
 SidebarNav_AppSidebarNav.defaultProps = SidebarNav_defaultProps;
 /* harmony default export */ var SidebarNav = (SidebarNav_AppSidebarNav);
-// CONCATENATED MODULE: ./src/SidebarNav2.js
-function SidebarNav2_objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
-
-function SidebarNav2_extends() { SidebarNav2_extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return SidebarNav2_extends.apply(this, arguments); }
-
-function SidebarNav2_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function SidebarNav2_inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-
-
-
-
- // import 'react-perfect-scrollbar/dist/css/styles.css';
-// import '../css/scrollbar.css';
-
-
-var SidebarNav2_propTypes = {
-  children: prop_types_default.a.node,
-  className: prop_types_default.a.string,
-  navConfig: prop_types_default.a.any,
-  navFunc: prop_types_default.a.oneOfType([prop_types_default.a.func, prop_types_default.a.string]),
-  isOpen: prop_types_default.a.bool,
-  staticContext: prop_types_default.a.any,
-  tag: prop_types_default.a.oneOfType([prop_types_default.a.func, prop_types_default.a.string]),
-  router: prop_types_default.a.any,
-  props: prop_types_default.a.any
-};
-var SidebarNav2_defaultProps = {
-  tag: 'nav',
-  navConfig: {
-    items: [{
-      name: 'Dashboard',
-      url: '/dashboard',
-      icon: 'icon-speedometer',
-      badge: {
-        variant: 'info',
-        text: 'NEW'
-      }
-    }]
-  },
-  isOpen: false,
-  router: {
-    RsNavLink: es_NavLink
-  }
-};
-
-var SidebarNav2_AppSidebarNav2 = /*#__PURE__*/function (_Component) {
-  SidebarNav2_inheritsLoose(AppSidebarNav2, _Component);
-
-  function AppSidebarNav2(props) {
-    var _this;
-
-    _this = _Component.call(this, props) || this;
-
-    _defineProperty(SidebarNav2_assertThisInitialized(_this), "_scrollBarRef", null);
-
-    _this.handleClick = _this.handleClick.bind(SidebarNav2_assertThisInitialized(_this));
-    _this.activeRoute = _this.activeRoute.bind(SidebarNav2_assertThisInitialized(_this));
-    _this.hideMobile = _this.hideMobile.bind(SidebarNav2_assertThisInitialized(_this));
-    _this.changes = null;
-    _this.state = {
-      sidebarMinimized: false
-    };
-    return _this;
-  }
-
-  var _proto = AppSidebarNav2.prototype;
-
-  _proto.handleClick = function handleClick(e, item) {
-    if (item.attributes && typeof item.attributes.onClick === 'function' && !this.isActiveRoute(item.url, this.props)) {
-      item.attributes.onClick(e, item);
-    } else {
-      e.preventDefault();
-    }
-
-    e.currentTarget.parentElement.classList.toggle('open');
-  };
-
-  _proto.isActiveRoute = function isActiveRoute(routeName, props) {
-    return props.location.pathname.indexOf(routeName) > -1;
-  };
-
-  _proto.activeRoute = function activeRoute(routeName, props) {
-    return this.isActiveRoute(routeName, props) ? 'nav-item nav-dropdown open' : 'nav-item nav-dropdown';
-  };
-
-  _proto.hideMobile = function hideMobile() {
-    if (document.body.classList.contains('sidebar-show')) {
-      document.body.classList.toggle('sidebar-show');
-    }
-
-    if (document.body.classList.contains('sidebar-lg-show')) {
-      document.body.classList.toggle('sidebar-lg-show');
-    }
-  };
-
-  _proto.getAttribs = function getAttribs(attributes) {
-    return SidebarNav2_extends({}, attributes);
-  } // nav list
-  ;
-
-  _proto.navList = function navList(items) {
-    var _this2 = this;
-
-    return items.map(function (item, index) {
-      return _this2.navType(item, index);
-    });
-  } // nav type
-  ;
-
-  _proto.navType = function navType(item, idx) {
-    return item.title ? this.navTitle(item, idx) : item.divider ? this.navDivider(item, idx) : item.label ? this.navLabel(item, idx) : item.children ? this.navDropdown(item, idx) : this.navItem(item, idx);
-  } // nav list section title
-  ;
-
-  _proto.navTitle = function navTitle(title, key) {
-    var classes = classnames_default()('nav-title', title["class"], title.className);
-    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("li", {
-      key: key,
-      className: classes
-    }, this.navWrapper(title), " ");
-  } // simple wrapper for nav-title item
-  ;
-
-  _proto.navWrapper = function navWrapper(item) {
-    return item.wrapper && item.wrapper.element ? external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(item.wrapper.element, item.wrapper.attributes, item.name) : item.name;
-  } // nav list divider
-  ;
-
-  _proto.navDivider = function navDivider(divider, key) {
-    var classes = classnames_default()('divider', divider["class"], divider.className);
-    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("li", {
-      key: key,
-      className: classes
-    });
-  } // nav label with nav link
-  ;
-
-  _proto.navLabel = function navLabel(item, key) {
-    var classes = {
-      item: classnames_default()('hidden-cn', item["class"]),
-      link: classnames_default()('nav-label', item["class"] ? item["class"] : ''),
-      icon: classnames_default()('nav-icon', !item.icon ? 'fa fa-circle' : item.icon, item.label.variant ? "text-" + item.label.variant : '', item.label["class"] ? item.label["class"] : '')
-    };
-    return this.navLink(item, key, classes);
-  } // nav dropdown
-  ;
-
-  _proto.navDropdown = function navDropdown(item, key) {
-    var _this3 = this;
-
-    var itemIcon = this.navIcon(item);
-    var attributes = this.getAttribs(item.attributes);
-    var classes = classnames_default()('nav-link', 'nav-dropdown-toggle', item["class"], attributes["class"], attributes.className);
-    delete attributes["class"];
-    delete attributes.className;
-    var itemAttr = this.getAttribs(item.itemAttr);
-    var liClasses = classnames_default()('nav-item', 'nav-dropdown', itemAttr["class"], itemAttr.className);
-    delete itemAttr["class"];
-    delete itemAttr.className;
-    var NavLink = this.props.router.NavLink || es_NavLink;
-    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("li", SidebarNav2_extends({
-      key: key,
-      className: classnames_default()(liClasses, {
-        'open': this.isActiveRoute(item.url, this.props)
-      })
-    }, itemAttr), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(NavLink, SidebarNav2_extends({
-      activeClassName: "open",
-      className: classes,
-      to: item.url || ''
-    }, attributes, {
-      onClick: function onClick(e) {
-        return _this3.handleClick(e, item);
-      }
-    }), itemIcon, item.name, this.navBadge(item.badge)), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("ul", {
-      className: "nav-dropdown-items"
-    }, this.navList(item.children)));
-  } // nav item with nav link
-  ;
-
-  _proto.navItem = function navItem(item, key) {
-    var classes = {
-      item: classnames_default()(item["class"]),
-      link: classnames_default()('nav-link', item.variant ? "nav-link-" + item.variant : ''),
-      icon: classnames_default()('nav-icon', item.icon)
-    };
-    return this.navLink(item, key, classes);
-  };
-
-  _proto.navIcon = function navIcon(item) {
-    var icon = item.icon;
-    var iconObject = typeof icon === 'object' && icon !== null ? SidebarNav2_extends({
-      iconClass: icon["class"],
-      iconClassName: icon.className
-    }, icon) : {
-      iconClass: icon
-    };
-    var iconClass = iconObject.iconClass,
-        iconClassName = iconObject.iconClassName,
-        innerText = iconObject.innerText,
-        img = iconObject.img,
-        attributes = iconObject.attributes;
-
-    var iconAttr = SidebarNav2_extends({}, attributes);
-
-    delete iconAttr["class"];
-    delete iconAttr.className;
-    delete iconAttr.img;
-    var iconImg = img && img.src ? img : null;
-    var iconInner = innerText || null;
-    var classIcon = classnames_default()('nav-icon', iconClass, iconClassName);
-    var iconComponent = iconImg ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("img", SidebarNav2_extends({}, iconAttr, {
-      className: classIcon,
-      src: iconImg.src
-    })) : /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("i", SidebarNav2_extends({}, iconAttr, {
-      className: classIcon
-    }), iconInner);
-    return iconComponent;
-  } // nav link
-  ;
-
-  _proto.navLink = function navLink(item, key, classes) {
-    var _this4 = this;
-
-    var ref = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createRef();
-    var url = item.url || '';
-    var itemIcon = this.navIcon(item);
-    var itemBadge = this.navBadge(item.badge);
-    var attributes = this.getAttribs(item.attributes);
-    classes.link = classnames_default()(classes.link, attributes["class"], attributes.className);
-    delete attributes["class"];
-    delete attributes.className;
-    var itemAttr = this.getAttribs(item.itemAttr);
-    classes.item = classnames_default()(classes.item, itemAttr["class"], itemAttr.className);
-    delete itemAttr["class"];
-    delete itemAttr.className;
-    var NavLink = this.props.router.NavLink || es_NavLink;
-    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(es_NavItem, SidebarNav2_extends({
-      key: key,
-      className: classes.item
-    }, itemAttr), attributes.disabled ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(es_NavLink, SidebarNav2_extends({
-      href: '',
-      className: classes.link
-    }, attributes), itemIcon, item.name, itemBadge) : this.isExternal(url, this.props) || NavLink === es_NavLink ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(es_NavLink, SidebarNav2_extends({
-      href: url,
-      className: classes.link,
-      active: true
-    }, attributes), itemIcon, item.name, itemBadge) : /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(NavLink, SidebarNav2_extends({
-      to: url,
-      className: classes.link,
-      activeClassName: "active",
-      onClick: function onClick() {
-        return _this4.hideMobile(ref);
-      },
-      ref: ref
-    }, attributes), itemIcon, item.name, itemBadge));
-  } // badge addon to NavItem
-  ;
-
-  _proto.navBadge = function navBadge(badge) {
-    if (badge) {
-      var classes = classnames_default()(badge["class"], badge.className);
-      return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(es_Badge, {
-        className: classes,
-        color: badge.variant
-      }, badge.text);
-    }
-
-    return null;
-  };
-
-  _proto.isExternal = function isExternal(url, props) {
-    var linkType = typeof url;
-    var link = linkType === 'string' ? url : linkType === 'object' && url.pathname ? url.pathname : linkType === 'function' && typeof url(props.location) === 'string' ? url(props.location) : linkType === 'function' && typeof url(props.location) === 'object' ? url(props.location).pathname : '';
-    return link.substring(0, 4) === 'http';
-  };
-
-  _proto.observeDomMutations = function observeDomMutations() {
-    var _this5 = this;
-
-    if (window.MutationObserver) {
-      // eslint-disable-next-line
-      this.changes = new MutationObserver(function (mutations) {
-        var isSidebarMinimized = document.body.classList.contains('sidebar-minimized') || false;
-
-        _this5.setState({
-          sidebarMinimized: isSidebarMinimized
-        });
-
-        sidebarPSToggle(!isSidebarMinimized);
-      });
-      var element = document.body;
-      this.changes.observe(element, {
-        attributes: true,
-        attributeFilter: ['class']
-      });
-    }
-
-    window.addEventListener('resize', this.onResize);
-  };
-
-  _proto.onResize = function onResize() {
-    sidebarPSToggle(true);
-  };
-
-  _proto.componentDidMount = function componentDidMount() {
-    this.observeDomMutations();
-  };
-
-  _proto.componentWillUnmount = function componentWillUnmount() {
-    try {
-      this.changes.disconnect();
-      window.removeEventListener('resize', this.onResize);
-    } catch (ignore) {
-      // eslint-disable-next-line
-      console.warn('CoreUI SidebarNav failed to disconnect from MutationObserver', ignore);
-    }
-  };
-
-  _proto.render = function render() {
-    var _this6 = this;
-
-    var _this$props = this.props,
-        className = _this$props.className,
-        children = _this$props.children,
-        navConfig = _this$props.navConfig,
-        attributes = SidebarNav2_objectWithoutPropertiesLoose(_this$props, ["className", "children", "navConfig"]);
-
-    delete attributes.isOpen;
-    delete attributes.staticContext;
-    delete attributes.Tag;
-    delete attributes.router;
-    var navClasses = classnames_default()(className, 'sidebar-nav');
-    var options = Object.assign({}, {
-      suppressScrollX: true,
-      suppressScrollY: this.state.sidebarMinimized
-    }); // sidebar-nav root
-
-    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(react_perfect_scrollbar_lib_default.a, SidebarNav2_extends({
-      className: navClasses
-    }, attributes, {
-      options: options,
-      ref: function ref(_ref) {
-        _this6._scrollBarRef = _ref;
-      }
-    }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(es_Nav, null, children || this.navList(navConfig.items)));
-  };
-
-  return AppSidebarNav2;
-}(external_root_React_commonjs2_react_commonjs_react_amd_react_["Component"]);
-
-SidebarNav2_AppSidebarNav2.propTypes = SidebarNav2_propTypes;
-SidebarNav2_AppSidebarNav2.defaultProps = SidebarNav2_defaultProps;
-/* harmony default export */ var SidebarNav2 = (SidebarNav2_AppSidebarNav2);
 // CONCATENATED MODULE: ./src/SidebarToggler.js
 function SidebarToggler_extends() { SidebarToggler_extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return SidebarToggler_extends.apply(this, arguments); }
 
 function SidebarToggler_objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
 
-function SidebarToggler_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function SidebarToggler_inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
 
 
-
+ // import { sidebarCssClasses, validBreakpoints, checkBreakpoint } from './Shared/index';
+// import toggleClasses from './Shared/toggle-classes';
 
 
 var SidebarToggler_propTypes = {
@@ -5812,29 +5569,26 @@ var SidebarToggler_AppSidebarToggler = /*#__PURE__*/function (_Component) {
     var _this;
 
     _this = _Component.call(this, props) || this;
-    _this.sidebarToggle = _this.sidebarToggle.bind(SidebarToggler_assertThisInitialized(_this));
+    _this.sidebarController = my_sidebar_controller;
     return _this;
   }
 
   var _proto = AppSidebarToggler.prototype;
 
   _proto.sidebarToggle = function sidebarToggle(e) {
-    e.preventDefault();
-    this.toggle();
-  };
+    e.preventDefault(); // this.toggle();
 
-  _proto.toggle = function toggle(force) {
-    var _ref = [this.props.display, this.props.mobile],
-        display = _ref[0],
-        mobile = _ref[1];
-    var cssClass = sidebarCssClasses[0];
-
-    if (!mobile && display && checkBreakpoint(display, validBreakpoints)) {
-      cssClass = "sidebar-" + display + "-show";
-    }
-
-    toggleClasses(cssClass, sidebarCssClasses, force);
-  };
+    this.sidebarController.toggleOpen();
+  } // toggle(force) {
+  //   const mobile = this.props.mobile;
+  //   const display = this.sidebarController.display;
+  //   let cssClass = sidebarCssClasses[0]
+  //   if (!mobile && display && checkBreakpoint(display, validBreakpoints)) {
+  //     cssClass = `sidebar-${display}-show`
+  //   }
+  //   toggleClasses(cssClass, sidebarCssClasses, force)
+  // }
+  ;
 
   _proto.render = function render() {
     var _this2 = this;
@@ -6023,8 +5777,6 @@ Switch_AppSwitch.propTypes = Switch_propTypes;
 Switch_AppSwitch.defaultProps = Switch_defaultProps;
 /* harmony default export */ var Switch = (Switch_AppSwitch);
 // CONCATENATED MODULE: ./src/index.js
-
-
 
 
 

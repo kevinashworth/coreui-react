@@ -12,6 +12,7 @@ import { Badge, Nav, NavItem, NavLink as RsNavLink } from 'reactstrap';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import PerfectScrollbar from 'react-perfect-scrollbar';
+import SidebarController from './Shared/my-sidebar-controller.js';
 var propTypes = process.env.NODE_ENV !== "production" ? {
   children: PropTypes.node,
   className: PropTypes.string,
@@ -44,6 +45,7 @@ var AppSidebarNav = /*#__PURE__*/function (_Component) {
     var _this;
 
     _this = _Component.call(this, props) || this;
+    _this.sidebarController = SidebarController;
     _this.handleClick = _this.handleClick.bind(_assertThisInitialized(_this));
     _this.activeRoute = _this.activeRoute.bind(_assertThisInitialized(_this));
     _this.hideMobile = _this.hideMobile.bind(_assertThisInitialized(_this));
@@ -62,15 +64,7 @@ var AppSidebarNav = /*#__PURE__*/function (_Component) {
   };
 
   _proto.hideMobile = function hideMobile() {
-    console.log('SidebarNav hideMobile!');
-
-    if (document.body.classList.contains('sidebar-show')) {
-      document.body.classList.toggle('sidebar-show');
-    }
-
-    if (document.body.classList.contains('sidebar-lg-show')) {
-      document.body.classList.toggle('sidebar-lg-show');
-    }
+    this.sidebarController.hideMobile();
   } // nav list
   ;
 

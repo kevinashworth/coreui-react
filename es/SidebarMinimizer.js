@@ -2,14 +2,12 @@ function _extends() { _extends = Object.assign || function (target) { for (var i
 
 function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { sidebarToggle, sidebarPSToggle } from './Shared/my-helpers.js';
+import SidebarController from './Shared/my-sidebar-controller.js';
 var propTypes = process.env.NODE_ENV !== "production" ? {
   children: PropTypes.node,
   className: PropTypes.string,
@@ -28,20 +26,14 @@ var AppSidebarMinimizer = /*#__PURE__*/function (_Component) {
     var _this;
 
     _this = _Component.call(this, props) || this;
-    _this.handleClick = _this.handleClick.bind(_assertThisInitialized(_this));
+    _this.sidebarController = SidebarController;
     return _this;
   }
 
   var _proto = AppSidebarMinimizer.prototype;
 
-  _proto.componentDidMount = function componentDidMount() {
-    var isMinimized = document.body.classList.contains('sidebar-minimized');
-    sidebarPSToggle(!isMinimized);
-  };
-
   _proto.handleClick = function handleClick() {
-    console.log('SidebarMinimizer handleClick!');
-    sidebarToggle();
+    this.sidebarController.toggleMinimized();
   };
 
   _proto.render = function render() {

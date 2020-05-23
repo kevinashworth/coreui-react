@@ -6,13 +6,14 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 import React, { Component } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import { sidebarCssClasses } from './Shared';
 import ClickOutHandler from 'react-onclickout';
 import './Shared/element-closest';
-import { sidebarToggle } from './Shared/my-helpers.js';
+import SidebarController from './Shared/my-sidebar-controller.js';
 var propTypes = process.env.NODE_ENV !== "production" ? {
   children: PropTypes.node,
   className: PropTypes.string,
@@ -42,12 +43,19 @@ var AppSidebar = /*#__PURE__*/function (_Component) {
     var _this;
 
     _this = _Component.call(this, props) || this;
+
+    _defineProperty(_assertThisInitialized(_this), "handleSidebarMinimizer", function (shouldMinimize) {
+      if (shouldMinimize) {
+        _this.sidebarController.narrow();
+      } else {
+        _this.sidebarController.wide();
+      }
+    });
+
+    _this.sidebarController = SidebarController;
     _this.isCompact = _this.isCompact.bind(_assertThisInitialized(_this));
     _this.isFixed = _this.isFixed.bind(_assertThisInitialized(_this));
-    _this.isMinimized = _this.isMinimized.bind(_assertThisInitialized(_this));
     _this.isOffCanvas = _this.isOffCanvas.bind(_assertThisInitialized(_this));
-    _this.displayBreakpoint = _this.displayBreakpoint.bind(_assertThisInitialized(_this));
-    _this.hideMobile = _this.hideMobile.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -57,8 +65,8 @@ var AppSidebar = /*#__PURE__*/function (_Component) {
     this.displayBreakpoint(this.props.display);
     this.isCompact(this.props.compact);
     this.isFixed(this.props.fixed);
-    this.isMinimized(this.props.minimized);
     this.isOffCanvas(this.props.offCanvas);
+    this.handleSidebarMinimizer(this.props.minimized);
   };
 
   _proto.isCompact = function isCompact(compact) {
@@ -73,10 +81,6 @@ var AppSidebar = /*#__PURE__*/function (_Component) {
     }
   };
 
-  _proto.isMinimized = function isMinimized(minimized) {
-    sidebarToggle(minimized);
-  };
-
   _proto.isOffCanvas = function isOffCanvas(offCanvas) {
     if (offCanvas) {
       document.body.classList.add('sidebar-off-canvas');
@@ -84,25 +88,11 @@ var AppSidebar = /*#__PURE__*/function (_Component) {
   };
 
   _proto.displayBreakpoint = function displayBreakpoint(display) {
-    var cssTemplate = "sidebar-" + display + "-show";
-    var _sidebarCssClasses$ = sidebarCssClasses[0],
-        cssClass = _sidebarCssClasses$[0];
-
-    if (display && sidebarCssClasses.indexOf(cssTemplate) > -1) {
-      cssClass = cssTemplate;
-    }
-
-    document.body.classList.add(cssClass);
+    this.sidebarController.setDisplayBreakpoint(display);
   };
 
   _proto.hideMobile = function hideMobile() {
-    if (document.body.classList.contains('sidebar-show')) {
-      document.body.classList.remove('sidebar-show');
-    }
-
-    if (document.body.classList.contains('sidebar-lg-show')) {
-      document.body.classList.remove('sidebar-lg-show');
-    }
+    this.sidebarController.hideMobile();
   };
 
   _proto.onClickOut = function onClickOut(e) {

@@ -26,8 +26,6 @@ import _AppSidebarMinimizer from './SidebarMinimizer';
 export { _AppSidebarMinimizer as AppSidebarMinimizer };
 import _AppSidebarNav from './SidebarNav';
 export { _AppSidebarNav as AppSidebarNav };
-import _AppSidebarNav2 from './SidebarNav2';
-export { _AppSidebarNav2 as AppSidebarNav2 };
 import _AppSidebarToggler from './SidebarToggler';
 export { _AppSidebarToggler as AppSidebarToggler };
 import _AppSwitch from './Switch';
