@@ -30,22 +30,29 @@ import { sidebarCssClasses } from './classes.js';
 
 class SidebarController {
   constructor() {
-    this.isMinimized = this.contains('sidebar-minimized') || this.contains('brand-minimized');
-    // now, to ensure that both classes are used in tandem and that sidebarPSToggle is called
-    if (this.isMinimized) {
-      this.narrow();
-    } else {
-      this.wide();
-    }
-    this.display = null;
-    this.setDisplayBreakpoint('lg');
+    console.log('Hello from SidebarController!');
+    // if (document) {
+    //   this.isMinimized = this.contains('sidebar-minimized') || this.contains('brand-minimized');
+    //   // now, to ensure that both classes are used in tandem and that sidebarPSToggle is called
+    //   if (this.isMinimized) {
+    //     this.narrow();
+    //   } else {
+    //     this.wide();
+    //   }
+    //   this.display = null;
+    //   this.setDisplayBreakpoint('lg');
+    //   this.isOpen = true;
+    //   // now, to ensure that both plain and breakpoint classes are used together
+    //   if (this.isOpen) {
+    //     this.open();
+    //   } else {
+    //     this.close();
+    //   }
+    // } else {
+    this.display = 'lg';
+    this.isMinimized = false;
     this.isOpen = true;
-    // now, to ensure that both plain and breakpoint classes are used together
-    if (this.isOpen) {
-      this.open();
-    } else {
-      this.close();
-    }
+    // }
   }
 
   // isItOpen = () => {

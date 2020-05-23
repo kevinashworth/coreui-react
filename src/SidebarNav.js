@@ -36,6 +36,7 @@ class AppSidebarNav extends Component {
     this.sidebarController = SidebarController;
     this.handleClick = this.handleClick.bind(this);
     this.activeRoute = this.activeRoute.bind(this);
+    this.hideMobile = this.hideMobile.bind(this);
   }
 
   handleClick(e) {
@@ -149,7 +150,7 @@ class AppSidebarNav extends Component {
             <RsNavLink href={url} className={classes.link} active {...attributes}>
               {itemIcon}{item.name}{itemBadge}
             </RsNavLink> :
-            <NavLink to={url} className={classes.link} activeClassName="active" onClick={this.hideMobile()} {...attributes}>
+            <NavLink to={url} className={classes.link} activeClassName="active" onClick={this.hideMobile} {...attributes}>
               {itemIcon}{item.name}{itemBadge}
             </NavLink>
         }
