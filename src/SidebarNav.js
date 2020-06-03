@@ -142,19 +142,17 @@ class AppSidebarNav extends Component {
     const attributes = item.attributes || {}
     return (
       <Nav.Item key={key} className={classes.item}>
-        { attributes.disabled ?
-            <Nav.Link href={''} className={classes.link} {...attributes}>
+        {attributes.disabled
+          ? <Nav.Link href={''} className={classes.link} {...attributes}>
               {itemIcon}{item.name}{itemBadge}
             </Nav.Link>
-         :
-          this.isExternal(url) ?
-            <Nav.Link href={url} className={classes.link} active {...attributes}>
-              {itemIcon}{item.name}{itemBadge}
-            </Nav.Link> :
-            <NavLink to={url} className={classes.link} activeClassName="active" onClick={this.hideMobile} {...attributes}>
-              {itemIcon}{item.name}{itemBadge}
-            </NavLink>
-        }
+          : this.isExternal(url)
+            ? <Nav.Link href={url} className={classes.link} active {...attributes}>
+                {itemIcon}{item.name}{itemBadge}
+              </Nav.Link>
+            : <NavLink to={url} className={classes.link} activeClassName="active" onClick={this.hideMobile} {...attributes}>
+                {itemIcon}{item.name}{itemBadge}
+              </NavLink>}
       </Nav.Item>
     );
   }
@@ -172,6 +170,7 @@ class AppSidebarNav extends Component {
 
   isExternal(url) {
     const link = url ? url.substring(0, 4) : '';
+    console.log('Hello from isExternal!', link);
     return link === 'http';
   }
 

@@ -3,6 +3,9 @@
 The document body classList is the one source of info.
 If there is no document, do nothing.
 
+sidebar-show is for mobile
+sidebar-{}-show is for all other browsers
+
 Use SidebarController as a singleton across multiple components:
   Sidebar, SidebarNav, SidebarMinimizer, SidebarToggler
 
@@ -82,6 +85,7 @@ class SidebarController {
   }
 
   close = () => {
+    // console.log('Hello from close!');
     if (document.body) {
       this.remove('sidebar-show');
       this.remove(`sidebar-${this.display}-show`);
@@ -96,6 +100,7 @@ class SidebarController {
     }
   }
   toggleOpen = () => {
+    // console.log('Hello from toggleOpen!');
     if (document.body) {
       if (this.isOpen) {
         this.close();
@@ -161,8 +166,9 @@ class SidebarController {
   }
 
   hideMobile = () => {
+    console.log('Hello from hideMobile in my-sidebar-contoller.js!');
     this.remove('sidebar-show');
-    this.remove(`sidebar-${this.display}-show`);
+    // this.remove(`sidebar-${this.display}-show`);
   }
 
   isOnMobile = () => {
