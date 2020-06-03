@@ -52,6 +52,18 @@ var AppSidebar = /*#__PURE__*/function (_Component) {
       }
     });
 
+    _defineProperty(_assertThisInitialized(_this), "hideMobile", function () {
+      _this.sidebarController.hideMobile();
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "onClickOut", function (e) {
+      if (typeof window !== 'undefined' && (document.body.classList.contains('sidebar-show') || document.body.classList.contains('sidebar-lg-show'))) {
+        if (!e.target.closest('[data-sidebar-toggler]')) {
+          _this.hideMobile();
+        }
+      }
+    });
+
     _this.sidebarController = SidebarController;
     _this.isCompact = _this.isCompact.bind(_assertThisInitialized(_this));
     _this.isFixed = _this.isFixed.bind(_assertThisInitialized(_this));
@@ -95,21 +107,7 @@ var AppSidebar = /*#__PURE__*/function (_Component) {
     this.sidebarController.setDisplayBreakpoint(display);
   };
 
-  _proto.hideMobile = function hideMobile() {
-    this.sidebarController.hideMobile();
-  };
-
-  _proto.onClickOut = function onClickOut(e) {
-    if (typeof window !== 'undefined' && (document.body.classList.contains('sidebar-show') || document.body.classList.contains('sidebar-lg-show'))) {
-      if (!e.target.closest('[data-sidebar-toggler]')) {
-        this.hideMobile();
-      }
-    }
-  };
-
   _proto.render = function render() {
-    var _this2 = this;
-
     var _this$props = this.props,
         className = _this$props.className,
         children = _this$props.children,
@@ -126,9 +124,7 @@ var AppSidebar = /*#__PURE__*/function (_Component) {
     var classes = classNames(className, 'sidebar'); // sidebar-nav root
 
     return /*#__PURE__*/React.createElement(ClickOutHandler, {
-      onClickOut: function onClickOut(e) {
-        _this2.onClickOut(e);
-      }
+      onClickOut: this.onClickOut
     }, /*#__PURE__*/React.createElement(Tag, _extends({
       className: classes
     }, attributes), children));

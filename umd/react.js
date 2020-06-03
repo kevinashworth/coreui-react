@@ -7966,6 +7966,18 @@ var Sidebar_AppSidebar = /*#__PURE__*/function (_Component) {
       }
     });
 
+    Sidebar_defineProperty(Sidebar_assertThisInitialized(_this), "hideMobile", function () {
+      _this.sidebarController.hideMobile();
+    });
+
+    Sidebar_defineProperty(Sidebar_assertThisInitialized(_this), "onClickOut", function (e) {
+      if (typeof window !== 'undefined' && (document.body.classList.contains('sidebar-show') || document.body.classList.contains('sidebar-lg-show'))) {
+        if (!e.target.closest('[data-sidebar-toggler]')) {
+          _this.hideMobile();
+        }
+      }
+    });
+
     _this.sidebarController = my_sidebar_controller;
     _this.isCompact = _this.isCompact.bind(Sidebar_assertThisInitialized(_this));
     _this.isFixed = _this.isFixed.bind(Sidebar_assertThisInitialized(_this));
@@ -8009,21 +8021,7 @@ var Sidebar_AppSidebar = /*#__PURE__*/function (_Component) {
     this.sidebarController.setDisplayBreakpoint(display);
   };
 
-  _proto.hideMobile = function hideMobile() {
-    this.sidebarController.hideMobile();
-  };
-
-  _proto.onClickOut = function onClickOut(e) {
-    if (typeof window !== 'undefined' && (document.body.classList.contains('sidebar-show') || document.body.classList.contains('sidebar-lg-show'))) {
-      if (!e.target.closest('[data-sidebar-toggler]')) {
-        this.hideMobile();
-      }
-    }
-  };
-
   _proto.render = function render() {
-    var _this2 = this;
-
     var _this$props = this.props,
         className = _this$props.className,
         children = _this$props.children,
@@ -8040,9 +8038,7 @@ var Sidebar_AppSidebar = /*#__PURE__*/function (_Component) {
     var classes = classnames_default()(className, 'sidebar'); // sidebar-nav root
 
     return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(react_onclickout_default.a, {
-      onClickOut: function onClickOut(e) {
-        _this2.onClickOut(e);
-      }
+      onClickOut: this.onClickOut
     }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Tag, Sidebar_extends({
       className: classes
     }, attributes), children));
