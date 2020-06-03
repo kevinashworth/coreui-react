@@ -74,7 +74,6 @@ class AppSidebar extends Component {
   }
 
   hideMobile() {
-    console.log('Hello from hideMobile in Sidebar.js!');
     this.sidebarController.hideMobile();
   }
 

@@ -170,7 +170,6 @@ class AppSidebarNav extends Component {
 
   isExternal(url) {
     const link = url ? url.substring(0, 4) : '';
-    console.log('Hello from isExternal!', link);
     return link === 'http';
   }
 
