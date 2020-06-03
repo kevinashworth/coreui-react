@@ -6,7 +6,7 @@ The document body classList is the one source of info.
 If there is no document, do nothing.
 
 sidebar-show is for mobile
-sidebar-{}-show is for all other browsers
+sidebar-{}-show is for all others
 
 Use SidebarController as a singleton across multiple components:
   Sidebar, SidebarNav, SidebarMinimizer, SidebarToggler
@@ -54,7 +54,6 @@ var SidebarController = function SidebarController() {
   });
 
   _defineProperty(this, "close", function () {
-    // console.log('Hello from close!');
     if (document.body) {
       _this.remove('sidebar-show');
 
@@ -75,7 +74,6 @@ var SidebarController = function SidebarController() {
   });
 
   _defineProperty(this, "toggleOpen", function () {
-    // console.log('Hello from toggleOpen!');
     if (document.body) {
       if (_this.isOpen) {
         _this.close();
@@ -140,10 +138,14 @@ var SidebarController = function SidebarController() {
   });
 
   _defineProperty(this, "hideMobile", function () {
-    console.log('Hello from hideMobile in my-sidebar-contoller.js!');
+    if (document.body) {
+      if (_this.isOnMobile()) {
+        _this.remove('sidebar-show'); // this.remove(`sidebar-${this.display}-show`);
 
-    _this.remove('sidebar-show'); // this.remove(`sidebar-${this.display}-show`);
 
+        _this.isOpen = false;
+      }
+    }
   });
 
   _defineProperty(this, "isOnMobile", function () {
@@ -227,38 +229,10 @@ var SidebarController = function SidebarController() {
     }
   });
 
-  console.log('Hello from SidebarController!'); // if (document) {
-  //   this.isMinimized = this.contains('sidebar-minimized') || this.contains('brand-minimized');
-  //   // now, to ensure that both classes are used in tandem and that sidebarPSToggle is called
-  //   if (this.isMinimized) {
-  //     this.narrow();
-  //   } else {
-  //     this.wide();
-  //   }
-  //   this.display = null;
-  //   this.setDisplayBreakpoint('lg');
-  //   this.isOpen = true;
-  //   // now, to ensure that both plain and breakpoint classes are used together
-  //   if (this.isOpen) {
-  //     this.open();
-  //   } else {
-  //     this.close();
-  //   }
-  // } else {
-
   this.display = 'lg';
   this.isMinimized = false;
-  this.isOpen = true; // }
-} // isItOpen = () => {
-//   let itIsOpen = false;
-//   sidebarCssClasses.forEach((cssClass) => {
-//     if (document.body.classList.contains(cssClass)) {
-//       itIsOpen = true;
-//     }
-//   });
-//   return itIsOpen;
-// }
-; // export it as a singleton
+  this.isOpen = true;
+}; // export it as a singleton
 
 
 export default new SidebarController();

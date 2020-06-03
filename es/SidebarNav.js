@@ -186,7 +186,6 @@ var AppSidebarNav = /*#__PURE__*/function (_Component) {
 
   _proto.isExternal = function isExternal(url) {
     var link = url ? url.substring(0, 4) : '';
-    console.log('Hello from isExternal!', link);
     return link === 'http';
   };
 

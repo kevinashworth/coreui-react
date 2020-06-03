@@ -67,6 +67,10 @@ var AppSidebar = /*#__PURE__*/function (_Component) {
     this.isFixed(this.props.fixed);
     this.isOffCanvas(this.props.offCanvas);
     this.handleSidebarMinimizer(this.props.minimized);
+
+    if (this.sidebarController.isOnMobile()) {
+      this.sidebarController.close();
+    }
   };
 
   _proto.isCompact = function isCompact(compact) {
@@ -92,7 +96,6 @@ var AppSidebar = /*#__PURE__*/function (_Component) {
   };
 
   _proto.hideMobile = function hideMobile() {
-    console.log('Hello from hideMobile in Sidebar.js!');
     this.sidebarController.hideMobile();
   };
 

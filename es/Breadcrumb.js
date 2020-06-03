@@ -5,7 +5,8 @@ function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) r
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
 import React, { Component } from 'react';
-import { Route, Link, matchPath } from 'react-router-dom';
+import { Route, matchPath } from 'react-router-dom';
+import { LinkContainer } from 'react-router-bootstrap';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
@@ -40,9 +41,9 @@ var BreadcrumbsItem = function BreadcrumbsItem(_ref) {
     return (// eslint-disable-next-line react/prop-types
       match.isExact ? /*#__PURE__*/React.createElement(Breadcrumb.Item, {
         active: true
-      }, routeName) : /*#__PURE__*/React.createElement(Breadcrumb.Item, null, /*#__PURE__*/React.createElement(Link, {
+      }, routeName) : /*#__PURE__*/React.createElement(LinkContainer, {
         to: match.url || ''
-      }, routeName))
+      }, /*#__PURE__*/React.createElement(Breadcrumb.Item, null, routeName))
     );
   }
 

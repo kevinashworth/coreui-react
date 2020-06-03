@@ -95,7 +95,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 10);
+/******/ 	return __webpack_require__(__webpack_require__.s = 12);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -118,7 +118,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__0__;
 if (false) { var throwOnDirectAccess, ReactIs; } else {
   // By explicitly using `prop-types` you are opting into new production behavior.
   // http://fb.me/prop-types-in-prod
-  module.exports = __webpack_require__(11)();
+  module.exports = __webpack_require__(13)();
 }
 
 
@@ -336,12 +336,196 @@ if (true) {
   // DCE check should happen before ReactDOM bundle executes so that
   // DevTools can report bad minification during injection.
   checkDCE();
-  module.exports = __webpack_require__(13);
+  module.exports = __webpack_require__(16);
 } else {}
 
 
 /***/ }),
 /* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.LinkContainer = undefined;
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(1);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _reactRouterDom = __webpack_require__(3);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var isModifiedEvent = function isModifiedEvent(event) {
+  return !!(event.metaKey || event.altKey || event.ctrlKey || event.shiftKey);
+};
+
+var LinkContainer = exports.LinkContainer = function (_Component) {
+  _inherits(LinkContainer, _Component);
+
+  function LinkContainer() {
+    var _temp, _this, _ret;
+
+    _classCallCheck(this, LinkContainer);
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, _Component.call.apply(_Component, [this].concat(args))), _this), _this.handleClick = function (event) {
+      var _this$props = _this.props,
+          children = _this$props.children,
+          onClick = _this$props.onClick;
+
+
+      if (children.props.onClick) {
+        children.props.onClick(event);
+      }
+
+      if (onClick) {
+        onClick(event);
+      }
+
+      if (!event.defaultPrevented && // onClick prevented default
+      event.button === 0 && // ignore right clicks
+      !isModifiedEvent(event) // ignore clicks with modifier keys
+      ) {
+          event.preventDefault();
+
+          var _this$props2 = _this.props,
+              replace = _this$props2.replace,
+              to = _this$props2.to,
+              history = _this$props2.history;
+
+
+          if (replace) {
+            history.replace(to);
+          } else {
+            history.push(to);
+          }
+        }
+    }, _temp), _possibleConstructorReturn(_this, _ret);
+  }
+
+  LinkContainer.prototype.render = function render() {
+    var _this2 = this;
+
+    var _props = this.props,
+        history = _props.history,
+        _location = _props.location,
+        _match = _props.match,
+        _staticContext = _props.staticContext,
+        children = _props.children,
+        replace = _props.replace,
+        to = _props.to,
+        exact = _props.exact,
+        strict = _props.strict,
+        activeClassName = _props.activeClassName,
+        className = _props.className,
+        activeStyle = _props.activeStyle,
+        style = _props.style,
+        getIsActive = _props.isActive,
+        props = _objectWithoutProperties(_props, ['history', 'location', 'match', 'staticContext', 'children', 'replace', 'to', 'exact', 'strict', 'activeClassName', 'className', 'activeStyle', 'style', 'isActive']);
+
+    var href = history.createHref(typeof to === 'string' ? { pathname: to } : to);
+
+    var child = _react2.default.Children.only(children);
+
+    return _react2.default.createElement(_reactRouterDom.Route, {
+      path: (typeof to === 'undefined' ? 'undefined' : _typeof(to)) === 'object' ? to.pathname : to,
+      exact: exact,
+      strict: strict,
+      children: function children(_ref) {
+        var location = _ref.location,
+            match = _ref.match;
+
+        var isActive = !!(getIsActive ? getIsActive(match, location) : match);
+
+        return _react2.default.cloneElement(child, _extends({}, props, {
+          className: [className, child.props.className, isActive ? activeClassName : null].join(' ').trim(),
+          style: isActive ? _extends({}, style, activeStyle) : style,
+          href: href,
+          onClick: _this2.handleClick
+        }));
+      }
+    });
+  };
+
+  return LinkContainer;
+}(_react.Component);
+
+LinkContainer.propTypes = {
+  history: _propTypes2.default.shape({
+    push: _propTypes2.default.func.isRequired,
+    replace: _propTypes2.default.func.isRequired,
+    createHref: _propTypes2.default.func.isRequired
+  }).isRequired,
+  location: _propTypes2.default.object,
+  match: _propTypes2.default.object,
+  staticContext: _propTypes2.default.object,
+  children: _propTypes2.default.element.isRequired,
+  onClick: _propTypes2.default.func,
+  replace: _propTypes2.default.bool,
+  to: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.object]).isRequired,
+  exact: _propTypes2.default.bool,
+  strict: _propTypes2.default.bool,
+  className: _propTypes2.default.string,
+  activeClassName: _propTypes2.default.string,
+  style: _propTypes2.default.object,
+  activeStyle: _propTypes2.default.object,
+  isActive: _propTypes2.default.func
+};
+LinkContainer.defaultProps = {
+  replace: false,
+  exact: false,
+  strict: false,
+  activeClassName: 'active'
+};
+exports.default = (0, _reactRouterDom.withRouter)(LinkContainer);
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.LinkContainer = exports.IndexLinkContainer = undefined;
+
+var _IndexLinkContainer2 = __webpack_require__(15);
+
+var _IndexLinkContainer3 = _interopRequireDefault(_IndexLinkContainer2);
+
+var _LinkContainer2 = __webpack_require__(7);
+
+var _LinkContainer3 = _interopRequireDefault(_LinkContainer2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.IndexLinkContainer = _IndexLinkContainer3.default;
+exports.LinkContainer = _LinkContainer3.default;
+
+/***/ }),
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -377,7 +561,7 @@ function forwardRef(renderFn, _temp) {
 }
 
 /***/ }),
-/* 8 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -493,7 +677,7 @@ module.exports = ClickOutComponent;
 
 
 /***/ }),
-/* 9 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -503,7 +687,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _scrollbar = __webpack_require__(19);
+var _scrollbar = __webpack_require__(22);
 
 var _scrollbar2 = _interopRequireDefault(_scrollbar);
 
@@ -513,14 +697,14 @@ exports.default = _scrollbar2.default;
 module.exports = exports['default'];
 
 /***/ }),
-/* 10 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(23);
+module.exports = __webpack_require__(26);
 
 
 /***/ }),
-/* 11 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -533,7 +717,7 @@ module.exports = __webpack_require__(23);
 
 
 
-var ReactPropTypesSecret = __webpack_require__(12);
+var ReactPropTypesSecret = __webpack_require__(14);
 
 function emptyFunction() {}
 function emptyFunctionWithReset() {}
@@ -591,7 +775,7 @@ module.exports = function() {
 
 
 /***/ }),
-/* 12 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -610,7 +794,58 @@ module.exports = ReactPropTypesSecret;
 
 
 /***/ }),
-/* 13 */
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.IndexLinkContainer = undefined;
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterDom = __webpack_require__(3);
+
+var _LinkContainer = __webpack_require__(7);
+
+var _LinkContainer2 = _interopRequireDefault(_LinkContainer);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+// Don't use a stateless function, to allow users to set a ref.
+/* eslint-disable react/prefer-stateless-function */
+var IndexLinkContainer = exports.IndexLinkContainer = function (_React$Component) {
+  _inherits(IndexLinkContainer, _React$Component);
+
+  function IndexLinkContainer() {
+    _classCallCheck(this, IndexLinkContainer);
+
+    return _possibleConstructorReturn(this, _React$Component.apply(this, arguments));
+  }
+
+  IndexLinkContainer.prototype.render = function render() {
+    return _react2.default.createElement(_LinkContainer2.default, _extends({}, this.props, { exact: true }));
+  };
+
+  return IndexLinkContainer;
+}(_react2.default.Component);
+/* eslint-enable react/prefer-stateless-function */
+
+exports.default = (0, _reactRouterDom.withRouter)(IndexLinkContainer);
+
+/***/ }),
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -626,7 +861,7 @@ module.exports = ReactPropTypesSecret;
 /*
  Modernizr 3.0.0pre (Custom Build) | MIT
 */
-var aa=__webpack_require__(0),n=__webpack_require__(14),r=__webpack_require__(15);function u(a){for(var b="https://reactjs.org/docs/error-decoder.html?invariant="+a,c=1;c<arguments.length;c++)b+="&args[]="+encodeURIComponent(arguments[c]);return"Minified React error #"+a+"; visit "+b+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings."}if(!aa)throw Error(u(227));
+var aa=__webpack_require__(0),n=__webpack_require__(17),r=__webpack_require__(18);function u(a){for(var b="https://reactjs.org/docs/error-decoder.html?invariant="+a,c=1;c<arguments.length;c++)b+="&args[]="+encodeURIComponent(arguments[c]);return"Minified React error #"+a+"; visit "+b+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings."}if(!aa)throw Error(u(227));
 function ba(a,b,c,d,e,f,g,h,k){var l=Array.prototype.slice.call(arguments,3);try{b.apply(c,l)}catch(m){this.onError(m)}}var da=!1,ea=null,fa=!1,ha=null,ia={onError:function(a){da=!0;ea=a}};function ja(a,b,c,d,e,f,g,h,k){da=!1;ea=null;ba.apply(ia,arguments)}function ka(a,b,c,d,e,f,g,h,k){ja.apply(this,arguments);if(da){if(da){var l=ea;da=!1;ea=null}else throw Error(u(198));fa||(fa=!0,ha=l)}}var la=null,ma=null,na=null;
 function oa(a,b,c){var d=a.type||"unknown-event";a.currentTarget=na(c);ka(d,b,void 0,a);a.currentTarget=null}var pa=null,qa={};
 function ra(){if(pa)for(var a in qa){var b=qa[a],c=pa.indexOf(a);if(!(-1<c))throw Error(u(96,a));if(!sa[c]){if(!b.extractEvents)throw Error(u(97,a));sa[c]=b;c=b.eventTypes;for(var d in c){var e=void 0;var f=c[d],g=b,h=d;if(ta.hasOwnProperty(h))throw Error(u(99,h));ta[h]=f;var k=f.phasedRegistrationNames;if(k){for(e in k)k.hasOwnProperty(e)&&ua(k[e],g,h);e=!0}else f.registrationName?(ua(f.registrationName,g,h),e=!0):e=!1;if(!e)throw Error(u(98,d,a));}}}}
@@ -909,7 +1144,7 @@ exports.unstable_renderSubtreeIntoContainer=function(a,b,c,d){if(!gk(c))throw Er
 
 
 /***/ }),
-/* 14 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1006,19 +1241,19 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 
 /***/ }),
-/* 15 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 if (true) {
-  module.exports = __webpack_require__(16);
+  module.exports = __webpack_require__(19);
 } else {}
 
 
 /***/ }),
-/* 16 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1046,7 +1281,7 @@ exports.unstable_shouldYield=function(){var a=exports.unstable_now();V(a);var b=
 
 
 /***/ }),
-/* 17 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1075,7 +1310,7 @@ function isRequiredForA11y(validator) {
 module.exports = exports['default'];
 
 /***/ }),
-/* 18 */
+/* 21 */
 /***/ (function(module, exports) {
 
 (function (ElementProto) {
@@ -1115,7 +1350,7 @@ module.exports = exports['default'];
 })(typeof window !== 'undefined' && window.Element.prototype);
 
 /***/ }),
-/* 19 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1135,7 +1370,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _propTypes = __webpack_require__(1);
 
-var _perfectScrollbar = __webpack_require__(20);
+var _perfectScrollbar = __webpack_require__(23);
 
 var _perfectScrollbar2 = _interopRequireDefault(_perfectScrollbar);
 
@@ -1353,7 +1588,7 @@ ScrollBar.propTypes = {
 module.exports = exports['default'];
 
 /***/ }),
-/* 20 */
+/* 23 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2702,7 +2937,7 @@ PerfectScrollbar.prototype.removePsClasses = function removePsClasses () {
 
 
 /***/ }),
-/* 21 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2713,7 +2948,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = all;
 
-var _createChainableTypeChecker = __webpack_require__(22);
+var _createChainableTypeChecker = __webpack_require__(25);
 
 var _createChainableTypeChecker2 = _interopRequireDefault(_createChainableTypeChecker);
 
@@ -2750,7 +2985,7 @@ function all() {
 module.exports = exports['default'];
 
 /***/ }),
-/* 22 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2799,7 +3034,7 @@ function createChainableTypeChecker(validate) {
 module.exports = exports['default'];
 
 /***/ }),
-/* 23 */
+/* 26 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3059,6 +3294,9 @@ AsideToggler_AppAsideToggler.defaultProps = AsideToggler_defaultProps;
 // EXTERNAL MODULE: external {"root":"ReactRouterDom","commonjs2":"react-router-dom","commonjs":"react-router-dom","amd":"react-router-dom"}
 var external_root_ReactRouterDom_commonjs2_react_router_dom_commonjs_react_router_dom_amd_react_router_dom_ = __webpack_require__(3);
 
+// EXTERNAL MODULE: ./node_modules/react-router-bootstrap/lib/index.js
+var lib = __webpack_require__(8);
+
 // CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/extends.js
 function extends_extends() {
   extends_extends = Object.assign || function (target) {
@@ -3093,7 +3331,7 @@ function objectWithoutPropertiesLoose_objectWithoutPropertiesLoose(source, exclu
   return target;
 }
 // EXTERNAL MODULE: ./node_modules/@restart/context/forwardRef.js
-var forwardRef = __webpack_require__(7);
+var forwardRef = __webpack_require__(9);
 var forwardRef_default = /*#__PURE__*/__webpack_require__.n(forwardRef);
 
 // CONCATENATED MODULE: ./node_modules/react-bootstrap/esm/ThemeProvider.js
@@ -3341,6 +3579,7 @@ function Breadcrumb_inheritsLoose(subClass, superClass) { subClass.prototype = O
 
 
 
+
 var routes;
 
 var getPaths = function getPaths(pathname) {
@@ -3372,9 +3611,9 @@ var Breadcrumb_BreadcrumbsItem = function BreadcrumbsItem(_ref) {
     return (// eslint-disable-next-line react/prop-types
       match.isExact ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Breadcrumb.Item, {
         active: true
-      }, routeName) : /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Breadcrumb.Item, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(external_root_ReactRouterDom_commonjs2_react_router_dom_commonjs_react_router_dom_amd_react_router_dom_["Link"], {
+      }, routeName) : /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(lib["LinkContainer"], {
         to: match.url || ''
-      }, routeName))
+      }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Breadcrumb.Item, null, routeName))
     );
   }
 
@@ -7063,7 +7302,7 @@ DropdownMenu_DropdownMenu.displayName = 'DropdownMenu';
 DropdownMenu_DropdownMenu.defaultProps = esm_DropdownMenu_defaultProps;
 /* harmony default export */ var react_bootstrap_esm_DropdownMenu = (DropdownMenu_DropdownMenu);
 // EXTERNAL MODULE: ./node_modules/prop-types-extra/lib/isRequiredForA11y.js
-var isRequiredForA11y = __webpack_require__(17);
+var isRequiredForA11y = __webpack_require__(20);
 
 // CONCATENATED MODULE: ./node_modules/react-bootstrap/esm/Button.js
 
@@ -7427,11 +7666,11 @@ NavbarBrand_AppNavbarBrand.propTypes = NavbarBrand_propTypes;
 NavbarBrand_AppNavbarBrand.defaultProps = NavbarBrand_defaultProps;
 /* harmony default export */ var NavbarBrand = (NavbarBrand_AppNavbarBrand);
 // EXTERNAL MODULE: ./node_modules/react-onclickout/index.js
-var react_onclickout = __webpack_require__(8);
+var react_onclickout = __webpack_require__(10);
 var react_onclickout_default = /*#__PURE__*/__webpack_require__.n(react_onclickout);
 
 // EXTERNAL MODULE: ./src/Shared/element-closest.js
-var element_closest = __webpack_require__(18);
+var element_closest = __webpack_require__(21);
 
 // CONCATENATED MODULE: ./src/Shared/my-sidebar-controller.js
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -7442,7 +7681,7 @@ The document body classList is the one source of info.
 If there is no document, do nothing.
 
 sidebar-show is for mobile
-sidebar-{}-show is for all other browsers
+sidebar-{}-show is for all others
 
 Use SidebarController as a singleton across multiple components:
   Sidebar, SidebarNav, SidebarMinimizer, SidebarToggler
@@ -7490,7 +7729,6 @@ var my_sidebar_controller_SidebarController = function SidebarController() {
   });
 
   _defineProperty(this, "close", function () {
-    // console.log('Hello from close!');
     if (document.body) {
       _this.remove('sidebar-show');
 
@@ -7511,7 +7749,6 @@ var my_sidebar_controller_SidebarController = function SidebarController() {
   });
 
   _defineProperty(this, "toggleOpen", function () {
-    // console.log('Hello from toggleOpen!');
     if (document.body) {
       if (_this.isOpen) {
         _this.close();
@@ -7576,10 +7813,14 @@ var my_sidebar_controller_SidebarController = function SidebarController() {
   });
 
   _defineProperty(this, "hideMobile", function () {
-    console.log('Hello from hideMobile in my-sidebar-contoller.js!');
+    if (document.body) {
+      if (_this.isOnMobile()) {
+        _this.remove('sidebar-show'); // this.remove(`sidebar-${this.display}-show`);
 
-    _this.remove('sidebar-show'); // this.remove(`sidebar-${this.display}-show`);
 
+        _this.isOpen = false;
+      }
+    }
   });
 
   _defineProperty(this, "isOnMobile", function () {
@@ -7663,38 +7904,10 @@ var my_sidebar_controller_SidebarController = function SidebarController() {
     }
   });
 
-  console.log('Hello from SidebarController!'); // if (document) {
-  //   this.isMinimized = this.contains('sidebar-minimized') || this.contains('brand-minimized');
-  //   // now, to ensure that both classes are used in tandem and that sidebarPSToggle is called
-  //   if (this.isMinimized) {
-  //     this.narrow();
-  //   } else {
-  //     this.wide();
-  //   }
-  //   this.display = null;
-  //   this.setDisplayBreakpoint('lg');
-  //   this.isOpen = true;
-  //   // now, to ensure that both plain and breakpoint classes are used together
-  //   if (this.isOpen) {
-  //     this.open();
-  //   } else {
-  //     this.close();
-  //   }
-  // } else {
-
   this.display = 'lg';
   this.isMinimized = false;
-  this.isOpen = true; // }
-} // isItOpen = () => {
-//   let itIsOpen = false;
-//   sidebarCssClasses.forEach((cssClass) => {
-//     if (document.body.classList.contains(cssClass)) {
-//       itIsOpen = true;
-//     }
-//   });
-//   return itIsOpen;
-// }
-; // export it as a singleton
+  this.isOpen = true;
+}; // export it as a singleton
 
 
 /* harmony default export */ var my_sidebar_controller = (new my_sidebar_controller_SidebarController());
@@ -7768,6 +7981,10 @@ var Sidebar_AppSidebar = /*#__PURE__*/function (_Component) {
     this.isFixed(this.props.fixed);
     this.isOffCanvas(this.props.offCanvas);
     this.handleSidebarMinimizer(this.props.minimized);
+
+    if (this.sidebarController.isOnMobile()) {
+      this.sidebarController.close();
+    }
   };
 
   _proto.isCompact = function isCompact(compact) {
@@ -7793,7 +8010,6 @@ var Sidebar_AppSidebar = /*#__PURE__*/function (_Component) {
   };
 
   _proto.hideMobile = function hideMobile() {
-    console.log('Hello from hideMobile in Sidebar.js!');
     this.sidebarController.hideMobile();
   };
 
@@ -8077,7 +8293,7 @@ Badge.displayName = 'Badge';
 Badge.defaultProps = Badge_defaultProps;
 /* harmony default export */ var esm_Badge = (Badge);
 // EXTERNAL MODULE: ./node_modules/prop-types-extra/lib/all.js
-var lib_all = __webpack_require__(21);
+var lib_all = __webpack_require__(24);
 
 // CONCATENATED MODULE: ./node_modules/react-bootstrap/esm/CardContext.js
 
@@ -8349,8 +8565,8 @@ Nav.Item = esm_NavItem;
 Nav.Link = esm_NavLink;
 /* harmony default export */ var esm_Nav = (Nav);
 // EXTERNAL MODULE: ./node_modules/react-perfect-scrollbar/lib/index.js
-var lib = __webpack_require__(9);
-var lib_default = /*#__PURE__*/__webpack_require__.n(lib);
+var react_perfect_scrollbar_lib = __webpack_require__(11);
+var react_perfect_scrollbar_lib_default = /*#__PURE__*/__webpack_require__.n(react_perfect_scrollbar_lib);
 
 // CONCATENATED MODULE: ./src/SidebarNav.js
 function SidebarNav_objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
@@ -8541,7 +8757,6 @@ var SidebarNav_AppSidebarNav = /*#__PURE__*/function (_Component) {
 
   _proto.isExternal = function isExternal(url) {
     var link = url ? url.substring(0, 4) : '';
-    console.log('Hello from isExternal!', link);
     return link === 'http';
   };
 
@@ -8559,7 +8774,7 @@ var SidebarNav_AppSidebarNav = /*#__PURE__*/function (_Component) {
 
     var isRtl = getComputedStyle(document.documentElement).direction === 'rtl'; // sidebar-nav root
 
-    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(lib_default.a, SidebarNav_extends({
+    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(react_perfect_scrollbar_lib_default.a, SidebarNav_extends({
       className: navClasses
     }, attributes, {
       options: {
