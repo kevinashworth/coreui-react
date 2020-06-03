@@ -43,7 +43,8 @@
     "core-js": "^3.6.5",
     "prop-types": "^15.7.2",
     "react-onclickout": "^2.0.8",
-    "react-perfect-scrollbar": "~1.5.8"
+    "react-perfect-scrollbar": "~1.5.8",
+    "react-router-bootstrap": "^0.25.0"
   },
   "peerDependencies": {
     "@coreui/coreui": "^2.1.16",
