@@ -73,11 +73,11 @@ class AppSidebar extends Component {
     this.sidebarController.setDisplayBreakpoint(display);
   }
 
-  hideMobile() {
+  hideMobile = () => {
     this.sidebarController.hideMobile();
   }
 
-  onClickOut(e) {
+  onClickOut = (e) => {
     if (typeof window !== 'undefined' && (document.body.classList.contains('sidebar-show') || document.body.classList.contains('sidebar-lg-show'))) {
       if (!e.target.closest('[data-sidebar-toggler]')) {
         this.hideMobile();
@@ -100,7 +100,7 @@ class AppSidebar extends Component {
 
     // sidebar-nav root
     return (
-      <ClickOutHandler onClickOut={(e) => {this.onClickOut(e)}}>
+      <ClickOutHandler onClickOut={this.onClickOut}>
         <Tag className={classes} {...attributes}>
           {children}
         </Tag>
