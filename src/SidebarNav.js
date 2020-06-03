@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Badge, Nav, NavItem, NavLink as RsNavLink } from 'reactstrap';
+import Badge from 'react-bootstrap/Badge'
+import Nav from 'react-bootstrap/Nav'
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import PerfectScrollbar from 'react-perfect-scrollbar';
@@ -140,21 +141,21 @@ class AppSidebarNav extends Component {
     const itemBadge = this.navBadge(item.badge)
     const attributes = item.attributes || {}
     return (
-      <NavItem key={key} className={classes.item}>
+      <Nav.Item key={key} className={classes.item}>
         { attributes.disabled ?
-            <RsNavLink href={''} className={classes.link} {...attributes}>
+            <Nav.Link href={''} className={classes.link} {...attributes}>
               {itemIcon}{item.name}{itemBadge}
-            </RsNavLink>
+            </Nav.Link>
          :
           this.isExternal(url) ?
-            <RsNavLink href={url} className={classes.link} active {...attributes}>
+            <Nav.Link href={url} className={classes.link} active {...attributes}>
               {itemIcon}{item.name}{itemBadge}
-            </RsNavLink> :
+            </Nav.Link> :
             <NavLink to={url} className={classes.link} activeClassName="active" onClick={this.hideMobile} {...attributes}>
               {itemIcon}{item.name}{itemBadge}
             </NavLink>
         }
-      </NavItem>
+      </Nav.Item>
     );
   }
 

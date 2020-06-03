@@ -11,7 +11,7 @@ import '@coreui/icons/css/coreui-icons.min.css';
 // Import Simple Line Icons Set
 // import 'simple-line-icons/css/simple-line-icons.css';
 // Import Main styles for this application
-import './scss/style.css'
+import './css/main.css'
 // import '../node_modules/@coreui/styles/scss/_dropdown-menu-right.scss';
 
 // Containers

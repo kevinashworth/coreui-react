@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Route, Link, matchPath } from 'react-router-dom';
-import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import Breadcrumb from 'react-bootstrap/Breadcrumb'
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
@@ -30,13 +30,13 @@ const BreadcrumbsItem = ({ match }) => {
     return (
         // eslint-disable-next-line react/prop-types
       match.isExact ?
-        <BreadcrumbItem active>{routeName}</BreadcrumbItem>
+        <Breadcrumb.Item active>{routeName}</Breadcrumb.Item>
        :
-        <BreadcrumbItem>
+        <Breadcrumb.Item>
           <Link to={match.url || ''}>
             {routeName}
           </Link>
-        </BreadcrumbItem>
+        </Breadcrumb.Item>
     );
   }
   return null;

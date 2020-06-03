@@ -46,7 +46,7 @@ class AppNavbarBrand extends Component {
   }
 
   render() {
-    const { className, children, tag: Tag, ...attributes } = this.props;
+    const { className, children, tag: Tag } = this.props;
     const classes = classNames(className, 'navbar-brand');
 
     const img = [];
@@ -67,7 +67,7 @@ class AppNavbarBrand extends Component {
     }
 
     return (
-      <Tag {...attributes} className={classes}>
+      <Tag className={classes}>
         {children || img}
       </Tag>
     );

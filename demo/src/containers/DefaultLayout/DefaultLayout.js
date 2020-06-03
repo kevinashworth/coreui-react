@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import * as router from 'react-router-dom';
-import { Container, Nav, NavItem, NavLink, Badge, DropdownToggle, DropdownMenu } from 'reactstrap';
+import Badge from 'react-bootstrap/Badge'
+import Container from 'react-bootstrap/Container'
+import Dropdown from 'react-bootstrap/Dropdown'
+import Nav from 'react-bootstrap/Nav'
+import NavLink from 'react-bootstrap/NavLink'
 
 import {
   AppAside,
@@ -36,27 +40,27 @@ class DefaultLayout extends Component {
         <AppHeader fixed>
           <AppSidebarToggler className="d-lg-none" display="md" mobile />
           <AppNavbarBrand
-            full={{ src: logo, width: 89, height: 25, alt: 'CoreUI Logo' }}
-            minimized={{ src: sygnet, width: 30, height: 30, alt: 'CoreUI Logo' }}
+            full={{ src: logo, width: 89, height: 25, alt: 'CoreUI Logo (Full)' }}
+            minimized={{ src: sygnet, width: 30, height: 30, alt: 'CoreUI Logo (Min)' }}
           />
           <AppSidebarToggler className="d-md-down-none" display="sm" />
-          <Nav className="ml-auto" navbar>
-            <NavItem className="d-md-down-none">
-              <NavLink href="#"><i className="cui-bell icons font-xl d-block"></i><Badge pill color="danger">5</Badge></NavLink>
-            </NavItem>
-            <NavItem className="d-md-down-none">
-              <NavLink href="#"><i className="cui-list icons icons font-xl d-block"></i></NavLink>
-            </NavItem>
-            <NavItem className="d-md-down-none">
-              <NavLink href="#"><i className="cui-location-pin icons icons font-xl d-block"></i></NavLink>
-            </NavItem>
+          <Nav className="ml-auto">
+            <Nav.Item className="d-md-down-none">
+              <Nav.Link eventKey="link-1"><i className="cui-bell icons font-xl d-block"></i><Badge pill variant="danger">5</Badge></Nav.Link>
+            </Nav.Item>
+            <Nav.Item className="d-md-down-none">
+              <Nav.Link eventKey="link-2"><i className="cui-list icons icons font-xl d-block"></i></Nav.Link>
+            </Nav.Item>
+            <Nav.Item className="d-md-down-none">
+              <Nav.Link eventKey="link-3"><i className="cui-location-pin icons icons font-xl d-block"></i></Nav.Link>
+            </Nav.Item>
             <AppHeaderDropdown>
-              <DropdownToggle nav>
+              <Dropdown.Toggle as={NavLink}>
                 <img src={avatar} className="img-avatar" alt="admin@bootstrapmaster.com" />
-              </DropdownToggle>
-              <DropdownMenu right style={{ height: '400px' }}>
+              </Dropdown.Toggle>
+              <Dropdown.Menu alignRight style={{ height: '400px' }}>
                 AppHeaderDropdown
-              </DropdownMenu>
+              </Dropdown.Menu>
             </AppHeaderDropdown>
           </Nav>
           <AppAsideToggler className="d-md-down-none" />
