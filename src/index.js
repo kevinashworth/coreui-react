@@ -1,7 +1,6 @@
 export AppAside from './Aside';
 export AppAsideToggler from './AsideToggler';
 export AppBreadcrumb from './Breadcrumb';
-export AppBreadcrumb2 from './Breadcrumb2';
 export AppFooter from './Footer';
 export AppHeader from './Header';
 export AppHeaderDropdown from './HeaderDropdown';

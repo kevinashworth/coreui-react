@@ -10,7 +10,7 @@ import NavLink from 'react-bootstrap/NavLink'
 import {
   AppAside,
   AppAsideToggler,
-  AppBreadcrumb2 as AppBreadcrumb,
+  AppBreadcrumb,
   AppFooter,
   AppHeader,
   AppHeaderDropdown,
