@@ -6,7 +6,7 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 
 import React, { Component } from 'react';
 import { Route, Link, matchPath } from 'react-router-dom';
-import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 var routes;
@@ -38,9 +38,9 @@ var BreadcrumbsItem = function BreadcrumbsItem(_ref) {
 
   if (routeName) {
     return (// eslint-disable-next-line react/prop-types
-      match.isExact ? /*#__PURE__*/React.createElement(BreadcrumbItem, {
+      match.isExact ? /*#__PURE__*/React.createElement(Breadcrumb.Item, {
         active: true
-      }, routeName) : /*#__PURE__*/React.createElement(BreadcrumbItem, null, /*#__PURE__*/React.createElement(Link, {
+      }, routeName) : /*#__PURE__*/React.createElement(Breadcrumb.Item, null, /*#__PURE__*/React.createElement(Link, {
         to: match.url || ''
       }, routeName))
     );

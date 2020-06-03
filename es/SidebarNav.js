@@ -8,7 +8,8 @@ function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.crea
 
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Badge, Nav, NavItem, NavLink as RsNavLink } from 'reactstrap';
+import Badge from 'react-bootstrap/Badge';
+import Nav from 'react-bootstrap/Nav';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import PerfectScrollbar from 'react-perfect-scrollbar';
@@ -152,13 +153,13 @@ var AppSidebarNav = /*#__PURE__*/function (_Component) {
     });
     var itemBadge = this.navBadge(item.badge);
     var attributes = item.attributes || {};
-    return /*#__PURE__*/React.createElement(NavItem, {
+    return /*#__PURE__*/React.createElement(Nav.Item, {
       key: key,
       className: classes.item
-    }, attributes.disabled ? /*#__PURE__*/React.createElement(RsNavLink, _extends({
+    }, attributes.disabled ? /*#__PURE__*/React.createElement(Nav.Link, _extends({
       href: '',
       className: classes.link
-    }, attributes), itemIcon, item.name, itemBadge) : this.isExternal(url) ? /*#__PURE__*/React.createElement(RsNavLink, _extends({
+    }, attributes), itemIcon, item.name, itemBadge) : this.isExternal(url) ? /*#__PURE__*/React.createElement(Nav.Link, _extends({
       href: url,
       className: classes.link,
       active: true
@@ -185,6 +186,7 @@ var AppSidebarNav = /*#__PURE__*/function (_Component) {
 
   _proto.isExternal = function isExternal(url) {
     var link = url ? url.substring(0, 4) : '';
+    console.log('Hello from isExternal!', link);
     return link === 'http';
   };
 

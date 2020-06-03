@@ -1,7 +1,3 @@
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
-function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
-
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
 import React, { Component } from 'react';
@@ -59,9 +55,7 @@ var AppNavbarBrand = /*#__PURE__*/function (_Component) {
     var _this$props = this.props,
         className = _this$props.className,
         children = _this$props.children,
-        Tag = _this$props.tag,
-        attributes = _objectWithoutPropertiesLoose(_this$props, ["className", "children", "tag"]);
-
+        Tag = _this$props.tag;
     var classes = classNames(className, 'navbar-brand');
     var img = [];
 
@@ -83,9 +77,9 @@ var AppNavbarBrand = /*#__PURE__*/function (_Component) {
       img.push(this.navbarBrandImg(_props2, _classBrand2, img.length + 1));
     }
 
-    return /*#__PURE__*/React.createElement(Tag, _extends({}, attributes, {
+    return /*#__PURE__*/React.createElement(Tag, {
       className: classes
-    }), children || img);
+    }, children || img);
   };
 
   return AppNavbarBrand;

@@ -11,7 +11,7 @@
 		exports["CoreUIReact"] = factory(require("react"), require("react-router-dom"));
 	else
 		root["CoreUIReact"] = factory(root["React"], root["ReactRouterDom"]);
-})(window, function(__WEBPACK_EXTERNAL_MODULE__1__, __WEBPACK_EXTERNAL_MODULE__3__) {
+})(window, function(__WEBPACK_EXTERNAL_MODULE__0__, __WEBPACK_EXTERNAL_MODULE__3__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -95,11 +95,17 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 11);
+/******/ 	return __webpack_require__(__webpack_require__.s = 10);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE__0__;
+
+/***/ }),
+/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -112,15 +118,9 @@ return /******/ (function(modules) { // webpackBootstrap
 if (false) { var throwOnDirectAccess, ReactIs; } else {
   // By explicitly using `prop-types` you are opting into new production behavior.
   // http://fb.me/prop-types-in-prod
-  module.exports = __webpack_require__(12)();
+  module.exports = __webpack_require__(11)();
 }
 
-
-/***/ }),
-/* 1 */
-/***/ (function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE__1__;
 
 /***/ }),
 /* 2 */
@@ -186,40 +186,159 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 module.exports = __WEBPACK_EXTERNAL_MODULE__3__;
 
 /***/ }),
-/* 4 */,
-/* 5 */
-/***/ (function(module, exports) {
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
 
-function _assertThisInitialized(self) {
-  if (self === void 0) {
-    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+"use strict";
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+
+
+/**
+ * Use invariant() to assert state which your program assumes to be true.
+ *
+ * Provide sprintf-style format (only %s is supported) and arguments
+ * to provide information about what broke and what you were
+ * expecting.
+ *
+ * The invariant message will be stripped in production, but the invariant
+ * will remain to ensure logic does not differ in production.
+ */
+
+var invariant = function(condition, format, a, b, c, d, e, f) {
+  if (false) {}
+
+  if (!condition) {
+    var error;
+    if (format === undefined) {
+      error = new Error(
+        'Minified exception occurred; use the non-minified dev environment ' +
+        'for the full error message and additional helpful warnings.'
+      );
+    } else {
+      var args = [a, b, c, d, e, f];
+      var argIndex = 0;
+      error = new Error(
+        format.replace(/%s/g, function() { return args[argIndex++]; })
+      );
+      error.name = 'Invariant Violation';
+    }
+
+    error.framesToPop = 1; // we don't care about invariant's own frame
+    throw error;
+  }
+};
+
+module.exports = invariant;
+
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Copyright (c) 2014-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+
+
+/**
+ * Similar to invariant but only logs a warning if the condition is not met.
+ * This can be used to log issues in development environments in critical
+ * paths. Removing the logging code for production environments will keep the
+ * same logic and follow the same code paths.
+ */
+
+var __DEV__ = "production" !== 'production';
+
+var warning = function() {};
+
+if (__DEV__) {
+  var printWarning = function printWarning(format, args) {
+    var len = arguments.length;
+    args = new Array(len > 1 ? len - 1 : 0);
+    for (var key = 1; key < len; key++) {
+      args[key - 1] = arguments[key];
+    }
+    var argIndex = 0;
+    var message = 'Warning: ' +
+      format.replace(/%s/g, function() {
+        return args[argIndex++];
+      });
+    if (typeof console !== 'undefined') {
+      console.error(message);
+    }
+    try {
+      // --- Welcome to debugging React ---
+      // This error was thrown as a convenience so that you can use this stack
+      // to find the callsite that caused this warning to fire.
+      throw new Error(message);
+    } catch (x) {}
   }
 
-  return self;
+  warning = function(condition, format, args) {
+    var len = arguments.length;
+    args = new Array(len > 2 ? len - 2 : 0);
+    for (var key = 2; key < len; key++) {
+      args[key - 2] = arguments[key];
+    }
+    if (format === undefined) {
+      throw new Error(
+          '`warning(condition, format, ...args)` requires a warning ' +
+          'message argument'
+      );
+    }
+    if (!condition) {
+      printWarning.apply(null, [format].concat(args));
+    }
+  };
 }
 
-module.exports = _assertThisInitialized;
+module.exports = warning;
+
 
 /***/ }),
 /* 6 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
+"use strict";
+
+
+function checkDCE() {
+  /* global __REACT_DEVTOOLS_GLOBAL_HOOK__ */
+  if (
+    typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ === 'undefined' ||
+    typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE !== 'function'
+  ) {
+    return;
   }
-
-  return obj;
+  if (false) {}
+  try {
+    // Verify that the code above has been dead code eliminated (DCE'd).
+    __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE(checkDCE);
+  } catch (err) {
+    // DevTools shouldn't crash React, no matter what.
+    // We should still report in case we break this code.
+    console.error(err);
+  }
 }
 
-module.exports = _defineProperty;
+if (true) {
+  // DCE check should happen before ReactDOM bundle executes so that
+  // DevTools can report bad minification during injection.
+  checkDCE();
+  module.exports = __webpack_require__(13);
+} else {}
+
 
 /***/ }),
 /* 7 */
@@ -229,34 +348,36 @@ module.exports = _defineProperty;
 
 
 exports.__esModule = true;
+exports.default = forwardRef;
 
-var _react = __webpack_require__(1);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _implementation = __webpack_require__(14);
-
-var _implementation2 = _interopRequireDefault(_implementation);
+var _react = _interopRequireDefault(__webpack_require__(0));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.default = _react2.default.createContext || _implementation2.default;
-module.exports = exports['default'];
+function forwardRef(renderFn, _temp) {
+  var _ref = _temp === void 0 ? {} : _temp,
+      propTypes = _ref.propTypes,
+      defaultProps = _ref.defaultProps,
+      _ref$allowFallback = _ref.allowFallback,
+      allowFallback = _ref$allowFallback === void 0 ? false : _ref$allowFallback,
+      _ref$displayName = _ref.displayName,
+      displayName = _ref$displayName === void 0 ? renderFn.name || renderFn.displayName : _ref$displayName;
+
+  var render = function render(props, ref) {
+    return renderFn(props, ref);
+  };
+
+  return Object.assign(_react.default.forwardRef || !allowFallback ? _react.default.forwardRef(render) : function (props) {
+    return render(props, null);
+  }, {
+    displayName: displayName,
+    propTypes: propTypes,
+    defaultProps: defaultProps
+  });
+}
 
 /***/ }),
 /* 8 */
-/***/ (function(module, exports) {
-
-function _inheritsLoose(subClass, superClass) {
-  subClass.prototype = Object.create(superClass.prototype);
-  subClass.prototype.constructor = subClass;
-  subClass.__proto__ = superClass;
-}
-
-module.exports = _inheritsLoose;
-
-/***/ }),
-/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -270,8 +391,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var React = __webpack_require__(1);
-var ReactDOM = __webpack_require__(18);
+var React = __webpack_require__(0);
+var ReactDOM = __webpack_require__(6);
 
 var ClickOutComponent = function (_React$Component) {
   _inherits(ClickOutComponent, _React$Component);
@@ -372,7 +493,7 @@ module.exports = ClickOutComponent;
 
 
 /***/ }),
-/* 10 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -382,7 +503,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _scrollbar = __webpack_require__(24);
+var _scrollbar = __webpack_require__(19);
 
 var _scrollbar2 = _interopRequireDefault(_scrollbar);
 
@@ -392,14 +513,14 @@ exports.default = _scrollbar2.default;
 module.exports = exports['default'];
 
 /***/ }),
-/* 11 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(26);
+module.exports = __webpack_require__(23);
 
 
 /***/ }),
-/* 12 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -412,7 +533,7 @@ module.exports = __webpack_require__(26);
 
 
 
-var ReactPropTypesSecret = __webpack_require__(13);
+var ReactPropTypesSecret = __webpack_require__(12);
 
 function emptyFunction() {}
 function emptyFunctionWithReset() {}
@@ -470,7 +591,7 @@ module.exports = function() {
 
 
 /***/ }),
-/* 13 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -489,352 +610,7 @@ module.exports = ReactPropTypesSecret;
 
 
 /***/ }),
-/* 14 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _react = __webpack_require__(1);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _propTypes = __webpack_require__(0);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _gud = __webpack_require__(15);
-
-var _gud2 = _interopRequireDefault(_gud);
-
-var _warning = __webpack_require__(17);
-
-var _warning2 = _interopRequireDefault(_warning);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var MAX_SIGNED_31_BIT_INT = 1073741823;
-
-// Inlined Object.is polyfill.
-// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
-function objectIs(x, y) {
-  if (x === y) {
-    return x !== 0 || 1 / x === 1 / y;
-  } else {
-    return x !== x && y !== y;
-  }
-}
-
-function createEventEmitter(value) {
-  var handlers = [];
-  return {
-    on: function on(handler) {
-      handlers.push(handler);
-    },
-    off: function off(handler) {
-      handlers = handlers.filter(function (h) {
-        return h !== handler;
-      });
-    },
-    get: function get() {
-      return value;
-    },
-    set: function set(newValue, changedBits) {
-      value = newValue;
-      handlers.forEach(function (handler) {
-        return handler(value, changedBits);
-      });
-    }
-  };
-}
-
-function onlyChild(children) {
-  return Array.isArray(children) ? children[0] : children;
-}
-
-function createReactContext(defaultValue, calculateChangedBits) {
-  var _Provider$childContex, _Consumer$contextType;
-
-  var contextProp = '__create-react-context-' + (0, _gud2.default)() + '__';
-
-  var Provider = function (_Component) {
-    _inherits(Provider, _Component);
-
-    function Provider() {
-      var _temp, _this, _ret;
-
-      _classCallCheck(this, Provider);
-
-      for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
-
-      return _ret = (_temp = (_this = _possibleConstructorReturn(this, _Component.call.apply(_Component, [this].concat(args))), _this), _this.emitter = createEventEmitter(_this.props.value), _temp), _possibleConstructorReturn(_this, _ret);
-    }
-
-    Provider.prototype.getChildContext = function getChildContext() {
-      var _ref;
-
-      return _ref = {}, _ref[contextProp] = this.emitter, _ref;
-    };
-
-    Provider.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
-      if (this.props.value !== nextProps.value) {
-        var oldValue = this.props.value;
-        var newValue = nextProps.value;
-        var changedBits = void 0;
-
-        if (objectIs(oldValue, newValue)) {
-          changedBits = 0; // No change
-        } else {
-          changedBits = typeof calculateChangedBits === 'function' ? calculateChangedBits(oldValue, newValue) : MAX_SIGNED_31_BIT_INT;
-          if (false) {}
-
-          changedBits |= 0;
-
-          if (changedBits !== 0) {
-            this.emitter.set(nextProps.value, changedBits);
-          }
-        }
-      }
-    };
-
-    Provider.prototype.render = function render() {
-      return this.props.children;
-    };
-
-    return Provider;
-  }(_react.Component);
-
-  Provider.childContextTypes = (_Provider$childContex = {}, _Provider$childContex[contextProp] = _propTypes2.default.object.isRequired, _Provider$childContex);
-
-  var Consumer = function (_Component2) {
-    _inherits(Consumer, _Component2);
-
-    function Consumer() {
-      var _temp2, _this2, _ret2;
-
-      _classCallCheck(this, Consumer);
-
-      for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-        args[_key2] = arguments[_key2];
-      }
-
-      return _ret2 = (_temp2 = (_this2 = _possibleConstructorReturn(this, _Component2.call.apply(_Component2, [this].concat(args))), _this2), _this2.state = {
-        value: _this2.getValue()
-      }, _this2.onUpdate = function (newValue, changedBits) {
-        var observedBits = _this2.observedBits | 0;
-        if ((observedBits & changedBits) !== 0) {
-          _this2.setState({ value: _this2.getValue() });
-        }
-      }, _temp2), _possibleConstructorReturn(_this2, _ret2);
-    }
-
-    Consumer.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
-      var observedBits = nextProps.observedBits;
-
-      this.observedBits = observedBits === undefined || observedBits === null ? MAX_SIGNED_31_BIT_INT // Subscribe to all changes by default
-      : observedBits;
-    };
-
-    Consumer.prototype.componentDidMount = function componentDidMount() {
-      if (this.context[contextProp]) {
-        this.context[contextProp].on(this.onUpdate);
-      }
-      var observedBits = this.props.observedBits;
-
-      this.observedBits = observedBits === undefined || observedBits === null ? MAX_SIGNED_31_BIT_INT // Subscribe to all changes by default
-      : observedBits;
-    };
-
-    Consumer.prototype.componentWillUnmount = function componentWillUnmount() {
-      if (this.context[contextProp]) {
-        this.context[contextProp].off(this.onUpdate);
-      }
-    };
-
-    Consumer.prototype.getValue = function getValue() {
-      if (this.context[contextProp]) {
-        return this.context[contextProp].get();
-      } else {
-        return defaultValue;
-      }
-    };
-
-    Consumer.prototype.render = function render() {
-      return onlyChild(this.props.children)(this.state.value);
-    };
-
-    return Consumer;
-  }(_react.Component);
-
-  Consumer.contextTypes = (_Consumer$contextType = {}, _Consumer$contextType[contextProp] = _propTypes2.default.object, _Consumer$contextType);
-
-
-  return {
-    Provider: Provider,
-    Consumer: Consumer
-  };
-}
-
-exports.default = createReactContext;
-module.exports = exports['default'];
-
-/***/ }),
-/* 15 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(global) {// @flow
-
-
-var key = '__global_unique_id__';
-
-module.exports = function() {
-  return global[key] = (global[key] || 0) + 1;
-};
-
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(16)))
-
-/***/ }),
-/* 16 */
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || new Function("return this")();
-} catch (e) {
-	// This works if the window reference is available
-	if (typeof window === "object") g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-/* 17 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- * Copyright (c) 2014-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-
-
-/**
- * Similar to invariant but only logs a warning if the condition is not met.
- * This can be used to log issues in development environments in critical
- * paths. Removing the logging code for production environments will keep the
- * same logic and follow the same code paths.
- */
-
-var __DEV__ = "production" !== 'production';
-
-var warning = function() {};
-
-if (__DEV__) {
-  var printWarning = function printWarning(format, args) {
-    var len = arguments.length;
-    args = new Array(len > 1 ? len - 1 : 0);
-    for (var key = 1; key < len; key++) {
-      args[key - 1] = arguments[key];
-    }
-    var argIndex = 0;
-    var message = 'Warning: ' +
-      format.replace(/%s/g, function() {
-        return args[argIndex++];
-      });
-    if (typeof console !== 'undefined') {
-      console.error(message);
-    }
-    try {
-      // --- Welcome to debugging React ---
-      // This error was thrown as a convenience so that you can use this stack
-      // to find the callsite that caused this warning to fire.
-      throw new Error(message);
-    } catch (x) {}
-  }
-
-  warning = function(condition, format, args) {
-    var len = arguments.length;
-    args = new Array(len > 2 ? len - 2 : 0);
-    for (var key = 2; key < len; key++) {
-      args[key - 2] = arguments[key];
-    }
-    if (format === undefined) {
-      throw new Error(
-          '`warning(condition, format, ...args)` requires a warning ' +
-          'message argument'
-      );
-    }
-    if (!condition) {
-      printWarning.apply(null, [format].concat(args));
-    }
-  };
-}
-
-module.exports = warning;
-
-
-/***/ }),
-/* 18 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-function checkDCE() {
-  /* global __REACT_DEVTOOLS_GLOBAL_HOOK__ */
-  if (
-    typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ === 'undefined' ||
-    typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE !== 'function'
-  ) {
-    return;
-  }
-  if (false) {}
-  try {
-    // Verify that the code above has been dead code eliminated (DCE'd).
-    __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE(checkDCE);
-  } catch (err) {
-    // DevTools shouldn't crash React, no matter what.
-    // We should still report in case we break this code.
-    console.error(err);
-  }
-}
-
-if (true) {
-  // DCE check should happen before ReactDOM bundle executes so that
-  // DevTools can report bad minification during injection.
-  checkDCE();
-  module.exports = __webpack_require__(19);
-} else {}
-
-
-/***/ }),
-/* 19 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -850,7 +626,7 @@ if (true) {
 /*
  Modernizr 3.0.0pre (Custom Build) | MIT
 */
-var aa=__webpack_require__(1),n=__webpack_require__(20),r=__webpack_require__(21);function u(a){for(var b="https://reactjs.org/docs/error-decoder.html?invariant="+a,c=1;c<arguments.length;c++)b+="&args[]="+encodeURIComponent(arguments[c]);return"Minified React error #"+a+"; visit "+b+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings."}if(!aa)throw Error(u(227));
+var aa=__webpack_require__(0),n=__webpack_require__(14),r=__webpack_require__(15);function u(a){for(var b="https://reactjs.org/docs/error-decoder.html?invariant="+a,c=1;c<arguments.length;c++)b+="&args[]="+encodeURIComponent(arguments[c]);return"Minified React error #"+a+"; visit "+b+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings."}if(!aa)throw Error(u(227));
 function ba(a,b,c,d,e,f,g,h,k){var l=Array.prototype.slice.call(arguments,3);try{b.apply(c,l)}catch(m){this.onError(m)}}var da=!1,ea=null,fa=!1,ha=null,ia={onError:function(a){da=!0;ea=a}};function ja(a,b,c,d,e,f,g,h,k){da=!1;ea=null;ba.apply(ia,arguments)}function ka(a,b,c,d,e,f,g,h,k){ja.apply(this,arguments);if(da){if(da){var l=ea;da=!1;ea=null}else throw Error(u(198));fa||(fa=!0,ha=l)}}var la=null,ma=null,na=null;
 function oa(a,b,c){var d=a.type||"unknown-event";a.currentTarget=na(c);ka(d,b,void 0,a);a.currentTarget=null}var pa=null,qa={};
 function ra(){if(pa)for(var a in qa){var b=qa[a],c=pa.indexOf(a);if(!(-1<c))throw Error(u(96,a));if(!sa[c]){if(!b.extractEvents)throw Error(u(97,a));sa[c]=b;c=b.eventTypes;for(var d in c){var e=void 0;var f=c[d],g=b,h=d;if(ta.hasOwnProperty(h))throw Error(u(99,h));ta[h]=f;var k=f.phasedRegistrationNames;if(k){for(e in k)k.hasOwnProperty(e)&&ua(k[e],g,h);e=!0}else f.registrationName?(ua(f.registrationName,g,h),e=!0):e=!1;if(!e)throw Error(u(98,d,a));}}}}
@@ -1133,7 +909,7 @@ exports.unstable_renderSubtreeIntoContainer=function(a,b,c,d){if(!gk(c))throw Er
 
 
 /***/ }),
-/* 20 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1230,19 +1006,19 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 
 /***/ }),
-/* 21 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 if (true) {
-  module.exports = __webpack_require__(22);
+  module.exports = __webpack_require__(16);
 } else {}
 
 
 /***/ }),
-/* 22 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1270,7 +1046,36 @@ exports.unstable_shouldYield=function(){var a=exports.unstable_now();V(a);var b=
 
 
 /***/ }),
-/* 23 */
+/* 17 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = isRequiredForA11y;
+function isRequiredForA11y(validator) {
+  return function validate(props, propName, componentName, location, propFullName) {
+    var componentNameSafe = componentName || '<<anonymous>>';
+    var propFullNameSafe = propFullName || propName;
+
+    if (props[propName] == null) {
+      return new Error('The ' + location + ' `' + propFullNameSafe + '` is required to make ' + ('`' + componentNameSafe + '` accessible for users of assistive ') + 'technologies such as screen readers.');
+    }
+
+    for (var _len = arguments.length, args = Array(_len > 5 ? _len - 5 : 0), _key = 5; _key < _len; _key++) {
+      args[_key - 5] = arguments[_key];
+    }
+
+    return validator.apply(undefined, [props, propName, componentName, location, propFullName].concat(args));
+  };
+}
+module.exports = exports['default'];
+
+/***/ }),
+/* 18 */
 /***/ (function(module, exports) {
 
 (function (ElementProto) {
@@ -1310,7 +1115,7 @@ exports.unstable_shouldYield=function(){var a=exports.unstable_now();V(a);var b=
 })(typeof window !== 'undefined' && window.Element.prototype);
 
 /***/ }),
-/* 24 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1324,13 +1129,13 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = __webpack_require__(1);
+var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(0);
+var _propTypes = __webpack_require__(1);
 
-var _perfectScrollbar = __webpack_require__(25);
+var _perfectScrollbar = __webpack_require__(20);
 
 var _perfectScrollbar2 = _interopRequireDefault(_perfectScrollbar);
 
@@ -1548,7 +1353,7 @@ ScrollBar.propTypes = {
 module.exports = exports['default'];
 
 /***/ }),
-/* 25 */
+/* 20 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2897,7 +2702,104 @@ PerfectScrollbar.prototype.removePsClasses = function removePsClasses () {
 
 
 /***/ }),
-/* 26 */
+/* 21 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = all;
+
+var _createChainableTypeChecker = __webpack_require__(22);
+
+var _createChainableTypeChecker2 = _interopRequireDefault(_createChainableTypeChecker);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function all() {
+  for (var _len = arguments.length, validators = Array(_len), _key = 0; _key < _len; _key++) {
+    validators[_key] = arguments[_key];
+  }
+
+  function allPropTypes() {
+    for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+      args[_key2] = arguments[_key2];
+    }
+
+    var error = null;
+
+    validators.forEach(function (validator) {
+      if (error != null) {
+        return;
+      }
+
+      var result = validator.apply(undefined, args);
+      if (result != null) {
+        error = result;
+      }
+    });
+
+    return error;
+  }
+
+  return (0, _createChainableTypeChecker2.default)(allPropTypes);
+}
+module.exports = exports['default'];
+
+/***/ }),
+/* 22 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = createChainableTypeChecker;
+/**
+ * Copyright 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ */
+
+// Mostly taken from ReactPropTypes.
+
+function createChainableTypeChecker(validate) {
+  function checkType(isRequired, props, propName, componentName, location, propFullName) {
+    var componentNameSafe = componentName || '<<anonymous>>';
+    var propFullNameSafe = propFullName || propName;
+
+    if (props[propName] == null) {
+      if (isRequired) {
+        return new Error('Required ' + location + ' `' + propFullNameSafe + '` was not specified ' + ('in `' + componentNameSafe + '`.'));
+      }
+
+      return null;
+    }
+
+    for (var _len = arguments.length, args = Array(_len > 6 ? _len - 6 : 0), _key = 6; _key < _len; _key++) {
+      args[_key - 6] = arguments[_key];
+    }
+
+    return validate.apply(undefined, [props, propName, componentNameSafe, location, propFullNameSafe].concat(args));
+  }
+
+  var chainedCheckType = checkType.bind(null, false);
+  chainedCheckType.isRequired = checkType.bind(null, true);
+
+  return chainedCheckType;
+}
+module.exports = exports['default'];
+
+/***/ }),
+/* 23 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2908,7 +2810,6 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.d(__webpack_exports__, "AppAside", function() { return /* reexport */ Aside; });
 __webpack_require__.d(__webpack_exports__, "AppAsideToggler", function() { return /* reexport */ AsideToggler; });
 __webpack_require__.d(__webpack_exports__, "AppBreadcrumb", function() { return /* reexport */ src_Breadcrumb; });
-__webpack_require__.d(__webpack_exports__, "AppBreadcrumb2", function() { return /* reexport */ Breadcrumb2; });
 __webpack_require__.d(__webpack_exports__, "AppFooter", function() { return /* reexport */ Footer; });
 __webpack_require__.d(__webpack_exports__, "AppHeader", function() { return /* reexport */ Header; });
 __webpack_require__.d(__webpack_exports__, "AppHeaderDropdown", function() { return /* reexport */ HeaderDropdown; });
@@ -2923,11 +2824,11 @@ __webpack_require__.d(__webpack_exports__, "AppSidebarToggler", function() { ret
 __webpack_require__.d(__webpack_exports__, "AppSwitch", function() { return /* reexport */ Switch; });
 
 // EXTERNAL MODULE: external {"root":"React","commonjs2":"react","commonjs":"react","amd":"react"}
-var external_root_React_commonjs2_react_commonjs_react_amd_react_ = __webpack_require__(1);
+var external_root_React_commonjs2_react_commonjs_react_amd_react_ = __webpack_require__(0);
 var external_root_React_commonjs2_react_commonjs_react_amd_react_default = /*#__PURE__*/__webpack_require__.n(external_root_React_commonjs2_react_commonjs_react_amd_react_);
 
 // EXTERNAL MODULE: ./node_modules/prop-types/index.js
-var prop_types = __webpack_require__(0);
+var prop_types = __webpack_require__(1);
 var prop_types_default = /*#__PURE__*/__webpack_require__.n(prop_types);
 
 // EXTERNAL MODULE: ./node_modules/classnames/index.js
@@ -2985,7 +2886,7 @@ var propTypes = {
   offCanvas: prop_types_default.a.bool,
   tag: prop_types_default.a.oneOfType([prop_types_default.a.func, prop_types_default.a.string])
 };
-var defaultProps = {
+var Aside_defaultProps = {
   tag: 'aside',
   display: '',
   fixed: false,
@@ -3054,7 +2955,7 @@ var Aside_AppAside = /*#__PURE__*/function (_Component) {
 }(external_root_React_commonjs2_react_commonjs_react_amd_react_["Component"]);
 
 Aside_AppAside.propTypes = propTypes;
-Aside_AppAside.defaultProps = defaultProps;
+Aside_AppAside.defaultProps = Aside_defaultProps;
 /* harmony default export */ var Aside = (Aside_AppAside);
 // CONCATENATED MODULE: ./src/AsideToggler.js
 function AsideToggler_extends() { AsideToggler_extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return AsideToggler_extends.apply(this, arguments); }
@@ -3191,388 +3092,243 @@ function objectWithoutPropertiesLoose_objectWithoutPropertiesLoose(source, exclu
 
   return target;
 }
-// CONCATENATED MODULE: ./node_modules/reactstrap/es/utils.js
- // https://github.com/twbs/bootstrap/blob/v4.0.0-alpha.4/js/src/modal.js#L436-L443
+// EXTERNAL MODULE: ./node_modules/@restart/context/forwardRef.js
+var forwardRef = __webpack_require__(7);
+var forwardRef_default = /*#__PURE__*/__webpack_require__.n(forwardRef);
 
-function getScrollbarWidth() {
-  var scrollDiv = document.createElement('div'); // .modal-scrollbar-measure styles // https://github.com/twbs/bootstrap/blob/v4.0.0-alpha.4/scss/_modal.scss#L106-L113
+// CONCATENATED MODULE: ./node_modules/react-bootstrap/esm/ThemeProvider.js
 
-  scrollDiv.style.position = 'absolute';
-  scrollDiv.style.top = '-9999px';
-  scrollDiv.style.width = '50px';
-  scrollDiv.style.height = '50px';
-  scrollDiv.style.overflow = 'scroll';
-  document.body.appendChild(scrollDiv);
-  var scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
-  document.body.removeChild(scrollDiv);
-  return scrollbarWidth;
-}
-function setScrollbarWidth(padding) {
-  document.body.style.paddingRight = padding > 0 ? padding + "px" : null;
-}
-function isBodyOverflowing() {
-  return document.body.clientWidth < window.innerWidth;
-}
-function getOriginalBodyPadding() {
-  var style = window.getComputedStyle(document.body, null);
-  return parseInt(style && style.getPropertyValue('padding-right') || 0, 10);
-}
-function conditionallyUpdateScrollbar() {
-  var scrollbarWidth = getScrollbarWidth(); // https://github.com/twbs/bootstrap/blob/v4.0.0-alpha.6/js/src/modal.js#L433
 
-  var fixedContent = document.querySelectorAll('.fixed-top, .fixed-bottom, .is-fixed, .sticky-top')[0];
-  var bodyPadding = fixedContent ? parseInt(fixedContent.style.paddingRight || 0, 10) : 0;
 
-  if (isBodyOverflowing()) {
-    setScrollbarWidth(bodyPadding + scrollbarWidth);
+var ThemeContext = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createContext({});
+var Consumer = ThemeContext.Consumer,
+    Provider = ThemeContext.Provider;
+
+function ThemeProvider(_ref) {
+  var prefixes = _ref.prefixes,
+      children = _ref.children;
+  var copiedPrefixes = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useMemo"])(function () {
+    return extends_extends({}, prefixes);
+  }, [prefixes]);
+  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Provider, {
+    value: copiedPrefixes
+  }, children);
+}
+
+function useBootstrapPrefix(prefix, defaultPrefix) {
+  var prefixes = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useContext"])(ThemeContext);
+  return prefix || prefixes[defaultPrefix] || defaultPrefix;
+}
+
+function createBootstrapComponent(Component, opts) {
+  if (typeof opts === 'string') opts = {
+    prefix: opts
+  };
+  var isClassy = Component.prototype && Component.prototype.isReactComponent; // If it's a functional component make sure we don't break it with a ref
+
+  var _opts = opts,
+      prefix = _opts.prefix,
+      _opts$forwardRefAs = _opts.forwardRefAs,
+      forwardRefAs = _opts$forwardRefAs === void 0 ? isClassy ? 'ref' : 'innerRef' : _opts$forwardRefAs;
+  return forwardRef_default()(function (_ref2, ref) {
+    var props = extends_extends({}, _ref2);
+
+    props[forwardRefAs] = ref; // eslint-disable-next-line react/prop-types
+
+    var bsPrefix = useBootstrapPrefix(props.bsPrefix, prefix);
+    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Component, extends_extends({}, props, {
+      bsPrefix: bsPrefix
+    }));
+  }, {
+    displayName: "Bootstrap(" + (Component.displayName || Component.name) + ")"
+  });
+}
+
+
+/* harmony default export */ var esm_ThemeProvider = (ThemeProvider);
+// CONCATENATED MODULE: ./node_modules/react-bootstrap/esm/createChainedFunction.js
+/**
+ * Safe chained function
+ *
+ * Will only create a new function if needed,
+ * otherwise will pass back existing functions or null.
+ *
+ * @param {function} functions to chain
+ * @returns {function|null}
+ */
+function createChainedFunction() {
+  for (var _len = arguments.length, funcs = new Array(_len), _key = 0; _key < _len; _key++) {
+    funcs[_key] = arguments[_key];
   }
-}
-var globalCssModule;
-function setGlobalCssModule(cssModule) {
-  globalCssModule = cssModule;
-}
-function mapToCssModules(className, cssModule) {
-  if (className === void 0) {
-    className = '';
-  }
 
-  if (cssModule === void 0) {
-    cssModule = globalCssModule;
-  }
+  return funcs.filter(function (f) {
+    return f != null;
+  }).reduce(function (acc, f) {
+    if (typeof f !== 'function') {
+      throw new Error('Invalid Argument Type, must only provide functions, undefined, or null.');
+    }
 
-  if (!cssModule) return className;
-  return className.split(' ').map(function (c) {
-    return cssModule[c] || c;
-  }).join(' ');
+    if (acc === null) return f;
+    return function chainedFunction() {
+      for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+        args[_key2] = arguments[_key2];
+      }
+
+      acc.apply(this, args);
+      f.apply(this, args);
+    };
+  }, null);
+}
+
+/* harmony default export */ var esm_createChainedFunction = (createChainedFunction);
+// CONCATENATED MODULE: ./node_modules/react-bootstrap/esm/SafeAnchor.js
+
+
+
+
+
+function isTrivialHref(href) {
+  return !href || href.trim() === '#';
 }
 /**
- * Returns a new object with the key/value pairs from `obj` that are not in the array `omitKeys`.
+ * There are situations due to browser quirks or Bootstrap CSS where
+ * an anchor tag is needed, when semantically a button tag is the
+ * better choice. SafeAnchor ensures that when an anchor is used like a
+ * button its accessible. It also emulates input `disabled` behavior for
+ * links, which is usually desirable for Buttons, NavItems, DropdownItems, etc.
  */
 
-function omit(obj, omitKeys) {
-  var result = {};
-  Object.keys(obj).forEach(function (key) {
-    if (omitKeys.indexOf(key) === -1) {
-      result[key] = obj[key];
-    }
-  });
-  return result;
-}
-/**
- * Returns a filtered copy of an object with only the specified keys.
- */
 
-function pick(obj, keys) {
-  var pickKeys = Array.isArray(keys) ? keys : [keys];
-  var length = pickKeys.length;
-  var key;
-  var result = {};
+var SafeAnchor = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.forwardRef(function (_ref, ref) {
+  var _ref$as = _ref.as,
+      Component = _ref$as === void 0 ? 'a' : _ref$as,
+      disabled = _ref.disabled,
+      onKeyDown = _ref.onKeyDown,
+      props = objectWithoutPropertiesLoose_objectWithoutPropertiesLoose(_ref, ["as", "disabled", "onKeyDown"]);
 
-  while (length > 0) {
-    length -= 1;
-    key = pickKeys[length];
-    result[key] = obj[key];
-  }
+  var handleClick = function handleClick(event) {
+    var href = props.href,
+        onClick = props.onClick;
 
-  return result;
-}
-var warned = {};
-function warnOnce(message) {
-  if (!warned[message]) {
-    /* istanbul ignore else */
-    if (typeof console !== 'undefined') {
-      console.error(message); // eslint-disable-line no-console
+    if (disabled || isTrivialHref(href)) {
+      event.preventDefault();
     }
 
-    warned[message] = true;
-  }
-}
-function deprecated(propType, explanation) {
-  return function validate(props, propName, componentName) {
-    if (props[propName] !== null && typeof props[propName] !== 'undefined') {
-      warnOnce("\"" + propName + "\" property of \"" + componentName + "\" has been deprecated.\n" + explanation);
+    if (disabled) {
+      event.stopPropagation();
+      return;
     }
 
-    for (var _len = arguments.length, rest = new Array(_len > 3 ? _len - 3 : 0), _key = 3; _key < _len; _key++) {
-      rest[_key - 3] = arguments[_key];
+    if (onClick) {
+      onClick(event);
     }
-
-    return propType.apply(void 0, [props, propName, componentName].concat(rest));
   };
-} // Shim Element if needed (e.g. in Node environment)
 
-var Element = typeof window === 'object' && window.Element || function () {};
-
-function DOMElement(props, propName, componentName) {
-  if (!(props[propName] instanceof Element)) {
-    return new Error('Invalid prop `' + propName + '` supplied to `' + componentName + '`. Expected prop to be an instance of Element. Validation failed.');
-  }
-}
-var targetPropType = prop_types_default.a.oneOfType([prop_types_default.a.string, prop_types_default.a.func, DOMElement, prop_types_default.a.shape({
-  current: prop_types_default.a.any
-})]);
-var tagPropType = prop_types_default.a.oneOfType([prop_types_default.a.func, prop_types_default.a.string, prop_types_default.a.shape({
-  $$typeof: prop_types_default.a.symbol,
-  render: prop_types_default.a.func
-}), prop_types_default.a.arrayOf(prop_types_default.a.oneOfType([prop_types_default.a.func, prop_types_default.a.string, prop_types_default.a.shape({
-  $$typeof: prop_types_default.a.symbol,
-  render: prop_types_default.a.func
-})]))]);
-/* eslint key-spacing: ["error", { afterColon: true, align: "value" }] */
-// These are all setup to match what is in the bootstrap _variables.scss
-// https://github.com/twbs/bootstrap/blob/v4-dev/scss/_variables.scss
-
-var TransitionTimeouts = {
-  Fade: 150,
-  // $transition-fade
-  Collapse: 350,
-  // $transition-collapse
-  Modal: 300,
-  // $modal-transition
-  Carousel: 600 // $carousel-transition
-
-}; // Duplicated Transition.propType keys to ensure that Reactstrap builds
-// for distribution properly exclude these keys for nested child HTML attributes
-// since `react-transition-group` removes propTypes in production builds.
-
-var TransitionPropTypeKeys = ['in', 'mountOnEnter', 'unmountOnExit', 'appear', 'enter', 'exit', 'timeout', 'onEnter', 'onEntering', 'onEntered', 'onExit', 'onExiting', 'onExited'];
-var TransitionStatuses = {
-  ENTERING: 'entering',
-  ENTERED: 'entered',
-  EXITING: 'exiting',
-  EXITED: 'exited'
-};
-var keyCodes = {
-  esc: 27,
-  space: 32,
-  enter: 13,
-  tab: 9,
-  up: 38,
-  down: 40,
-  home: 36,
-  end: 35,
-  n: 78,
-  p: 80
-};
-var PopperPlacements = ['auto-start', 'auto', 'auto-end', 'top-start', 'top', 'top-end', 'right-start', 'right', 'right-end', 'bottom-end', 'bottom', 'bottom-start', 'left-end', 'left', 'left-start'];
-var canUseDOM = !!(typeof window !== 'undefined' && window.document && window.document.createElement);
-function isReactRefObj(target) {
-  if (target && typeof target === 'object') {
-    return 'current' in target;
-  }
-
-  return false;
-}
-
-function getTag(value) {
-  if (value == null) {
-    return value === undefined ? '[object Undefined]' : '[object Null]';
-  }
-
-  return Object.prototype.toString.call(value);
-}
-
-function toNumber(value) {
-  var type = typeof value;
-  var NAN = 0 / 0;
-
-  if (type === 'number') {
-    return value;
-  }
-
-  if (type === 'symbol' || type === 'object' && getTag(value) === '[object Symbol]') {
-    return NAN;
-  }
-
-  if (isObject(value)) {
-    var other = typeof value.valueOf === 'function' ? value.valueOf() : value;
-    value = isObject(other) ? "" + other : other;
-  }
-
-  if (type !== 'string') {
-    return value === 0 ? value : +value;
-  }
-
-  value = value.replace(/^\s+|\s+$/g, '');
-  var isBinary = /^0b[01]+$/i.test(value);
-  return isBinary || /^0o[0-7]+$/i.test(value) ? parseInt(value.slice(2), isBinary ? 2 : 8) : /^[-+]0x[0-9a-f]+$/i.test(value) ? NAN : +value;
-}
-function isObject(value) {
-  var type = typeof value;
-  return value != null && (type === 'object' || type === 'function');
-}
-function isFunction(value) {
-  if (!isObject(value)) {
-    return false;
-  }
-
-  var tag = getTag(value);
-  return tag === '[object Function]' || tag === '[object AsyncFunction]' || tag === '[object GeneratorFunction]' || tag === '[object Proxy]';
-}
-function findDOMElements(target) {
-  if (isReactRefObj(target)) {
-    return target.current;
-  }
-
-  if (isFunction(target)) {
-    return target();
-  }
-
-  if (typeof target === 'string' && canUseDOM) {
-    var selection = document.querySelectorAll(target);
-
-    if (!selection.length) {
-      selection = document.querySelectorAll("#" + target);
+  var handleKeyDown = function handleKeyDown(event) {
+    if (event.key === ' ') {
+      event.preventDefault();
+      handleClick(event);
     }
-
-    if (!selection.length) {
-      throw new Error("The target '" + target + "' could not be identified in the dom, tip: check spelling");
-    }
-
-    return selection;
-  }
-
-  return target;
-}
-function isArrayOrNodeList(els) {
-  if (els === null) {
-    return false;
-  }
-
-  return Array.isArray(els) || canUseDOM && typeof els.length === 'number';
-}
-function getTarget(target, allElements) {
-  var els = findDOMElements(target);
-
-  if (allElements) {
-    if (isArrayOrNodeList(els)) {
-      return els;
-    }
-
-    if (els === null) {
-      return [];
-    }
-
-    return [els];
-  } else {
-    if (isArrayOrNodeList(els)) {
-      return els[0];
-    }
-
-    return els;
-  }
-}
-var defaultToggleEvents = ['touchstart', 'click'];
-function addMultipleEventListeners(_els, handler, _events, useCapture) {
-  var els = _els;
-
-  if (!isArrayOrNodeList(els)) {
-    els = [els];
-  }
-
-  var events = _events;
-
-  if (typeof events === 'string') {
-    events = events.split(/\s+/);
-  }
-
-  if (!isArrayOrNodeList(els) || typeof handler !== 'function' || !Array.isArray(events)) {
-    throw new Error("\n      The first argument of this function must be DOM node or an array on DOM nodes or NodeList.\n      The second must be a function.\n      The third is a string or an array of strings that represents DOM events\n    ");
-  }
-
-  Array.prototype.forEach.call(events, function (event) {
-    Array.prototype.forEach.call(els, function (el) {
-      el.addEventListener(event, handler, useCapture);
-    });
-  });
-  return function removeEvents() {
-    Array.prototype.forEach.call(events, function (event) {
-      Array.prototype.forEach.call(els, function (el) {
-        el.removeEventListener(event, handler, useCapture);
-      });
-    });
   };
-}
-var focusableElements = ['a[href]', 'area[href]', 'input:not([disabled]):not([type=hidden])', 'select:not([disabled])', 'textarea:not([disabled])', 'button:not([disabled])', 'object', 'embed', '[tabindex]:not(.modal)', 'audio[controls]', 'video[controls]', '[contenteditable]:not([contenteditable="false"])'];
-// CONCATENATED MODULE: ./node_modules/reactstrap/es/BreadcrumbItem.js
 
+  if (isTrivialHref(props.href)) {
+    props.role = props.role || 'button'; // we want to make sure there is a href attribute on the node
+    // otherwise, the cursor incorrectly styled (except with role='button')
 
+    props.href = props.href || '#';
+  }
 
+  if (disabled) {
+    props.tabIndex = -1;
+    props['aria-disabled'] = true;
+  }
 
-
-
-var BreadcrumbItem_propTypes = {
-  tag: tagPropType,
-  active: prop_types_default.a.bool,
-  className: prop_types_default.a.string,
-  cssModule: prop_types_default.a.object
-};
-var BreadcrumbItem_defaultProps = {
-  tag: 'li'
-};
-
-var BreadcrumbItem_BreadcrumbItem = function BreadcrumbItem(props) {
-  var className = props.className,
-      cssModule = props.cssModule,
-      active = props.active,
-      Tag = props.tag,
-      attributes = objectWithoutPropertiesLoose_objectWithoutPropertiesLoose(props, ["className", "cssModule", "active", "tag"]);
-
-  var classes = mapToCssModules(classnames_default()(className, active ? 'active' : false, 'breadcrumb-item'), cssModule);
-  return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Tag, extends_extends({}, attributes, {
-    className: classes,
-    "aria-current": active ? 'page' : undefined
+  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Component, extends_extends({
+    ref: ref
+  }, props, {
+    onClick: handleClick,
+    onKeyDown: esm_createChainedFunction(handleKeyDown, onKeyDown)
   }));
+});
+SafeAnchor.displayName = 'SafeAnchor';
+/* harmony default export */ var esm_SafeAnchor = (SafeAnchor);
+// CONCATENATED MODULE: ./node_modules/react-bootstrap/esm/BreadcrumbItem.js
+
+
+
+
+
+
+var BreadcrumbItem_defaultProps = {
+  active: false,
+  linkProps: {}
 };
+var BreadcrumbItem = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.forwardRef(function (_ref, ref) {
+  var bsPrefix = _ref.bsPrefix,
+      active = _ref.active,
+      children = _ref.children,
+      className = _ref.className,
+      _ref$as = _ref.as,
+      Component = _ref$as === void 0 ? 'li' : _ref$as,
+      _ref$linkAs = _ref.linkAs,
+      LinkComponent = _ref$linkAs === void 0 ? esm_SafeAnchor : _ref$linkAs,
+      linkProps = _ref.linkProps,
+      href = _ref.href,
+      title = _ref.title,
+      target = _ref.target,
+      props = objectWithoutPropertiesLoose_objectWithoutPropertiesLoose(_ref, ["bsPrefix", "active", "children", "className", "as", "linkAs", "linkProps", "href", "title", "target"]);
 
-BreadcrumbItem_BreadcrumbItem.propTypes = BreadcrumbItem_propTypes;
-BreadcrumbItem_BreadcrumbItem.defaultProps = BreadcrumbItem_defaultProps;
-/* harmony default export */ var es_BreadcrumbItem = (BreadcrumbItem_BreadcrumbItem);
-// CONCATENATED MODULE: ./node_modules/reactstrap/es/Breadcrumb.js
+  var prefix = useBootstrapPrefix(bsPrefix, 'breadcrumb-item');
+  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Component, extends_extends({
+    ref: ref
+  }, props, {
+    className: classnames_default()(prefix, className, {
+      active: active
+    }),
+    "aria-current": active ? 'page' : undefined
+  }), active ? children : /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(LinkComponent, extends_extends({}, linkProps, {
+    href: href,
+    title: title,
+    target: target
+  }), children));
+});
+BreadcrumbItem.displayName = 'BreadcrumbItem';
+BreadcrumbItem.defaultProps = BreadcrumbItem_defaultProps;
+/* harmony default export */ var esm_BreadcrumbItem = (BreadcrumbItem);
+// CONCATENATED MODULE: ./node_modules/react-bootstrap/esm/Breadcrumb.js
 
 
 
 
 
 
-var Breadcrumb_propTypes = {
-  tag: tagPropType,
-  listTag: tagPropType,
-  className: prop_types_default.a.string,
-  listClassName: prop_types_default.a.string,
-  cssModule: prop_types_default.a.object,
-  children: prop_types_default.a.node,
-  'aria-label': prop_types_default.a.string
-};
 var Breadcrumb_defaultProps = {
-  tag: 'nav',
-  listTag: 'ol',
-  'aria-label': 'breadcrumb'
+  label: 'breadcrumb',
+  listProps: {}
 };
+var Breadcrumb = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.forwardRef(function (_ref, ref) {
+  var bsPrefix = _ref.bsPrefix,
+      className = _ref.className,
+      listProps = _ref.listProps,
+      children = _ref.children,
+      label = _ref.label,
+      _ref$as = _ref.as,
+      Component = _ref$as === void 0 ? 'nav' : _ref$as,
+      props = objectWithoutPropertiesLoose_objectWithoutPropertiesLoose(_ref, ["bsPrefix", "className", "listProps", "children", "label", "as"]);
 
-var Breadcrumb_Breadcrumb = function Breadcrumb(props) {
-  var className = props.className,
-      listClassName = props.listClassName,
-      cssModule = props.cssModule,
-      children = props.children,
-      Tag = props.tag,
-      ListTag = props.listTag,
-      label = props['aria-label'],
-      attributes = objectWithoutPropertiesLoose_objectWithoutPropertiesLoose(props, ["className", "listClassName", "cssModule", "children", "tag", "listTag", "aria-label"]);
-
-  var classes = mapToCssModules(classnames_default()(className), cssModule);
-  var listClasses = mapToCssModules(classnames_default()('breadcrumb', listClassName), cssModule);
-  return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Tag, extends_extends({}, attributes, {
-    className: classes,
-    "aria-label": label
-  }), external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(ListTag, {
-    className: listClasses
-  }, children));
-};
-
-Breadcrumb_Breadcrumb.propTypes = Breadcrumb_propTypes;
-Breadcrumb_Breadcrumb.defaultProps = Breadcrumb_defaultProps;
-/* harmony default export */ var es_Breadcrumb = (Breadcrumb_Breadcrumb);
+  var prefix = useBootstrapPrefix(bsPrefix, 'breadcrumb');
+  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Component, extends_extends({
+    "aria-label": label,
+    className: className,
+    ref: ref
+  }, props), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement("ol", extends_extends({}, listProps, {
+    className: classnames_default()(prefix, listProps.className)
+  }), children));
+});
+Breadcrumb.displayName = 'Breadcrumb';
+Breadcrumb.defaultProps = Breadcrumb_defaultProps;
+Breadcrumb.Item = esm_BreadcrumbItem;
+/* harmony default export */ var esm_Breadcrumb = (Breadcrumb);
 // CONCATENATED MODULE: ./src/Breadcrumb.js
 function Breadcrumb_extends() { Breadcrumb_extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return Breadcrumb_extends.apply(this, arguments); }
 
@@ -3614,9 +3370,9 @@ var Breadcrumb_BreadcrumbsItem = function BreadcrumbsItem(_ref) {
 
   if (routeName) {
     return (// eslint-disable-next-line react/prop-types
-      match.isExact ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(es_BreadcrumbItem, {
+      match.isExact ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Breadcrumb.Item, {
         active: true
-      }, routeName) : /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(es_BreadcrumbItem, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(external_root_ReactRouterDom_commonjs2_react_router_dom_commonjs_react_router_dom_amd_react_router_dom_["Link"], {
+      }, routeName) : /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Breadcrumb.Item, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(external_root_ReactRouterDom_commonjs2_react_router_dom_commonjs_react_router_dom_amd_react_router_dom_["Link"], {
         to: match.url || ''
       }, routeName))
     );
@@ -3640,10 +3396,10 @@ var Breadcrumb_Breadcrumbs = function Breadcrumbs(args) {
       component: Breadcrumb_BreadcrumbsItem
     });
   });
-  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(es_Breadcrumb, null, items);
+  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Breadcrumb, null, items);
 };
 
-var src_Breadcrumb_propTypes = {
+var Breadcrumb_propTypes = {
   children: prop_types_default.a.node,
   className: prop_types_default.a.string,
   appRoutes: prop_types_default.a.any,
@@ -3696,142 +3452,9 @@ var Breadcrumb_AppBreadcrumb = /*#__PURE__*/function (_Component) {
   return AppBreadcrumb;
 }(external_root_React_commonjs2_react_commonjs_react_amd_react_["Component"]);
 
-Breadcrumb_AppBreadcrumb.propTypes = src_Breadcrumb_propTypes;
+Breadcrumb_AppBreadcrumb.propTypes = Breadcrumb_propTypes;
 Breadcrumb_AppBreadcrumb.defaultProps = src_Breadcrumb_defaultProps;
 /* harmony default export */ var src_Breadcrumb = (Breadcrumb_AppBreadcrumb);
-// CONCATENATED MODULE: ./src/Breadcrumb2.js
-function Breadcrumb2_extends() { Breadcrumb2_extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return Breadcrumb2_extends.apply(this, arguments); }
-
-function Breadcrumb2_objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
-
-function Breadcrumb2_inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
-
-
-
-
-
-var Breadcrumb2_routes;
-var router;
-
-var Breadcrumb2_getPaths = function getPaths(pathname) {
-  var paths = ['/'];
-  if (pathname === '/') return paths;
-  pathname.split('/').reduce(function (prev, curr) {
-    var currPath = prev + "/" + curr;
-    paths.push(currPath);
-    return currPath;
-  });
-  return paths;
-};
-
-var findRouteName2 = function findRouteName2(url) {
-  var matchPath = router.matchPath;
-  var aroute = Breadcrumb2_routes.find(function (route) {
-    return matchPath(url, {
-      path: route.path,
-      exact: route.exact
-    });
-  });
-  return aroute && aroute.name ? aroute.name : null;
-};
-
-var Breadcrumb2_BreadcrumbsItem2 = function BreadcrumbsItem2(_ref) {
-  var match = _ref.match;
-  var routeName = findRouteName2(match.url);
-  var Link = router.Link;
-
-  if (routeName) {
-    return (// eslint-disable-next-line react/prop-types
-      match.isExact ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(es_BreadcrumbItem, {
-        active: true
-      }, routeName) : /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(es_BreadcrumbItem, null, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Link, {
-        to: match.url || ''
-      }, routeName))
-    );
-  }
-
-  return null;
-};
-
-Breadcrumb2_BreadcrumbsItem2.propTypes = {
-  match: prop_types_default.a.shape({
-    url: prop_types_default.a.string
-  })
-};
-
-var Breadcrumb2_Breadcrumbs2 = function Breadcrumbs2(args) {
-  var Route = router.Route;
-  var paths = Breadcrumb2_getPaths(args.location.pathname);
-  var items = paths.map(function (path, i) {
-    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Route, {
-      key: i.toString(),
-      path: path,
-      component: Breadcrumb2_BreadcrumbsItem2
-    });
-  });
-  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(es_Breadcrumb, null, items);
-};
-
-var Breadcrumb2_propTypes = {
-  children: prop_types_default.a.node,
-  className: prop_types_default.a.string,
-  appRoutes: prop_types_default.a.any,
-  tag: prop_types_default.a.oneOfType([prop_types_default.a.func, prop_types_default.a.string]),
-  router: prop_types_default.a.any
-};
-var Breadcrumb2_defaultProps = {
-  tag: 'div',
-  className: '',
-  appRoutes: [{
-    path: '/',
-    exact: true,
-    name: 'Home',
-    component: null
-  }]
-};
-
-var Breadcrumb2_AppBreadcrumb2 = /*#__PURE__*/function (_Component) {
-  Breadcrumb2_inheritsLoose(AppBreadcrumb2, _Component);
-
-  function AppBreadcrumb2(props) {
-    var _this;
-
-    _this = _Component.call(this, props) || this;
-    _this.state = {
-      routes: props.appRoutes
-    };
-    Breadcrumb2_routes = _this.state.routes;
-    router = props.router;
-    return _this;
-  }
-
-  var _proto = AppBreadcrumb2.prototype;
-
-  _proto.render = function render() {
-    var _this$props = this.props,
-        className = _this$props.className,
-        Tag = _this$props.tag,
-        attributes = Breadcrumb2_objectWithoutPropertiesLoose(_this$props, ["className", "tag"]);
-
-    delete attributes.children;
-    delete attributes.appRoutes;
-    delete attributes.router;
-    var classes = classnames_default()(className);
-    var Route = router.Route;
-    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Tag, {
-      className: classes
-    }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Route, Breadcrumb2_extends({
-      path: "/:path",
-      component: Breadcrumb2_Breadcrumbs2
-    }, attributes)));
-  };
-
-  return AppBreadcrumb2;
-}(external_root_React_commonjs2_react_commonjs_react_amd_react_["Component"]);
-
-Breadcrumb2_AppBreadcrumb2.propTypes = Breadcrumb2_propTypes;
-Breadcrumb2_AppBreadcrumb2.defaultProps = Breadcrumb2_defaultProps;
-/* harmony default export */ var Breadcrumb2 = (Breadcrumb2_AppBreadcrumb2);
 // CONCATENATED MODULE: ./src/Footer.js
 function Footer_extends() { Footer_extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return Footer_extends.apply(this, arguments); }
 
@@ -3961,13 +3584,130 @@ var Header_AppHeader = /*#__PURE__*/function (_Component) {
 Header_AppHeader.propTypes = Header_propTypes;
 Header_AppHeader.defaultProps = Header_defaultProps;
 /* harmony default export */ var Header = (Header_AppHeader);
-// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js
-function assertThisInitialized_assertThisInitialized(self) {
-  if (self === void 0) {
-    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+// CONCATENATED MODULE: ./node_modules/dom-helpers/esm/matches.js
+var matchesImpl;
+function matches(node, selector) {
+  if (!matchesImpl) {
+    var body = document.body;
+    var nativeMatch = body.matches || body.matchesSelector || body.webkitMatchesSelector || body.mozMatchesSelector || body.msMatchesSelector;
+
+    matchesImpl = function matchesImpl(n, s) {
+      return nativeMatch.call(n, s);
+    };
   }
 
-  return self;
+  return matchesImpl(node, selector);
+}
+// CONCATENATED MODULE: ./node_modules/dom-helpers/esm/querySelectorAll.js
+var toArray = Function.prototype.bind.call(Function.prototype.call, [].slice);
+function qsa(element, selector) {
+  return toArray(element.querySelectorAll(selector));
+}
+// EXTERNAL MODULE: ./node_modules/invariant/browser.js
+var browser = __webpack_require__(4);
+var browser_default = /*#__PURE__*/__webpack_require__.n(browser);
+
+// CONCATENATED MODULE: ./node_modules/uncontrollable/esm/utils.js
+
+
+var noop = function noop() {};
+
+function readOnlyPropType(handler, name) {
+  return function (props, propName) {
+    if (props[propName] !== undefined) {
+      if (!props[handler]) {
+        return new Error("You have provided a `" + propName + "` prop to `" + name + "` " + ("without an `" + handler + "` handler prop. This will render a read-only field. ") + ("If the field should be mutable use `" + defaultKey(propName) + "`. ") + ("Otherwise, set `" + handler + "`."));
+      }
+    }
+  };
+}
+
+function uncontrolledPropTypes(controlledValues, displayName) {
+  var propTypes = {};
+  Object.keys(controlledValues).forEach(function (prop) {
+    // add default propTypes for folks that use runtime checks
+    propTypes[defaultKey(prop)] = noop;
+
+    if (false) { var handler; }
+  });
+  return propTypes;
+}
+function utils_isProp(props, prop) {
+  return props[prop] !== undefined;
+}
+function defaultKey(key) {
+  return 'default' + key.charAt(0).toUpperCase() + key.substr(1);
+}
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ */
+
+function utils_canAcceptRef(component) {
+  return !!component && (typeof component !== 'function' || component.prototype && component.prototype.isReactComponent);
+}
+// CONCATENATED MODULE: ./node_modules/uncontrollable/esm/hook.js
+
+
+
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
+
+function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+
+
+
+
+function useUncontrolledProp(propValue, defaultValue, handler) {
+  var wasPropRef = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(propValue !== undefined);
+
+  var _useState = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(defaultValue),
+      stateValue = _useState[0],
+      setState = _useState[1];
+
+  var isProp = propValue !== undefined;
+  var wasProp = wasPropRef.current;
+  wasPropRef.current = isProp;
+  /**
+   * If a prop switches from controlled to Uncontrolled
+   * reset its value to the defaultValue
+   */
+
+  if (!isProp && wasProp && stateValue !== defaultValue) {
+    setState(defaultValue);
+  }
+
+  return [isProp ? propValue : stateValue, Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useCallback"])(function (value) {
+    for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+      args[_key - 1] = arguments[_key];
+    }
+
+    if (handler) handler.apply(void 0, [value].concat(args));
+    setState(value);
+  }, [handler])];
+}
+
+
+function useUncontrolled(props, config) {
+  return Object.keys(config).reduce(function (result, fieldName) {
+    var _extends2;
+
+    var _ref = result,
+        defaultValue = _ref[defaultKey(fieldName)],
+        propsValue = _ref[fieldName],
+        rest = objectWithoutPropertiesLoose_objectWithoutPropertiesLoose(_ref, [defaultKey(fieldName), fieldName].map(_toPropertyKey));
+
+    var handlerName = config[fieldName];
+
+    var _useUncontrolledProp = useUncontrolledProp(propsValue, defaultValue, props[handlerName]),
+        value = _useUncontrolledProp[0],
+        handler = _useUncontrolledProp[1];
+
+    return extends_extends({}, rest, (_extends2 = {}, _extends2[fieldName] = value, _extends2[handlerName] = handler, _extends2));
+  }, props);
 }
 // CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/inheritsLoose.js
 function inheritsLoose_inheritsLoose(subClass, superClass) {
@@ -3975,98 +3715,2858 @@ function inheritsLoose_inheritsLoose(subClass, superClass) {
   subClass.prototype.constructor = subClass;
   subClass.__proto__ = superClass;
 }
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/assertThisInitialized.js
-var assertThisInitialized = __webpack_require__(5);
-var assertThisInitialized_default = /*#__PURE__*/__webpack_require__.n(assertThisInitialized);
-
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/inheritsLoose.js
-var inheritsLoose = __webpack_require__(8);
-var inheritsLoose_default = /*#__PURE__*/__webpack_require__.n(inheritsLoose);
-
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/defineProperty.js
-var defineProperty = __webpack_require__(6);
-var defineProperty_default = /*#__PURE__*/__webpack_require__.n(defineProperty);
-
-// EXTERNAL MODULE: ./node_modules/create-react-context/lib/index.js
-var lib = __webpack_require__(7);
-var lib_default = /*#__PURE__*/__webpack_require__.n(lib);
-
-// CONCATENATED MODULE: ./node_modules/react-popper/lib/esm/Manager.js
-
-
-
-
-
-var ManagerReferenceNodeContext = lib_default()();
-var ManagerReferenceNodeSetterContext = lib_default()();
-
-var Manager_Manager =
-/*#__PURE__*/
-function (_React$Component) {
-  inheritsLoose_default()(Manager, _React$Component);
-
-  function Manager() {
-    var _this;
-
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    _this = _React$Component.call.apply(_React$Component, [this].concat(args)) || this;
-
-    defineProperty_default()(assertThisInitialized_default()(_this), "referenceNode", void 0);
-
-    defineProperty_default()(assertThisInitialized_default()(_this), "setReferenceNode", function (newReferenceNode) {
-      if (newReferenceNode && _this.referenceNode !== newReferenceNode) {
-        _this.referenceNode = newReferenceNode;
-
-        _this.forceUpdate();
-      }
-    });
-
-    return _this;
-  }
-
-  var _proto = Manager.prototype;
-
-  _proto.componentWillUnmount = function componentWillUnmount() {
-    this.referenceNode = null;
-  };
-
-  _proto.render = function render() {
-    return external_root_React_commonjs2_react_commonjs_react_amd_react_["createElement"](ManagerReferenceNodeContext.Provider, {
-      value: this.referenceNode
-    }, external_root_React_commonjs2_react_commonjs_react_amd_react_["createElement"](ManagerReferenceNodeSetterContext.Provider, {
-      value: this.setReferenceNode
-    }, this.props.children));
-  };
-
-  return Manager;
-}(external_root_React_commonjs2_react_commonjs_react_amd_react_["Component"]);
-
-
-// CONCATENATED MODULE: ./node_modules/reactstrap/es/DropdownContext.js
-
+// CONCATENATED MODULE: ./node_modules/react-lifecycles-compat/react-lifecycles-compat.es.js
 /**
- * DropdownContext
- * {
- *  toggle: PropTypes.func.isRequired,
- *  isOpen: PropTypes.bool.isRequired,
- *  direction: PropTypes.oneOf(['up', 'down', 'left', 'right']).isRequired,
- *  inNavbar: PropTypes.bool.isRequired,
- *  disabled: PropTypes.bool
- * }
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 
-var DropdownContext = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createContext({});
-// CONCATENATED MODULE: ./node_modules/reactstrap/es/Dropdown.js
+function componentWillMount() {
+  // Call this.constructor.gDSFP to support sub-classes.
+  var state = this.constructor.getDerivedStateFromProps(this.props, this.state);
+  if (state !== null && state !== undefined) {
+    this.setState(state);
+  }
+}
+
+function componentWillReceiveProps(nextProps) {
+  // Call this.constructor.gDSFP to support sub-classes.
+  // Use the setState() updater to ensure state isn't stale in certain edge cases.
+  function updater(prevState) {
+    var state = this.constructor.getDerivedStateFromProps(nextProps, prevState);
+    return state !== null && state !== undefined ? state : null;
+  }
+  // Binding "this" is important for shallow renderer support.
+  this.setState(updater.bind(this));
+}
+
+function componentWillUpdate(nextProps, nextState) {
+  try {
+    var prevProps = this.props;
+    var prevState = this.state;
+    this.props = nextProps;
+    this.state = nextState;
+    this.__reactInternalSnapshotFlag = true;
+    this.__reactInternalSnapshot = this.getSnapshotBeforeUpdate(
+      prevProps,
+      prevState
+    );
+  } finally {
+    this.props = prevProps;
+    this.state = prevState;
+  }
+}
+
+// React may warn about cWM/cWRP/cWU methods being deprecated.
+// Add a flag to suppress these warnings for this special case.
+componentWillMount.__suppressDeprecationWarning = true;
+componentWillReceiveProps.__suppressDeprecationWarning = true;
+componentWillUpdate.__suppressDeprecationWarning = true;
+
+function polyfill(Component) {
+  var prototype = Component.prototype;
+
+  if (!prototype || !prototype.isReactComponent) {
+    throw new Error('Can only polyfill class components');
+  }
+
+  if (
+    typeof Component.getDerivedStateFromProps !== 'function' &&
+    typeof prototype.getSnapshotBeforeUpdate !== 'function'
+  ) {
+    return Component;
+  }
+
+  // If new component APIs are defined, "unsafe" lifecycles won't be called.
+  // Error if any of these lifecycles are present,
+  // Because they would work differently between older and newer (16.3+) versions of React.
+  var foundWillMountName = null;
+  var foundWillReceivePropsName = null;
+  var foundWillUpdateName = null;
+  if (typeof prototype.componentWillMount === 'function') {
+    foundWillMountName = 'componentWillMount';
+  } else if (typeof prototype.UNSAFE_componentWillMount === 'function') {
+    foundWillMountName = 'UNSAFE_componentWillMount';
+  }
+  if (typeof prototype.componentWillReceiveProps === 'function') {
+    foundWillReceivePropsName = 'componentWillReceiveProps';
+  } else if (typeof prototype.UNSAFE_componentWillReceiveProps === 'function') {
+    foundWillReceivePropsName = 'UNSAFE_componentWillReceiveProps';
+  }
+  if (typeof prototype.componentWillUpdate === 'function') {
+    foundWillUpdateName = 'componentWillUpdate';
+  } else if (typeof prototype.UNSAFE_componentWillUpdate === 'function') {
+    foundWillUpdateName = 'UNSAFE_componentWillUpdate';
+  }
+  if (
+    foundWillMountName !== null ||
+    foundWillReceivePropsName !== null ||
+    foundWillUpdateName !== null
+  ) {
+    var componentName = Component.displayName || Component.name;
+    var newApiName =
+      typeof Component.getDerivedStateFromProps === 'function'
+        ? 'getDerivedStateFromProps()'
+        : 'getSnapshotBeforeUpdate()';
+
+    throw Error(
+      'Unsafe legacy lifecycles will not be called for components using new component APIs.\n\n' +
+        componentName +
+        ' uses ' +
+        newApiName +
+        ' but also contains the following legacy lifecycles:' +
+        (foundWillMountName !== null ? '\n  ' + foundWillMountName : '') +
+        (foundWillReceivePropsName !== null
+          ? '\n  ' + foundWillReceivePropsName
+          : '') +
+        (foundWillUpdateName !== null ? '\n  ' + foundWillUpdateName : '') +
+        '\n\nThe above lifecycles should be removed. Learn more about this warning here:\n' +
+        'https://fb.me/react-async-component-lifecycle-hooks'
+    );
+  }
+
+  // React <= 16.2 does not support static getDerivedStateFromProps.
+  // As a workaround, use cWM and cWRP to invoke the new static lifecycle.
+  // Newer versions of React will ignore these lifecycles if gDSFP exists.
+  if (typeof Component.getDerivedStateFromProps === 'function') {
+    prototype.componentWillMount = componentWillMount;
+    prototype.componentWillReceiveProps = componentWillReceiveProps;
+  }
+
+  // React <= 16.2 does not support getSnapshotBeforeUpdate.
+  // As a workaround, use cWU to invoke the new lifecycle.
+  // Newer versions of React will ignore that lifecycle if gSBU exists.
+  if (typeof prototype.getSnapshotBeforeUpdate === 'function') {
+    if (typeof prototype.componentDidUpdate !== 'function') {
+      throw new Error(
+        'Cannot polyfill getSnapshotBeforeUpdate() for components that do not define componentDidUpdate() on the prototype'
+      );
+    }
+
+    prototype.componentWillUpdate = componentWillUpdate;
+
+    var componentDidUpdate = prototype.componentDidUpdate;
+
+    prototype.componentDidUpdate = function componentDidUpdatePolyfill(
+      prevProps,
+      prevState,
+      maybeSnapshot
+    ) {
+      // 16.3+ will not execute our will-update method;
+      // It will pass a snapshot value to did-update though.
+      // Older versions will require our polyfilled will-update value.
+      // We need to handle both cases, but can't just check for the presence of "maybeSnapshot",
+      // Because for <= 15.x versions this might be a "prevContext" object.
+      // We also can't just check "__reactInternalSnapshot",
+      // Because get-snapshot might return a falsy value.
+      // So check for the explicit __reactInternalSnapshotFlag flag to determine behavior.
+      var snapshot = this.__reactInternalSnapshotFlag
+        ? this.__reactInternalSnapshot
+        : maybeSnapshot;
+
+      componentDidUpdate.call(this, prevProps, prevState, snapshot);
+    };
+  }
+
+  return Component;
+}
+
+
+
+// CONCATENATED MODULE: ./node_modules/uncontrollable/esm/uncontrollable.js
 
 
 
 
 
-/* eslint react/no-find-dom-node: 0 */
-// https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-find-dom-node.md
+
+
+function uncontrollable(Component, controlledValues, methods) {
+  if (methods === void 0) {
+    methods = [];
+  }
+
+  var displayName = Component.displayName || Component.name || 'Component';
+  var canAcceptRef = utils_canAcceptRef(Component);
+  var controlledProps = Object.keys(controlledValues);
+  var PROPS_TO_OMIT = controlledProps.map(defaultKey);
+  !(canAcceptRef || !methods.length) ?  false ? undefined : browser_default()(false) : void 0;
+
+  var UncontrolledComponent =
+  /*#__PURE__*/
+  function (_React$Component) {
+    inheritsLoose_inheritsLoose(UncontrolledComponent, _React$Component);
+
+    function UncontrolledComponent() {
+      var _this;
+
+      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      _this = _React$Component.call.apply(_React$Component, [this].concat(args)) || this;
+      _this.handlers = Object.create(null);
+      controlledProps.forEach(function (propName) {
+        var handlerName = controlledValues[propName];
+
+        var handleChange = function handleChange(value) {
+          if (_this.props[handlerName]) {
+            var _this$props;
+
+            _this._notifying = true;
+
+            for (var _len2 = arguments.length, args = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+              args[_key2 - 1] = arguments[_key2];
+            }
+
+            (_this$props = _this.props)[handlerName].apply(_this$props, [value].concat(args));
+
+            _this._notifying = false;
+          }
+
+          if (!_this.unmounted) _this.setState(function (_ref) {
+            var _extends2;
+
+            var values = _ref.values;
+            return {
+              values: extends_extends(Object.create(null), values, (_extends2 = {}, _extends2[propName] = value, _extends2))
+            };
+          });
+        };
+
+        _this.handlers[handlerName] = handleChange;
+      });
+      if (methods.length) _this.attachRef = function (ref) {
+        _this.inner = ref;
+      };
+      var values = Object.create(null);
+      controlledProps.forEach(function (key) {
+        values[key] = _this.props[defaultKey(key)];
+      });
+      _this.state = {
+        values: values,
+        prevProps: {}
+      };
+      return _this;
+    }
+
+    var _proto = UncontrolledComponent.prototype;
+
+    _proto.shouldComponentUpdate = function shouldComponentUpdate() {
+      //let setState trigger the update
+      return !this._notifying;
+    };
+
+    UncontrolledComponent.getDerivedStateFromProps = function getDerivedStateFromProps(props, _ref2) {
+      var values = _ref2.values,
+          prevProps = _ref2.prevProps;
+      var nextState = {
+        values: extends_extends(Object.create(null), values),
+        prevProps: {}
+      };
+      controlledProps.forEach(function (key) {
+        /**
+         * If a prop switches from controlled to Uncontrolled
+         * reset its value to the defaultValue
+         */
+        nextState.prevProps[key] = props[key];
+
+        if (!utils_isProp(props, key) && utils_isProp(prevProps, key)) {
+          nextState.values[key] = props[defaultKey(key)];
+        }
+      });
+      return nextState;
+    };
+
+    _proto.componentWillUnmount = function componentWillUnmount() {
+      this.unmounted = true;
+    };
+
+    _proto.render = function render() {
+      var _this2 = this;
+
+      var _this$props2 = this.props,
+          innerRef = _this$props2.innerRef,
+          props = objectWithoutPropertiesLoose_objectWithoutPropertiesLoose(_this$props2, ["innerRef"]);
+
+      PROPS_TO_OMIT.forEach(function (prop) {
+        delete props[prop];
+      });
+      var newProps = {};
+      controlledProps.forEach(function (propName) {
+        var propValue = _this2.props[propName];
+        newProps[propName] = propValue !== undefined ? propValue : _this2.state.values[propName];
+      });
+      return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Component, extends_extends({}, props, newProps, this.handlers, {
+        ref: innerRef || this.attachRef
+      }));
+    };
+
+    return UncontrolledComponent;
+  }(external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.Component);
+
+  polyfill(UncontrolledComponent);
+  UncontrolledComponent.displayName = "Uncontrolled(" + displayName + ")";
+  UncontrolledComponent.propTypes = extends_extends({
+    innerRef: function innerRef() {}
+  }, uncontrolledPropTypes(controlledValues, displayName));
+  methods.forEach(function (method) {
+    UncontrolledComponent.prototype[method] = function $proxiedMethod() {
+      var _this$inner;
+
+      return (_this$inner = this.inner)[method].apply(_this$inner, arguments);
+    };
+  });
+  var WrappedComponent = UncontrolledComponent;
+
+  if (external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.forwardRef) {
+    WrappedComponent = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.forwardRef(function (props, ref) {
+      return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(UncontrolledComponent, extends_extends({}, props, {
+        innerRef: ref
+      }));
+    });
+    WrappedComponent.propTypes = UncontrolledComponent.propTypes;
+  }
+
+  WrappedComponent.ControlledComponent = Component;
+  /**
+   * useful when wrapping a Component and you want to control
+   * everything
+   */
+
+  WrappedComponent.deferControlTo = function (newComponent, additions, nextMethods) {
+    if (additions === void 0) {
+      additions = {};
+    }
+
+    return uncontrollable(newComponent, extends_extends({}, controlledValues, additions), nextMethods);
+  };
+
+  return WrappedComponent;
+}
+// CONCATENATED MODULE: ./node_modules/uncontrollable/esm/index.js
+
+
+// CONCATENATED MODULE: ./node_modules/@restart/hooks/esm/usePrevious.js
+
+/**
+ * Store the last of some value. Tracked via a `Ref` only updating it
+ * after the component renders.
+ *
+ * Helpful if you need to compare a prop value to it's previous value during render.
+ *
+ * ```ts
+ * function Component(props) {
+ *   const lastProps = usePrevious(props)
+ *
+ *   if (lastProps.foo !== props.foo)
+ *     resetValueFromProps(props.foo)
+ * }
+ * ```
+ *
+ * @param value the value to track
+ */
+
+function usePrevious(value) {
+  var ref = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(null);
+  Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+    ref.current = value;
+  });
+  return ref.current;
+}
+// CONCATENATED MODULE: ./node_modules/@restart/hooks/esm/useCallbackRef.js
+
+/**
+ * A convenience hook around `useState` designed to be paired with
+ * the component [callback ref](https://reactjs.org/docs/refs-and-the-dom.html#callback-refs) api.
+ * Callback refs are useful over `useRef()` when you need to respond to the ref being set
+ * instead of lazily accessing it in an effect.
+ *
+ * ```ts
+ * const [element, attachRef] = useCallbackRef<HTMLDivElement>()
+ *
+ * useEffect(() => {
+ *   if (!element) return
+ *
+ *   const calendar = new FullCalendar.Calendar(element)
+ *
+ *   return () => {
+ *     calendar.destroy()
+ *   }
+ * }, [element])
+ *
+ * return <div ref={attachRef} />
+ * ```
+ *
+ * @category refs
+ */
+
+function useCallbackRef() {
+  return Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(null);
+}
+// CONCATENATED MODULE: ./node_modules/@restart/hooks/esm/useForceUpdate.js
+
+/**
+ * Returns a function that triggers a component update. the hook equivalent to
+ * `this.forceUpdate()` in a class component. In most cases using a state value directly
+ * is preferable but may be required in some advanced usages of refs for interop or
+ * when direct DOM manipulation is required.
+ *
+ * ```ts
+ * const forceUpdate = useForceUpdate();
+ *
+ * const updateOnClick = useCallback(() => {
+ *  forceUpdate()
+ * }, [forceUpdate])
+ *
+ * return <button type="button" onClick={updateOnClick}>Hi there</button>
+ * ```
+ */
+
+function useForceUpdate() {
+  // The toggling state value is designed to defeat React optimizations for skipping
+  // updates when they are stricting equal to the last state value
+  var _useReducer = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useReducer"])(function (state) {
+    return !state;
+  }, false),
+      dispatch = _useReducer[1];
+
+  return dispatch;
+}
+// CONCATENATED MODULE: ./node_modules/@restart/hooks/esm/useCommittedRef.js
+
+/**
+ * Creates a `Ref` whose value is updated in an effect, ensuring the most recent
+ * value is the one rendered with. Generally only required for Concurrent mode usage
+ * where previous work in `render()` may be discarded befor being used.
+ *
+ * This is safe to access in an event handler.
+ *
+ * @param value The `Ref` value
+ */
+
+function useCommittedRef(value) {
+  var ref = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(value);
+  Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+    ref.current = value;
+  }, [value]);
+  return ref;
+}
+
+/* harmony default export */ var esm_useCommittedRef = (useCommittedRef);
+// CONCATENATED MODULE: ./node_modules/@restart/hooks/esm/useEventCallback.js
+
+
+function useEventCallback(fn) {
+  var ref = esm_useCommittedRef(fn);
+  return Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useCallback"])(function () {
+    return ref.current && ref.current.apply(ref, arguments);
+  }, [ref]);
+}
+// CONCATENATED MODULE: ./node_modules/react-overlays/esm/DropdownContext.js
+
+var DropdownContext = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createContext(null);
+/* harmony default export */ var esm_DropdownContext = (DropdownContext);
+// CONCATENATED MODULE: ./node_modules/@restart/hooks/esm/useMounted.js
+
+/**
+ * Track whether a component is current mounted. Generally less preferable than
+ * properlly canceling effects so they don't run after a component is unmounted,
+ * but helpful in cases where that isn't feasible, such as a `Promise` resolution.
+ *
+ * @returns a function that returns the current isMounted state of the component
+ *
+ * ```ts
+ * const [data, setData] = useState(null)
+ * const isMounted = useMounted()
+ *
+ * useEffect(() => {
+ *   fetchdata().then((newData) => {
+ *      if (isMounted()) {
+ *        setData(newData);
+ *      }
+ *   })
+ * })
+ * ```
+ */
+
+function useMounted() {
+  var mounted = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(true);
+  var isMounted = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(function () {
+    return mounted.current;
+  });
+  Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+    return function () {
+      mounted.current = false;
+    };
+  }, []);
+  return isMounted.current;
+}
+// CONCATENATED MODULE: ./node_modules/@restart/hooks/esm/useSafeState.js
+
+
+
+function useSafeState(state) {
+  var isMounted = useMounted();
+  return [state[0], Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useCallback"])(function (nextState) {
+    if (!isMounted()) return;
+    return state[1](nextState);
+  }, [isMounted, state[1]])];
+}
+
+/* harmony default export */ var esm_useSafeState = (useSafeState);
+// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/utils/getBasePlacement.js
+
+function getBasePlacement(placement) {
+  return placement.split('-')[0];
+}
+// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/dom-utils/getLayoutRect.js
+// Returns the layout rect of an element relative to its offsetParent. Layout
+// means it doesn't take into account transforms.
+function getLayoutRect(element) {
+  return {
+    x: element.offsetLeft,
+    y: element.offsetTop,
+    width: element.offsetWidth,
+    height: element.offsetHeight
+  };
+}
+// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/dom-utils/contains.js
+function contains(parent, child) {
+  // $FlowFixMe: hasOwnProperty doesn't seem to work in tests
+  var isShadow = Boolean(child.getRootNode && child.getRootNode().host); // First, attempt with faster native method
+
+  if (parent.contains(child)) {
+    return true;
+  } // then fallback to custom implementation with Shadow DOM support
+  else if (isShadow) {
+      var next = child;
+
+      do {
+        if (next && parent.isSameNode(next)) {
+          return true;
+        } // $FlowFixMe: need a better way to handle this...
+
+
+        next = next.parentNode || next.host;
+      } while (next);
+    } // Give up, the result is false
+
+
+  return false;
+}
+// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/dom-utils/getWindow.js
+/*:: import type { Window } from '../types'; */
+
+/*:: declare function getWindow(node: Node | Window): Window; */
+function getWindow(node) {
+  if (node.toString() !== '[object Window]') {
+    var ownerDocument = node.ownerDocument;
+    return ownerDocument ? ownerDocument.defaultView : window;
+  }
+
+  return node;
+}
+// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/dom-utils/getNodeName.js
+function getNodeName(element) {
+  return element ? (element.nodeName || '').toLowerCase() : null;
+}
+// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/dom-utils/getComputedStyle.js
+
+function getComputedStyle_getComputedStyle(element) {
+  return getWindow(element).getComputedStyle(element);
+}
+// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/dom-utils/instanceOf.js
+
+/*:: declare function isElement(node: mixed): boolean %checks(node instanceof
+  Element); */
+
+function isElement(node) {
+  var OwnElement = getWindow(node).Element;
+  return node instanceof OwnElement || node instanceof Element;
+}
+/*:: declare function isHTMLElement(node: mixed): boolean %checks(node instanceof
+  HTMLElement); */
+
+
+function isHTMLElement(node) {
+  var OwnElement = getWindow(node).HTMLElement;
+  return node instanceof OwnElement || node instanceof HTMLElement;
+}
+
+
+// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/dom-utils/isTableElement.js
+
+function isTableElement(element) {
+  return ['table', 'td', 'th'].indexOf(getNodeName(element)) >= 0;
+}
+// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/dom-utils/getOffsetParent.js
+
+
+
+
+
+
+function getTrueOffsetParent(element) {
+  if (!isHTMLElement(element) || // https://github.com/popperjs/popper-core/issues/837
+  getComputedStyle_getComputedStyle(element).position === 'fixed') {
+    return null;
+  }
+
+  return element.offsetParent;
+}
+
+function getOffsetParent(element) {
+  var window = getWindow(element);
+  var offsetParent = getTrueOffsetParent(element); // Find the nearest non-table offsetParent
+
+  while (offsetParent && isTableElement(offsetParent)) {
+    offsetParent = getTrueOffsetParent(offsetParent);
+  }
+
+  if (offsetParent && getNodeName(offsetParent) === 'body' && getComputedStyle_getComputedStyle(offsetParent).position === 'static') {
+    return window;
+  }
+
+  return offsetParent || window;
+}
+// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/utils/getMainAxisFromPlacement.js
+function getMainAxisFromPlacement(placement) {
+  return ['top', 'bottom'].indexOf(placement) >= 0 ? 'x' : 'y';
+}
+// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/utils/within.js
+function within(min, value, max) {
+  return Math.max(min, Math.min(value, max));
+}
+// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/utils/getFreshSideObject.js
+function getFreshSideObject() {
+  return {
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0
+  };
+}
+// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/utils/mergePaddingObject.js
+
+function mergePaddingObject(paddingObject) {
+  return Object.assign({}, getFreshSideObject(), {}, paddingObject);
+}
+// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/utils/expandToHashMap.js
+function expandToHashMap(value, keys) {
+  return keys.reduce(function (hashMap, key) {
+    hashMap[key] = value;
+    return hashMap;
+  }, {});
+}
+// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/enums.js
+var enums_top = 'top';
+var bottom = 'bottom';
+var right = 'right';
+var left = 'left';
+var auto = 'auto';
+var basePlacements = [enums_top, bottom, right, left];
+var start = 'start';
+var end = 'end';
+var enums_clippingParents = 'clippingParents';
+var viewport = 'viewport';
+var enums_popper = 'popper';
+var enums_reference = 'reference';
+var variationPlacements = /*#__PURE__*/basePlacements.reduce(function (acc, placement) {
+  return acc.concat([placement + "-" + start, placement + "-" + end]);
+}, []);
+var enums_placements = /*#__PURE__*/[].concat(basePlacements, [auto]).reduce(function (acc, placement) {
+  return acc.concat([placement, placement + "-" + start, placement + "-" + end]);
+}, []); // modifiers that need to read the DOM
+
+var beforeRead = 'beforeRead';
+var read = 'read';
+var afterRead = 'afterRead'; // pure-logic modifiers
+
+var beforeMain = 'beforeMain';
+var main = 'main';
+var afterMain = 'afterMain'; // modifier with the purpose to write to the DOM (or write into a framework state)
+
+var beforeWrite = 'beforeWrite';
+var write = 'write';
+var afterWrite = 'afterWrite';
+var modifierPhases = [beforeRead, read, afterRead, beforeMain, main, afterMain, beforeWrite, write, afterWrite];
+// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/modifiers/arrow.js
+
+
+
+
+
+
+
+
+
+ // eslint-disable-next-line import/no-unused-modules
+
+function arrow(_ref) {
+  var _state$modifiersData$;
+
+  var state = _ref.state,
+      name = _ref.name;
+  var arrowElement = state.elements.arrow;
+  var popperOffsets = state.modifiersData.popperOffsets;
+  var basePlacement = getBasePlacement(state.placement);
+  var axis = getMainAxisFromPlacement(basePlacement);
+  var isVertical = [left, right].indexOf(basePlacement) >= 0;
+  var len = isVertical ? 'height' : 'width';
+
+  if (!arrowElement || !popperOffsets) {
+    return;
+  }
+
+  var paddingObject = state.modifiersData[name + "#persistent"].padding;
+  var arrowRect = getLayoutRect(arrowElement);
+  var minProp = axis === 'y' ? enums_top : left;
+  var maxProp = axis === 'y' ? bottom : right;
+  var endDiff = state.rects.reference[len] + state.rects.reference[axis] - popperOffsets[axis] - state.rects.popper[len];
+  var startDiff = popperOffsets[axis] - state.rects.reference[axis];
+  var arrowOffsetParent = getOffsetParent(arrowElement);
+  var clientSize = arrowOffsetParent ? axis === 'y' ? arrowOffsetParent.clientHeight || 0 : arrowOffsetParent.clientWidth || 0 : 0;
+  var centerToReference = endDiff / 2 - startDiff / 2; // Make sure the arrow doesn't overflow the popper if the center point is
+  // outside of the popper bounds
+
+  var min = paddingObject[minProp];
+  var max = clientSize - arrowRect[len] - paddingObject[maxProp];
+  var center = clientSize / 2 - arrowRect[len] / 2 + centerToReference;
+  var offset = within(min, center, max); // Prevents breaking syntax highlighting...
+
+  var axisProp = axis;
+  state.modifiersData[name] = (_state$modifiersData$ = {}, _state$modifiersData$[axisProp] = offset, _state$modifiersData$.centerOffset = offset - center, _state$modifiersData$);
+}
+
+function effect(_ref2) {
+  var state = _ref2.state,
+      options = _ref2.options,
+      name = _ref2.name;
+  var _options$element = options.element,
+      arrowElement = _options$element === void 0 ? '[data-popper-arrow]' : _options$element,
+      _options$padding = options.padding,
+      padding = _options$padding === void 0 ? 0 : _options$padding;
+
+  if (arrowElement == null) {
+    return;
+  } // CSS selector
+
+
+  if (typeof arrowElement === 'string') {
+    arrowElement = state.elements.popper.querySelector(arrowElement);
+
+    if (!arrowElement) {
+      return;
+    }
+  }
+
+  if (false) {}
+
+  if (!contains(state.elements.popper, arrowElement)) {
+    if (false) {}
+
+    return;
+  }
+
+  state.elements.arrow = arrowElement;
+  state.modifiersData[name + "#persistent"] = {
+    padding: mergePaddingObject(typeof padding !== 'number' ? padding : expandToHashMap(padding, basePlacements))
+  };
+} // eslint-disable-next-line import/no-unused-modules
+
+
+/* harmony default export */ var modifiers_arrow = ({
+  name: 'arrow',
+  enabled: true,
+  phase: 'main',
+  fn: arrow,
+  effect: effect,
+  requires: ['popperOffsets'],
+  requiresIfExists: ['preventOverflow']
+});
+// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/dom-utils/getDocumentElement.js
+
+function getDocumentElement(element) {
+  // $FlowFixMe: assume body is always available
+  return (isElement(element) ? element.ownerDocument : element.document).documentElement;
+}
+// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/modifiers/computeStyles.js
+
+
+
+
+
+ // eslint-disable-next-line import/no-unused-modules
+
+var unsetSides = {
+  top: 'auto',
+  right: 'auto',
+  bottom: 'auto',
+  left: 'auto'
+}; // Round the offsets to the nearest suitable subpixel based on the DPR.
+// Zooming can change the DPR, but it seems to report a value that will
+// cleanly divide the values into the appropriate subpixels.
+
+function roundOffsets(_ref) {
+  var x = _ref.x,
+      y = _ref.y;
+  var win = window;
+  var dpr = win.devicePixelRatio || 1;
+  return {
+    x: Math.round(x * dpr) / dpr || 0,
+    y: Math.round(y * dpr) / dpr || 0
+  };
+}
+
+function mapToStyles(_ref2) {
+  var _Object$assign2;
+
+  var popper = _ref2.popper,
+      popperRect = _ref2.popperRect,
+      placement = _ref2.placement,
+      offsets = _ref2.offsets,
+      position = _ref2.position,
+      gpuAcceleration = _ref2.gpuAcceleration,
+      adaptive = _ref2.adaptive;
+
+  var _roundOffsets = roundOffsets(offsets),
+      x = _roundOffsets.x,
+      y = _roundOffsets.y;
+
+  var hasX = offsets.hasOwnProperty('x');
+  var hasY = offsets.hasOwnProperty('y');
+  var sideX = left;
+  var sideY = enums_top;
+  var win = window;
+
+  if (adaptive) {
+    var offsetParent = getOffsetParent(popper);
+
+    if (offsetParent === getWindow(popper)) {
+      offsetParent = getDocumentElement(popper);
+    } // $FlowFixMe: force type refinement, we compare offsetParent with window above, but Flow doesn't detect it
+
+    /*:: offsetParent = (offsetParent: Element); */
+
+
+    if (placement === enums_top) {
+      sideY = bottom;
+      y -= offsetParent.clientHeight - popperRect.height;
+      y *= gpuAcceleration ? 1 : -1;
+    }
+
+    if (placement === left) {
+      sideX = right;
+      x -= offsetParent.clientWidth - popperRect.width;
+      x *= gpuAcceleration ? 1 : -1;
+    }
+  }
+
+  var commonStyles = Object.assign({
+    position: position
+  }, adaptive && unsetSides);
+
+  if (gpuAcceleration) {
+    var _Object$assign;
+
+    return Object.assign({}, commonStyles, (_Object$assign = {}, _Object$assign[sideY] = hasY ? '0' : '', _Object$assign[sideX] = hasX ? '0' : '', _Object$assign.transform = (win.devicePixelRatio || 1) < 2 ? "translate(" + x + "px, " + y + "px)" : "translate3d(" + x + "px, " + y + "px, 0)", _Object$assign));
+  }
+
+  return Object.assign({}, commonStyles, (_Object$assign2 = {}, _Object$assign2[sideY] = hasY ? y + "px" : '', _Object$assign2[sideX] = hasX ? x + "px" : '', _Object$assign2.transform = '', _Object$assign2));
+}
+
+function computeStyles(_ref3) {
+  var state = _ref3.state,
+      options = _ref3.options;
+  var _options$gpuAccelerat = options.gpuAcceleration,
+      gpuAcceleration = _options$gpuAccelerat === void 0 ? true : _options$gpuAccelerat,
+      _options$adaptive = options.adaptive,
+      adaptive = _options$adaptive === void 0 ? true : _options$adaptive;
+
+  if (false) { var transitionProperty; }
+
+  var commonStyles = {
+    placement: getBasePlacement(state.placement),
+    popper: state.elements.popper,
+    popperRect: state.rects.popper,
+    gpuAcceleration: gpuAcceleration
+  };
+
+  if (state.modifiersData.popperOffsets != null) {
+    state.styles.popper = Object.assign({}, state.styles.popper, {}, mapToStyles(Object.assign({}, commonStyles, {
+      offsets: state.modifiersData.popperOffsets,
+      position: state.options.strategy,
+      adaptive: adaptive
+    })));
+  }
+
+  if (state.modifiersData.arrow != null) {
+    state.styles.arrow = Object.assign({}, state.styles.arrow, {}, mapToStyles(Object.assign({}, commonStyles, {
+      offsets: state.modifiersData.arrow,
+      position: 'absolute',
+      adaptive: false
+    })));
+  }
+
+  state.attributes.popper = Object.assign({}, state.attributes.popper, {
+    'data-popper-placement': state.placement
+  });
+} // eslint-disable-next-line import/no-unused-modules
+
+
+/* harmony default export */ var modifiers_computeStyles = ({
+  name: 'computeStyles',
+  enabled: true,
+  phase: 'beforeWrite',
+  fn: computeStyles,
+  data: {}
+});
+// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/modifiers/eventListeners.js
+ // eslint-disable-next-line import/no-unused-modules
+
+var passive = {
+  passive: true
+};
+
+function eventListeners_effect(_ref) {
+  var state = _ref.state,
+      instance = _ref.instance,
+      options = _ref.options;
+  var _options$scroll = options.scroll,
+      scroll = _options$scroll === void 0 ? true : _options$scroll,
+      _options$resize = options.resize,
+      resize = _options$resize === void 0 ? true : _options$resize;
+  var window = getWindow(state.elements.popper);
+  var scrollParents = [].concat(state.scrollParents.reference, state.scrollParents.popper);
+
+  if (scroll) {
+    scrollParents.forEach(function (scrollParent) {
+      scrollParent.addEventListener('scroll', instance.update, passive);
+    });
+  }
+
+  if (resize) {
+    window.addEventListener('resize', instance.update, passive);
+  }
+
+  return function () {
+    if (scroll) {
+      scrollParents.forEach(function (scrollParent) {
+        scrollParent.removeEventListener('scroll', instance.update, passive);
+      });
+    }
+
+    if (resize) {
+      window.removeEventListener('resize', instance.update, passive);
+    }
+  };
+} // eslint-disable-next-line import/no-unused-modules
+
+
+/* harmony default export */ var eventListeners = ({
+  name: 'eventListeners',
+  enabled: true,
+  phase: 'write',
+  fn: function fn() {},
+  effect: eventListeners_effect,
+  data: {}
+});
+// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/utils/getOppositePlacement.js
+var hash = {
+  left: 'right',
+  right: 'left',
+  bottom: 'top',
+  top: 'bottom'
+};
+function getOppositePlacement(placement) {
+  return placement.replace(/left|right|bottom|top/g, function (matched) {
+    return hash[matched];
+  });
+}
+// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/utils/getOppositeVariationPlacement.js
+var getOppositeVariationPlacement_hash = {
+  start: 'end',
+  end: 'start'
+};
+function getOppositeVariationPlacement(placement) {
+  return placement.replace(/start|end/g, function (matched) {
+    return getOppositeVariationPlacement_hash[matched];
+  });
+}
+// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/dom-utils/getBoundingClientRect.js
+function getBoundingClientRect(element) {
+  var rect = element.getBoundingClientRect();
+  return {
+    width: rect.width,
+    height: rect.height,
+    top: rect.top,
+    right: rect.right,
+    bottom: rect.bottom,
+    left: rect.left,
+    x: rect.left,
+    y: rect.top
+  };
+}
+// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/dom-utils/getViewportRect.js
+
+function getViewportRect(element) {
+  var win = getWindow(element);
+  var visualViewport = win.visualViewport;
+  var width = win.innerWidth;
+  var height = win.innerHeight; // We don't know which browsers have buggy or odd implementations of this, so
+  // for now we're only applying it to iOS to fix the keyboard issue.
+  // Investigation required
+
+  if (visualViewport && /iPhone|iPod|iPad/.test(navigator.platform)) {
+    width = visualViewport.width;
+    height = visualViewport.height;
+  }
+
+  return {
+    width: width,
+    height: height,
+    x: 0,
+    y: 0
+  };
+}
+// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/dom-utils/getWindowScroll.js
+
+function getWindowScroll(node) {
+  var win = getWindow(node);
+  var scrollLeft = win.pageXOffset;
+  var scrollTop = win.pageYOffset;
+  return {
+    scrollLeft: scrollLeft,
+    scrollTop: scrollTop
+  };
+}
+// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/dom-utils/getHTMLElementScroll.js
+function getHTMLElementScroll(element) {
+  return {
+    scrollLeft: element.scrollLeft,
+    scrollTop: element.scrollTop
+  };
+}
+// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/dom-utils/getNodeScroll.js
+
+
+
+
+function getNodeScroll(node) {
+  if (node === getWindow(node) || !isHTMLElement(node)) {
+    return getWindowScroll(node);
+  } else {
+    return getHTMLElementScroll(node);
+  }
+}
+// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/dom-utils/getWindowScrollBarX.js
+
+
+
+function getWindowScrollBarX(element) {
+  // If <html> has a CSS width greater than the viewport, then this will be
+  // incorrect for RTL.
+  // Popper 1 is broken in this case and never had a bug report so let's assume
+  // it's not an issue. I don't think anyone ever specifies width on <html>
+  // anyway.
+  // Browsers where the left scrollbar doesn't cause an issue report `0` for
+  // this (e.g. Edge 2019, IE11, Safari)
+  return getBoundingClientRect(getDocumentElement(element)).left + getWindowScroll(element).scrollLeft;
+}
+// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/dom-utils/isScrollParent.js
+
+function isScrollParent(element) {
+  // Firefox wants us to check `-x` and `-y` variations as well
+  var _getComputedStyle = getComputedStyle_getComputedStyle(element),
+      overflow = _getComputedStyle.overflow,
+      overflowX = _getComputedStyle.overflowX,
+      overflowY = _getComputedStyle.overflowY;
+
+  return /auto|scroll|overlay|hidden/.test(overflow + overflowY + overflowX);
+}
+// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/dom-utils/getCompositeRect.js
+
+
+
+
+
+
+ // Returns the composite rect of an element relative to its offsetParent.
+// Composite means it takes into account transforms as well as layout.
+
+function getCompositeRect(elementOrVirtualElement, offsetParent, isFixed) {
+  if (isFixed === void 0) {
+    isFixed = false;
+  }
+
+  var documentElement = getDocumentElement(offsetParent);
+  var rect = getBoundingClientRect(elementOrVirtualElement);
+  var scroll = {
+    scrollLeft: 0,
+    scrollTop: 0
+  };
+  var offsets = {
+    x: 0,
+    y: 0
+  };
+
+  if (!isFixed) {
+    if (getNodeName(offsetParent) !== 'body' || // https://github.com/popperjs/popper-core/issues/1078
+    isScrollParent(documentElement)) {
+      scroll = getNodeScroll(offsetParent);
+    }
+
+    if (isHTMLElement(offsetParent)) {
+      offsets = getBoundingClientRect(offsetParent);
+      offsets.x += offsetParent.clientLeft;
+      offsets.y += offsetParent.clientTop;
+    } else if (documentElement) {
+      offsets.x = getWindowScrollBarX(documentElement);
+    }
+  }
+
+  return {
+    x: rect.left + scroll.scrollLeft - offsets.x,
+    y: rect.top + scroll.scrollTop - offsets.y,
+    width: rect.width,
+    height: rect.height
+  };
+}
+// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/dom-utils/getDocumentRect.js
+
+
+
+
+function getDocumentRect(element) {
+  var win = getWindow(element);
+  var winScroll = getWindowScroll(element);
+  var documentRect = getCompositeRect(getDocumentElement(element), win);
+  documentRect.height = Math.max(documentRect.height, win.innerHeight);
+  documentRect.width = Math.max(documentRect.width, win.innerWidth);
+  documentRect.x = -winScroll.scrollLeft;
+  documentRect.y = -winScroll.scrollTop;
+  return documentRect;
+}
+// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/dom-utils/getParentNode.js
+
+
+function getParentNode(element) {
+  if (getNodeName(element) === 'html') {
+    return element;
+  }
+
+  return (// $FlowFixMe: this is a quicker (but less type safe) way to save quite some bytes from the bundle
+    element.assignedSlot || // step into the shadow DOM of the parent of a slotted node
+    element.parentNode || // DOM Element detected
+    // $FlowFixMe: need a better way to handle this...
+    element.host || // ShadowRoot detected
+    // $FlowFixMe: HTMLElement is a Node
+    getDocumentElement(element) // fallback
+
+  );
+}
+// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/dom-utils/getScrollParent.js
+
+
+
+
+function getScrollParent(node) {
+  if (['html', 'body', '#document'].indexOf(getNodeName(node)) >= 0) {
+    // $FlowFixMe: assume body is always available
+    return node.ownerDocument.body;
+  }
+
+  if (isHTMLElement(node) && isScrollParent(node)) {
+    return node;
+  }
+
+  return getScrollParent(getParentNode(node));
+}
+// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/dom-utils/listScrollParents.js
+
+
+
+
+
+function listScrollParents(element, list) {
+  if (list === void 0) {
+    list = [];
+  }
+
+  var scrollParent = getScrollParent(element);
+  var isBody = getNodeName(scrollParent) === 'body';
+  var win = getWindow(scrollParent);
+  var target = isBody ? [win].concat(win.visualViewport || [], isScrollParent(scrollParent) ? scrollParent : []) : scrollParent;
+  var updatedList = list.concat(target);
+  return isBody ? updatedList : // $FlowFixMe: isBody tells us target will be an HTMLElement here
+  updatedList.concat(listScrollParents(getParentNode(target)));
+}
+// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/dom-utils/getBorders.js
+
+
+
+function toNumber(cssValue) {
+  return parseFloat(cssValue) || 0;
+}
+
+function getBorders(element) {
+  var computedStyle = isHTMLElement(element) ? getComputedStyle_getComputedStyle(element) : {};
+  return {
+    top: toNumber(computedStyle.borderTopWidth),
+    right: toNumber(computedStyle.borderRightWidth),
+    bottom: toNumber(computedStyle.borderBottomWidth),
+    left: toNumber(computedStyle.borderLeftWidth)
+  };
+}
+// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/dom-utils/getDecorations.js
+
+
+
+ // Borders + scrollbars
+
+function getDecorations(element) {
+  var win = getWindow(element);
+  var borders = getBorders(element);
+  var isHTML = getNodeName(element) === 'html';
+  var winScrollBarX = getWindowScrollBarX(element);
+  var x = element.clientWidth + borders.right;
+  var y = element.clientHeight + borders.bottom; // HACK:
+  // document.documentElement.clientHeight on iOS reports the height of the
+  // viewport including the bottom bar, even if the bottom bar isn't visible.
+  // If the difference between window innerHeight and html clientHeight is more
+  // than 50, we assume it's a mobile bottom bar and ignore scrollbars.
+  // * A 50px thick scrollbar is likely non-existent (macOS is 15px and Windows
+  //   is about 17px)
+  // * The mobile bar is 114px tall
+
+  if (isHTML && win.innerHeight - element.clientHeight > 50) {
+    y = win.innerHeight - borders.bottom;
+  }
+
+  return {
+    top: isHTML ? 0 : element.clientTop,
+    right: // RTL scrollbar (scrolling containers only)
+    element.clientLeft > borders.left ? borders.right : // LTR scrollbar
+    isHTML ? win.innerWidth - x - winScrollBarX : element.offsetWidth - x,
+    bottom: isHTML ? win.innerHeight - y : element.offsetHeight - y,
+    left: isHTML ? winScrollBarX : element.clientLeft
+  };
+}
+// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/utils/rectToClientRect.js
+function rectToClientRect(rect) {
+  return Object.assign({}, rect, {
+    left: rect.x,
+    top: rect.y,
+    right: rect.x + rect.width,
+    bottom: rect.y + rect.height
+  });
+}
+// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/dom-utils/getClippingRect.js
+
+
+
+
+
+
+
+
+
+
+
+
+
+function getClientRectFromMixedType(element, clippingParent) {
+  return clippingParent === viewport ? rectToClientRect(getViewportRect(element)) : isHTMLElement(clippingParent) ? getBoundingClientRect(clippingParent) : rectToClientRect(getDocumentRect(getDocumentElement(element)));
+} // A "clipping parent" is an overflowable container with the characteristic of
+// clipping (or hiding) overflowing elements with a position different from
+// `initial`
+
+
+function getClippingParents(element) {
+  var clippingParents = listScrollParents(element);
+  var canEscapeClipping = ['absolute', 'fixed'].indexOf(getComputedStyle_getComputedStyle(element).position) >= 0;
+  var clipperElement = canEscapeClipping && isHTMLElement(element) ? getOffsetParent(element) : element;
+
+  if (!isElement(clipperElement)) {
+    return [];
+  } // $FlowFixMe: https://github.com/facebook/flow/issues/1414
+
+
+  return clippingParents.filter(function (clippingParent) {
+    return isElement(clippingParent) && contains(clippingParent, clipperElement);
+  });
+} // Gets the maximum area that the element is visible in due to any number of
+// clipping parents
+
+
+function getClippingRect(element, boundary, rootBoundary) {
+  var mainClippingParents = boundary === 'clippingParents' ? getClippingParents(element) : [].concat(boundary);
+  var clippingParents = [].concat(mainClippingParents, [rootBoundary]);
+  var firstClippingParent = clippingParents[0];
+  var clippingRect = clippingParents.reduce(function (accRect, clippingParent) {
+    var rect = getClientRectFromMixedType(element, clippingParent);
+    var decorations = getDecorations(isHTMLElement(clippingParent) ? clippingParent : getDocumentElement(element));
+    accRect.top = Math.max(rect.top + decorations.top, accRect.top);
+    accRect.right = Math.min(rect.right - decorations.right, accRect.right);
+    accRect.bottom = Math.min(rect.bottom - decorations.bottom, accRect.bottom);
+    accRect.left = Math.max(rect.left + decorations.left, accRect.left);
+    return accRect;
+  }, getClientRectFromMixedType(element, firstClippingParent));
+  clippingRect.width = clippingRect.right - clippingRect.left;
+  clippingRect.height = clippingRect.bottom - clippingRect.top;
+  clippingRect.x = clippingRect.left;
+  clippingRect.y = clippingRect.top;
+  return clippingRect;
+}
+// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/utils/getVariation.js
+function getVariation(placement) {
+  return placement.split('-')[1];
+}
+// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/utils/computeOffsets.js
+
+
+
+
+function computeOffsets(_ref) {
+  var reference = _ref.reference,
+      element = _ref.element,
+      placement = _ref.placement;
+  var basePlacement = placement ? getBasePlacement(placement) : null;
+  var variation = placement ? getVariation(placement) : null;
+  var commonX = reference.x + reference.width / 2 - element.width / 2;
+  var commonY = reference.y + reference.height / 2 - element.height / 2;
+  var offsets;
+
+  switch (basePlacement) {
+    case enums_top:
+      offsets = {
+        x: commonX,
+        y: reference.y - element.height
+      };
+      break;
+
+    case bottom:
+      offsets = {
+        x: commonX,
+        y: reference.y + reference.height
+      };
+      break;
+
+    case right:
+      offsets = {
+        x: reference.x + reference.width,
+        y: commonY
+      };
+      break;
+
+    case left:
+      offsets = {
+        x: reference.x - element.width,
+        y: commonY
+      };
+      break;
+
+    default:
+      offsets = {
+        x: reference.x,
+        y: reference.y
+      };
+  }
+
+  var mainAxis = basePlacement ? getMainAxisFromPlacement(basePlacement) : null;
+
+  if (mainAxis != null) {
+    var len = mainAxis === 'y' ? 'height' : 'width';
+
+    switch (variation) {
+      case start:
+        offsets[mainAxis] = Math.floor(offsets[mainAxis]) - Math.floor(reference[len] / 2 - element[len] / 2);
+        break;
+
+      case end:
+        offsets[mainAxis] = Math.floor(offsets[mainAxis]) + Math.ceil(reference[len] / 2 - element[len] / 2);
+        break;
+
+      default:
+    }
+  }
+
+  return offsets;
+}
+// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/utils/detectOverflow.js
+
+
+
+
+
+
+
+
+ // eslint-disable-next-line import/no-unused-modules
+
+function detectOverflow(state, options) {
+  if (options === void 0) {
+    options = {};
+  }
+
+  var _options = options,
+      _options$placement = _options.placement,
+      placement = _options$placement === void 0 ? state.placement : _options$placement,
+      _options$boundary = _options.boundary,
+      boundary = _options$boundary === void 0 ? enums_clippingParents : _options$boundary,
+      _options$rootBoundary = _options.rootBoundary,
+      rootBoundary = _options$rootBoundary === void 0 ? viewport : _options$rootBoundary,
+      _options$elementConte = _options.elementContext,
+      elementContext = _options$elementConte === void 0 ? enums_popper : _options$elementConte,
+      _options$altBoundary = _options.altBoundary,
+      altBoundary = _options$altBoundary === void 0 ? false : _options$altBoundary,
+      _options$padding = _options.padding,
+      padding = _options$padding === void 0 ? 0 : _options$padding;
+  var paddingObject = mergePaddingObject(typeof padding !== 'number' ? padding : expandToHashMap(padding, basePlacements));
+  var altContext = elementContext === enums_popper ? enums_reference : enums_popper;
+  var referenceElement = state.elements.reference;
+  var popperRect = state.rects.popper;
+  var element = state.elements[altBoundary ? altContext : elementContext];
+  var clippingClientRect = getClippingRect(isElement(element) ? element : element.contextElement || getDocumentElement(state.elements.popper), boundary, rootBoundary);
+  var referenceClientRect = getBoundingClientRect(referenceElement);
+  var popperOffsets = computeOffsets({
+    reference: referenceClientRect,
+    element: popperRect,
+    strategy: 'absolute',
+    placement: placement
+  });
+  var popperClientRect = rectToClientRect(Object.assign({}, popperRect, {}, popperOffsets));
+  var elementClientRect = elementContext === enums_popper ? popperClientRect : referenceClientRect; // positive = overflowing the clipping rect
+  // 0 or negative = within the clipping rect
+
+  var overflowOffsets = {
+    top: clippingClientRect.top - elementClientRect.top + paddingObject.top,
+    bottom: elementClientRect.bottom - clippingClientRect.bottom + paddingObject.bottom,
+    left: clippingClientRect.left - elementClientRect.left + paddingObject.left,
+    right: elementClientRect.right - clippingClientRect.right + paddingObject.right
+  };
+  var offsetData = state.modifiersData.offset; // Offsets can be applied only to the popper element
+
+  if (elementContext === enums_popper && offsetData) {
+    var offset = offsetData[placement];
+    Object.keys(overflowOffsets).forEach(function (key) {
+      var multiply = [right, bottom].indexOf(key) >= 0 ? 1 : -1;
+      var axis = [enums_top, bottom].indexOf(key) >= 0 ? 'y' : 'x';
+      overflowOffsets[key] += offset[axis] * multiply;
+    });
+  }
+
+  return overflowOffsets;
+}
+// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/utils/computeAutoPlacement.js
+
+
+
+
+
+/*:: type OverflowsMap = { [ComputedPlacement]: number }; */
+
+/*;; type OverflowsMap = { [key in ComputedPlacement]: number }; */
+function computeAutoPlacement(state, options) {
+  if (options === void 0) {
+    options = {};
+  }
+
+  var _options = options,
+      placement = _options.placement,
+      boundary = _options.boundary,
+      rootBoundary = _options.rootBoundary,
+      padding = _options.padding,
+      flipVariations = _options.flipVariations,
+      _options$allowedAutoP = _options.allowedAutoPlacements,
+      allowedAutoPlacements = _options$allowedAutoP === void 0 ? enums_placements : _options$allowedAutoP;
+  var variation = getVariation(placement);
+  var placements = (variation ? flipVariations ? variationPlacements : variationPlacements.filter(function (placement) {
+    return getVariation(placement) === variation;
+  }) : basePlacements).filter(function (placement) {
+    return allowedAutoPlacements.indexOf(placement) >= 0;
+  }); // $FlowFixMe: Flow seems to have problems with two array unions...
+
+  var overflows = placements.reduce(function (acc, placement) {
+    acc[placement] = detectOverflow(state, {
+      placement: placement,
+      boundary: boundary,
+      rootBoundary: rootBoundary,
+      padding: padding
+    })[getBasePlacement(placement)];
+    return acc;
+  }, {});
+  return Object.keys(overflows).sort(function (a, b) {
+    return overflows[a] - overflows[b];
+  });
+}
+// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/modifiers/flip.js
+
+
+
+
+
+
+ // eslint-disable-next-line import/no-unused-modules
+
+function getExpandedFallbackPlacements(placement) {
+  if (getBasePlacement(placement) === auto) {
+    return [];
+  }
+
+  var oppositePlacement = getOppositePlacement(placement);
+  return [getOppositeVariationPlacement(placement), oppositePlacement, getOppositeVariationPlacement(oppositePlacement)];
+}
+
+function flip_flip(_ref) {
+  var state = _ref.state,
+      options = _ref.options,
+      name = _ref.name;
+
+  if (state.modifiersData[name]._skip) {
+    return;
+  }
+
+  var _options$mainAxis = options.mainAxis,
+      checkMainAxis = _options$mainAxis === void 0 ? true : _options$mainAxis,
+      _options$altAxis = options.altAxis,
+      checkAltAxis = _options$altAxis === void 0 ? true : _options$altAxis,
+      specifiedFallbackPlacements = options.fallbackPlacements,
+      padding = options.padding,
+      boundary = options.boundary,
+      rootBoundary = options.rootBoundary,
+      altBoundary = options.altBoundary,
+      _options$flipVariatio = options.flipVariations,
+      flipVariations = _options$flipVariatio === void 0 ? true : _options$flipVariatio,
+      allowedAutoPlacements = options.allowedAutoPlacements;
+  var preferredPlacement = state.options.placement;
+  var basePlacement = getBasePlacement(preferredPlacement);
+  var isBasePlacement = basePlacement === preferredPlacement;
+  var fallbackPlacements = specifiedFallbackPlacements || (isBasePlacement || !flipVariations ? [getOppositePlacement(preferredPlacement)] : getExpandedFallbackPlacements(preferredPlacement));
+  var placements = [preferredPlacement].concat(fallbackPlacements).reduce(function (acc, placement) {
+    return acc.concat(getBasePlacement(placement) === auto ? computeAutoPlacement(state, {
+      placement: placement,
+      boundary: boundary,
+      rootBoundary: rootBoundary,
+      padding: padding,
+      flipVariations: flipVariations,
+      allowedAutoPlacements: allowedAutoPlacements
+    }) : placement);
+  }, []);
+  var referenceRect = state.rects.reference;
+  var popperRect = state.rects.popper;
+  var checksMap = new Map();
+  var makeFallbackChecks = true;
+  var firstFittingPlacement = placements[0];
+
+  for (var i = 0; i < placements.length; i++) {
+    var placement = placements[i];
+
+    var _basePlacement = getBasePlacement(placement);
+
+    var isStartVariation = getVariation(placement) === start;
+    var isVertical = [enums_top, bottom].indexOf(_basePlacement) >= 0;
+    var len = isVertical ? 'width' : 'height';
+    var overflow = detectOverflow(state, {
+      placement: placement,
+      boundary: boundary,
+      rootBoundary: rootBoundary,
+      altBoundary: altBoundary,
+      padding: padding
+    });
+    var mainVariationSide = isVertical ? isStartVariation ? right : left : isStartVariation ? bottom : enums_top;
+
+    if (referenceRect[len] > popperRect[len]) {
+      mainVariationSide = getOppositePlacement(mainVariationSide);
+    }
+
+    var altVariationSide = getOppositePlacement(mainVariationSide);
+    var checks = [];
+
+    if (checkMainAxis) {
+      checks.push(overflow[_basePlacement] <= 0);
+    }
+
+    if (checkAltAxis) {
+      checks.push(overflow[mainVariationSide] <= 0, overflow[altVariationSide] <= 0);
+    }
+
+    if (checks.every(function (check) {
+      return check;
+    })) {
+      firstFittingPlacement = placement;
+      makeFallbackChecks = false;
+      break;
+    }
+
+    checksMap.set(placement, checks);
+  }
+
+  if (makeFallbackChecks) {
+    // `2` may be desired in some cases – research later
+    var numberOfChecks = flipVariations ? 3 : 1;
+
+    var _loop = function _loop(_i) {
+      var fittingPlacement = placements.find(function (placement) {
+        var checks = checksMap.get(placement);
+
+        if (checks) {
+          return checks.slice(0, _i).every(function (check) {
+            return check;
+          });
+        }
+      });
+
+      if (fittingPlacement) {
+        firstFittingPlacement = fittingPlacement;
+        return "break";
+      }
+    };
+
+    for (var _i = numberOfChecks; _i > 0; _i--) {
+      var _ret = _loop(_i);
+
+      if (_ret === "break") break;
+    }
+  }
+
+  if (state.placement !== firstFittingPlacement) {
+    state.modifiersData[name]._skip = true;
+    state.placement = firstFittingPlacement;
+    state.reset = true;
+  }
+} // eslint-disable-next-line import/no-unused-modules
+
+
+/* harmony default export */ var modifiers_flip = ({
+  name: 'flip',
+  enabled: true,
+  phase: 'main',
+  fn: flip_flip,
+  requiresIfExists: ['offset'],
+  data: {
+    _skip: false
+  }
+});
+// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/modifiers/hide.js
+
+
+
+function getSideOffsets(overflow, rect, preventedOffsets) {
+  if (preventedOffsets === void 0) {
+    preventedOffsets = {
+      x: 0,
+      y: 0
+    };
+  }
+
+  return {
+    top: overflow.top - rect.height - preventedOffsets.y,
+    right: overflow.right - rect.width + preventedOffsets.x,
+    bottom: overflow.bottom - rect.height + preventedOffsets.y,
+    left: overflow.left - rect.width - preventedOffsets.x
+  };
+}
+
+function isAnySideFullyClipped(overflow) {
+  return [enums_top, right, bottom, left].some(function (side) {
+    return overflow[side] >= 0;
+  });
+}
+
+function hide(_ref) {
+  var state = _ref.state,
+      name = _ref.name;
+  var referenceRect = state.rects.reference;
+  var popperRect = state.rects.popper;
+  var preventedOffsets = state.modifiersData.preventOverflow;
+  var referenceOverflow = detectOverflow(state, {
+    elementContext: 'reference'
+  });
+  var popperAltOverflow = detectOverflow(state, {
+    altBoundary: true
+  });
+  var referenceClippingOffsets = getSideOffsets(referenceOverflow, referenceRect);
+  var popperEscapeOffsets = getSideOffsets(popperAltOverflow, popperRect, preventedOffsets);
+  var isReferenceHidden = isAnySideFullyClipped(referenceClippingOffsets);
+  var hasPopperEscaped = isAnySideFullyClipped(popperEscapeOffsets);
+  state.modifiersData[name] = {
+    referenceClippingOffsets: referenceClippingOffsets,
+    popperEscapeOffsets: popperEscapeOffsets,
+    isReferenceHidden: isReferenceHidden,
+    hasPopperEscaped: hasPopperEscaped
+  };
+  state.attributes.popper = Object.assign({}, state.attributes.popper, {
+    'data-popper-reference-hidden': isReferenceHidden,
+    'data-popper-escaped': hasPopperEscaped
+  });
+} // eslint-disable-next-line import/no-unused-modules
+
+
+/* harmony default export */ var modifiers_hide = ({
+  name: 'hide',
+  enabled: true,
+  phase: 'main',
+  requiresIfExists: ['preventOverflow'],
+  fn: hide
+});
+// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/modifiers/offset.js
+
+
+function distanceAndSkiddingToXY(placement, rects, offset) {
+  var basePlacement = getBasePlacement(placement);
+  var invertDistance = [left, enums_top].indexOf(basePlacement) >= 0 ? -1 : 1;
+
+  var _ref = typeof offset === 'function' ? offset(Object.assign({}, rects, {
+    placement: placement
+  })) : offset,
+      skidding = _ref[0],
+      distance = _ref[1];
+
+  skidding = skidding || 0;
+  distance = (distance || 0) * invertDistance;
+  return [left, right].indexOf(basePlacement) >= 0 ? {
+    x: distance,
+    y: skidding
+  } : {
+    x: skidding,
+    y: distance
+  };
+}
+
+function offset_offset(_ref2) {
+  var state = _ref2.state,
+      options = _ref2.options,
+      name = _ref2.name;
+  var _options$offset = options.offset,
+      offset = _options$offset === void 0 ? [0, 0] : _options$offset;
+  var data = enums_placements.reduce(function (acc, placement) {
+    acc[placement] = distanceAndSkiddingToXY(placement, state.rects, offset);
+    return acc;
+  }, {});
+  var _data$state$placement = data[state.placement],
+      x = _data$state$placement.x,
+      y = _data$state$placement.y;
+
+  if (state.modifiersData.popperOffsets != null) {
+    state.modifiersData.popperOffsets.x += x;
+    state.modifiersData.popperOffsets.y += y;
+  }
+
+  state.modifiersData[name] = data;
+} // eslint-disable-next-line import/no-unused-modules
+
+
+/* harmony default export */ var modifiers_offset = ({
+  name: 'offset',
+  enabled: true,
+  phase: 'main',
+  requires: ['popperOffsets'],
+  fn: offset_offset
+});
+// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/modifiers/popperOffsets.js
+
+
+function popperOffsets_popperOffsets(_ref) {
+  var state = _ref.state,
+      name = _ref.name;
+  // Offsets are the actual position the popper needs to have to be
+  // properly positioned near its reference element
+  // This is the most basic placement, and will be adjusted by
+  // the modifiers in the next step
+  state.modifiersData[name] = computeOffsets({
+    reference: state.rects.reference,
+    element: state.rects.popper,
+    strategy: 'absolute',
+    placement: state.placement
+  });
+} // eslint-disable-next-line import/no-unused-modules
+
+
+/* harmony default export */ var modifiers_popperOffsets = ({
+  name: 'popperOffsets',
+  enabled: true,
+  phase: 'read',
+  fn: popperOffsets_popperOffsets,
+  data: {}
+});
+// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/utils/getAltAxis.js
+function getAltAxis(axis) {
+  return axis === 'x' ? 'y' : 'x';
+}
+// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/modifiers/preventOverflow.js
+
+
+
+
+
+
+
+
+
+
+
+function preventOverflow(_ref) {
+  var state = _ref.state,
+      options = _ref.options,
+      name = _ref.name;
+  var _options$mainAxis = options.mainAxis,
+      checkMainAxis = _options$mainAxis === void 0 ? true : _options$mainAxis,
+      _options$altAxis = options.altAxis,
+      checkAltAxis = _options$altAxis === void 0 ? false : _options$altAxis,
+      boundary = options.boundary,
+      rootBoundary = options.rootBoundary,
+      altBoundary = options.altBoundary,
+      padding = options.padding,
+      _options$tether = options.tether,
+      tether = _options$tether === void 0 ? true : _options$tether,
+      _options$tetherOffset = options.tetherOffset,
+      tetherOffset = _options$tetherOffset === void 0 ? 0 : _options$tetherOffset;
+  var overflow = detectOverflow(state, {
+    boundary: boundary,
+    rootBoundary: rootBoundary,
+    padding: padding,
+    altBoundary: altBoundary
+  });
+  var basePlacement = getBasePlacement(state.placement);
+  var variation = getVariation(state.placement);
+  var isBasePlacement = !variation;
+  var mainAxis = getMainAxisFromPlacement(basePlacement);
+  var altAxis = getAltAxis(mainAxis);
+  var popperOffsets = state.modifiersData.popperOffsets;
+  var referenceRect = state.rects.reference;
+  var popperRect = state.rects.popper;
+  var tetherOffsetValue = typeof tetherOffset === 'function' ? tetherOffset(Object.assign({}, state.rects, {
+    placement: state.placement
+  })) : tetherOffset;
+  var data = {
+    x: 0,
+    y: 0
+  };
+
+  if (!popperOffsets) {
+    return;
+  }
+
+  if (checkMainAxis) {
+    var mainSide = mainAxis === 'y' ? enums_top : left;
+    var altSide = mainAxis === 'y' ? bottom : right;
+    var len = mainAxis === 'y' ? 'height' : 'width';
+    var offset = popperOffsets[mainAxis];
+    var min = popperOffsets[mainAxis] + overflow[mainSide];
+    var max = popperOffsets[mainAxis] - overflow[altSide];
+    var additive = tether ? -popperRect[len] / 2 : 0;
+    var minLen = variation === start ? referenceRect[len] : popperRect[len];
+    var maxLen = variation === start ? -popperRect[len] : -referenceRect[len]; // We need to include the arrow in the calculation so the arrow doesn't go
+    // outside the reference bounds
+
+    var arrowElement = state.elements.arrow;
+    var arrowRect = tether && arrowElement ? getLayoutRect(arrowElement) : {
+      width: 0,
+      height: 0
+    };
+    var arrowPaddingObject = state.modifiersData['arrow#persistent'] ? state.modifiersData['arrow#persistent'].padding : getFreshSideObject();
+    var arrowPaddingMin = arrowPaddingObject[mainSide];
+    var arrowPaddingMax = arrowPaddingObject[altSide]; // If the reference length is smaller than the arrow length, we don't want
+    // to include its full size in the calculation. If the reference is small
+    // and near the edge of a boundary, the popper can overflow even if the
+    // reference is not overflowing as well (e.g. virtual elements with no
+    // width or height)
+
+    var arrowLen = within(0, referenceRect[len], arrowRect[len]);
+    var minOffset = isBasePlacement ? referenceRect[len] / 2 - additive - arrowLen - arrowPaddingMin - tetherOffsetValue : minLen - arrowLen - arrowPaddingMin - tetherOffsetValue;
+    var maxOffset = isBasePlacement ? -referenceRect[len] / 2 + additive + arrowLen + arrowPaddingMax + tetherOffsetValue : maxLen + arrowLen + arrowPaddingMax + tetherOffsetValue;
+    var arrowOffsetParent = state.elements.arrow && getOffsetParent(state.elements.arrow);
+    var clientOffset = arrowOffsetParent ? mainAxis === 'y' ? arrowOffsetParent.clientTop || 0 : arrowOffsetParent.clientLeft || 0 : 0;
+    var offsetModifierValue = state.modifiersData.offset ? state.modifiersData.offset[state.placement][mainAxis] : 0;
+    var tetherMin = popperOffsets[mainAxis] + minOffset - offsetModifierValue - clientOffset;
+    var tetherMax = popperOffsets[mainAxis] + maxOffset - offsetModifierValue;
+    var preventedOffset = within(tether ? Math.min(min, tetherMin) : min, offset, tether ? Math.max(max, tetherMax) : max);
+    popperOffsets[mainAxis] = preventedOffset;
+    data[mainAxis] = preventedOffset - offset;
+  }
+
+  if (checkAltAxis) {
+    var _mainSide = mainAxis === 'x' ? enums_top : left;
+
+    var _altSide = mainAxis === 'x' ? bottom : right;
+
+    var _offset = popperOffsets[altAxis];
+
+    var _min = _offset + overflow[_mainSide];
+
+    var _max = _offset - overflow[_altSide];
+
+    var _preventedOffset = within(_min, _offset, _max);
+
+    popperOffsets[altAxis] = _preventedOffset;
+    data[altAxis] = _preventedOffset - _offset;
+  }
+
+  state.modifiersData[name] = data;
+} // eslint-disable-next-line import/no-unused-modules
+
+
+/* harmony default export */ var modifiers_preventOverflow = ({
+  name: 'preventOverflow',
+  enabled: true,
+  phase: 'main',
+  fn: preventOverflow,
+  requiresIfExists: ['offset']
+});
+// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/utils/orderModifiers.js
+ // source: https://stackoverflow.com/questions/49875255
+
+function order(modifiers) {
+  var map = new Map();
+  var visited = new Set();
+  var result = [];
+  modifiers.forEach(function (modifier) {
+    map.set(modifier.name, modifier);
+  }); // On visiting object, check for its dependencies and visit them recursively
+
+  function sort(modifier) {
+    visited.add(modifier.name);
+    var requires = [].concat(modifier.requires || [], modifier.requiresIfExists || []);
+    requires.forEach(function (dep) {
+      if (!visited.has(dep)) {
+        var depModifier = map.get(dep);
+
+        if (depModifier) {
+          sort(depModifier);
+        }
+      }
+    });
+    result.push(modifier);
+  }
+
+  modifiers.forEach(function (modifier) {
+    if (!visited.has(modifier.name)) {
+      // check for visited object
+      sort(modifier);
+    }
+  });
+  return result;
+}
+
+function orderModifiers(modifiers) {
+  // order based on dependencies
+  var orderedModifiers = order(modifiers); // order based on phase
+
+  return modifierPhases.reduce(function (acc, phase) {
+    return acc.concat(orderedModifiers.filter(function (modifier) {
+      return modifier.phase === phase;
+    }));
+  }, []);
+}
+// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/utils/debounce.js
+function debounce(fn) {
+  var pending;
+  return function () {
+    if (!pending) {
+      pending = new Promise(function (resolve) {
+        Promise.resolve().then(function () {
+          pending = undefined;
+          resolve(fn());
+        });
+      });
+    }
+
+    return pending;
+  };
+}
+// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/utils/mergeByName.js
+function mergeByName(modifiers) {
+  var merged = modifiers.reduce(function (merged, current) {
+    var existing = merged[current.name];
+    merged[current.name] = existing ? Object.assign({}, existing, {}, current, {
+      options: Object.assign({}, existing.options, {}, current.options),
+      data: Object.assign({}, existing.data, {}, current.data)
+    }) : current;
+    return merged;
+  }, {}); // IE11 does not support Object.values
+
+  return Object.keys(merged).map(function (key) {
+    return merged[key];
+  });
+}
+// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/index.js
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var INVALID_ELEMENT_ERROR = 'Popper: Invalid reference or popper argument provided. They must be either a DOM element or virtual element.';
+var INFINITE_LOOP_ERROR = 'Popper: An infinite loop in the modifiers cycle has been detected! The cycle has been interrupted to prevent a browser crash.';
+var DEFAULT_OPTIONS = {
+  placement: 'bottom',
+  modifiers: [],
+  strategy: 'absolute'
+};
+
+function areValidElements() {
+  for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+    args[_key] = arguments[_key];
+  }
+
+  return !args.some(function (element) {
+    return !(element && typeof element.getBoundingClientRect === 'function');
+  });
+}
+
+function popperGenerator(generatorOptions) {
+  if (generatorOptions === void 0) {
+    generatorOptions = {};
+  }
+
+  var _generatorOptions = generatorOptions,
+      _generatorOptions$def = _generatorOptions.defaultModifiers,
+      defaultModifiers = _generatorOptions$def === void 0 ? [] : _generatorOptions$def,
+      _generatorOptions$def2 = _generatorOptions.defaultOptions,
+      defaultOptions = _generatorOptions$def2 === void 0 ? DEFAULT_OPTIONS : _generatorOptions$def2;
+  return function createPopper(reference, popper, options) {
+    if (options === void 0) {
+      options = defaultOptions;
+    }
+
+    var state = {
+      placement: 'bottom',
+      orderedModifiers: [],
+      options: Object.assign({}, DEFAULT_OPTIONS, {}, defaultOptions),
+      modifiersData: {},
+      elements: {
+        reference: reference,
+        popper: popper
+      },
+      attributes: {},
+      styles: {}
+    };
+    var effectCleanupFns = [];
+    var isDestroyed = false;
+    var instance = {
+      state: state,
+      setOptions: function setOptions(options) {
+        cleanupModifierEffects();
+        state.options = Object.assign({}, defaultOptions, {}, state.options, {}, options);
+        state.scrollParents = {
+          reference: isElement(reference) ? listScrollParents(reference) : reference.contextElement ? listScrollParents(reference.contextElement) : [],
+          popper: listScrollParents(popper)
+        }; // Orders the modifiers based on their dependencies and `phase`
+        // properties
+
+        var orderedModifiers = orderModifiers(mergeByName([].concat(defaultModifiers, state.options.modifiers))); // Strip out disabled modifiers
+
+        state.orderedModifiers = orderedModifiers.filter(function (m) {
+          return m.enabled;
+        }); // Validate the provided modifiers so that the consumer will get warned
+        // if one of the modifiers is invalid for any reason
+
+        if (false) { var _getComputedStyle, marginTop, marginRight, marginBottom, marginLeft, flipModifier, modifiers; }
+
+        runModifierEffects();
+        return instance.update();
+      },
+      // Sync update – it will always be executed, even if not necessary. This
+      // is useful for low frequency updates where sync behavior simplifies the
+      // logic.
+      // For high frequency updates (e.g. `resize` and `scroll` events), always
+      // prefer the async Popper#update method
+      forceUpdate: function forceUpdate() {
+        if (isDestroyed) {
+          return;
+        }
+
+        var _state$elements = state.elements,
+            reference = _state$elements.reference,
+            popper = _state$elements.popper; // Don't proceed if `reference` or `popper` are not valid elements
+        // anymore
+
+        if (!areValidElements(reference, popper)) {
+          if (false) {}
+
+          return;
+        } // Store the reference and popper rects to be read by modifiers
+
+
+        state.rects = {
+          reference: getCompositeRect(reference, getOffsetParent(popper), state.options.strategy === 'fixed'),
+          popper: getLayoutRect(popper)
+        }; // Modifiers have the ability to reset the current update cycle. The
+        // most common use case for this is the `flip` modifier changing the
+        // placement, which then needs to re-run all the modifiers, because the
+        // logic was previously ran for the previous placement and is therefore
+        // stale/incorrect
+
+        state.reset = false;
+        state.placement = state.options.placement; // On each update cycle, the `modifiersData` property for each modifier
+        // is filled with the initial data specified by the modifier. This means
+        // it doesn't persist and is fresh on each update.
+        // To ensure persistent data, use `${name}#persistent`
+
+        state.orderedModifiers.forEach(function (modifier) {
+          return state.modifiersData[modifier.name] = Object.assign({}, modifier.data);
+        });
+        var __debug_loops__ = 0;
+
+        for (var index = 0; index < state.orderedModifiers.length; index++) {
+          if (false) {}
+
+          if (state.reset === true) {
+            state.reset = false;
+            index = -1;
+            continue;
+          }
+
+          var _state$orderedModifie = state.orderedModifiers[index],
+              fn = _state$orderedModifie.fn,
+              _state$orderedModifie2 = _state$orderedModifie.options,
+              _options = _state$orderedModifie2 === void 0 ? {} : _state$orderedModifie2,
+              name = _state$orderedModifie.name;
+
+          if (typeof fn === 'function') {
+            state = fn({
+              state: state,
+              options: _options,
+              name: name,
+              instance: instance
+            }) || state;
+          }
+        }
+      },
+      // Async and optimistically optimized update – it will not be executed if
+      // not necessary (debounced to run at most once-per-tick)
+      update: debounce(function () {
+        return new Promise(function (resolve) {
+          instance.forceUpdate();
+          resolve(state);
+        });
+      }),
+      destroy: function destroy() {
+        cleanupModifierEffects();
+        isDestroyed = true;
+      }
+    };
+
+    if (!areValidElements(reference, popper)) {
+      if (false) {}
+
+      return instance;
+    }
+
+    instance.setOptions(options).then(function (state) {
+      if (!isDestroyed && options.onFirstUpdate) {
+        options.onFirstUpdate(state);
+      }
+    }); // Modifiers have the ability to execute arbitrary code before the first
+    // update cycle runs. They will be executed in the same order as the update
+    // cycle. This is useful when a modifier adds some persistent data that
+    // other modifiers need to use, but the modifier is run after the dependent
+    // one.
+
+    function runModifierEffects() {
+      state.orderedModifiers.forEach(function (_ref3) {
+        var name = _ref3.name,
+            _ref3$options = _ref3.options,
+            options = _ref3$options === void 0 ? {} : _ref3$options,
+            effect = _ref3.effect;
+
+        if (typeof effect === 'function') {
+          var cleanupFn = effect({
+            state: state,
+            name: name,
+            instance: instance,
+            options: options
+          });
+
+          var noopFn = function noopFn() {};
+
+          effectCleanupFns.push(cleanupFn || noopFn);
+        }
+      });
+    }
+
+    function cleanupModifierEffects() {
+      effectCleanupFns.forEach(function (fn) {
+        return fn();
+      });
+      effectCleanupFns = [];
+    }
+
+    return instance;
+  };
+}
+var lib_createPopper = /*#__PURE__*/popperGenerator();
+// CONCATENATED MODULE: ./node_modules/react-overlays/esm/popper.js
+
+
+
+
+
+
+
+
+
+ // For the common JS build we will turn this file into a bundle with no imports.
+// This is b/c the Popper lib is all esm files, and would break in a common js only environment
+
+var popper_createPopper = popperGenerator({
+  defaultModifiers: [modifiers_hide, modifiers_popperOffsets, modifiers_computeStyles, eventListeners, modifiers_offset, modifiers_flip, modifiers_preventOverflow, modifiers_arrow]
+});
+
+// CONCATENATED MODULE: ./node_modules/react-overlays/esm/usePopper.js
+
+
+
+
+
+var initialPopperStyles = {
+  position: 'absolute',
+  top: '0',
+  left: '0',
+  opacity: '0',
+  pointerEvents: 'none'
+};
+var initialArrowStyles = {}; // until docjs supports type exports...
+
+function toModifierMap(modifiers) {
+  var result = {};
+
+  if (!Array.isArray(modifiers)) {
+    return modifiers || result;
+  } // eslint-disable-next-line no-unused-expressions
+
+
+  modifiers == null ? void 0 : modifiers.forEach(function (m) {
+    result[m.name] = m;
+  });
+  return result;
+}
+function toModifierArray(map) {
+  if (map === void 0) {
+    map = {};
+  }
+
+  if (Array.isArray(map)) return map;
+  return Object.keys(map).map(function (k) {
+    map[k].name = k;
+    return map[k];
+  });
+}
+
+/**
+ * Position an element relative some reference element using Popper.js
+ *
+ * @param referenceElement
+ * @param popperElement
+ * @param {object}      options
+ * @param {object=}     options.modifiers Popper.js modifiers
+ * @param {boolean=}    options.enabled toggle the popper functionality on/off
+ * @param {string=}     options.placement The popper element placement relative to the reference element
+ * @param {string=}     options.strategy the positioning strategy
+ * @param {boolean=}    options.eventsEnabled have Popper listen on window resize events to reposition the element
+ * @param {function=}   options.onCreate called when the popper is created
+ * @param {function=}   options.onUpdate called when the popper is updated
+ *
+ * @returns {UsePopperState} The popper state
+ */
+function usePopper(referenceElement, popperElement, _temp) {
+  var _ref = _temp === void 0 ? {} : _temp,
+      _ref$enabled = _ref.enabled,
+      enabled = _ref$enabled === void 0 ? true : _ref$enabled,
+      _ref$placement = _ref.placement,
+      placement = _ref$placement === void 0 ? 'bottom' : _ref$placement,
+      _ref$strategy = _ref.strategy,
+      strategy = _ref$strategy === void 0 ? 'absolute' : _ref$strategy,
+      _ref$eventsEnabled = _ref.eventsEnabled,
+      eventsEnabled = _ref$eventsEnabled === void 0 ? true : _ref$eventsEnabled,
+      userModifiers = _ref.modifiers,
+      popperOptions = objectWithoutPropertiesLoose_objectWithoutPropertiesLoose(_ref, ["enabled", "placement", "strategy", "eventsEnabled", "modifiers"]);
+
+  var popperInstanceRef = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])();
+  var scheduleUpdate = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useCallback"])(function () {
+    if (popperInstanceRef.current) {
+      popperInstanceRef.current.update();
+    }
+  }, []);
+
+  var _useSafeState = esm_useSafeState(Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])({
+    placement: placement,
+    scheduleUpdate: scheduleUpdate,
+    outOfBoundaries: false,
+    styles: initialPopperStyles,
+    arrowStyles: initialArrowStyles
+  })),
+      state = _useSafeState[0],
+      setState = _useSafeState[1];
+
+  var updateModifier = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useMemo"])(function () {
+    return {
+      name: 'updateStateModifier',
+      enabled: true,
+      phase: 'afterWrite',
+      requires: ['computeStyles'],
+      fn: function fn(data) {
+        var _data$state$modifiers, _data$state$styles, _data$state$styles2;
+
+        setState({
+          scheduleUpdate: scheduleUpdate,
+          outOfBoundaries: !!((_data$state$modifiers = data.state.modifiersData.hide) == null ? void 0 : _data$state$modifiers.isReferenceHidden),
+          placement: data.state.placement,
+          styles: extends_extends({}, (_data$state$styles = data.state.styles) == null ? void 0 : _data$state$styles.popper),
+          arrowStyles: extends_extends({}, (_data$state$styles2 = data.state.styles) == null ? void 0 : _data$state$styles2.arrow),
+          state: data.state
+        });
+      }
+    };
+  }, [scheduleUpdate, setState]);
+  var modifiers = toModifierArray(userModifiers);
+  var eventsModifier = modifiers.find(function (m) {
+    return m.name === 'eventListeners';
+  });
+
+  if (!eventsModifier && eventsEnabled) {
+    eventsModifier = {
+      name: 'eventListeners',
+      enabled: true
+    };
+    modifiers = [].concat(modifiers, [eventsModifier]);
+  } // A placement difference in state means popper determined a new placement
+  // apart from the props value. By the time the popper element is rendered with
+  // the new position Popper has already measured it, if the place change triggers
+  // a size change it will result in a misaligned popper. So we schedule an update to be sure.
+
+
+  Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+    scheduleUpdate();
+  }, [state.placement, scheduleUpdate]);
+  Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+    if (!popperInstanceRef.current || !enabled) return;
+    popperInstanceRef.current.setOptions({
+      placement: placement,
+      strategy: strategy,
+      modifiers: [].concat(modifiers, [updateModifier])
+    }); // intentionally NOT re-running on new modifiers
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [strategy, placement, eventsModifier.enabled, updateModifier, enabled]);
+  Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+    if (!enabled || referenceElement == null || popperElement == null) {
+      return undefined;
+    }
+
+    popperInstanceRef.current = popper_createPopper(referenceElement, popperElement, extends_extends(extends_extends({}, popperOptions), {}, {
+      placement: placement,
+      strategy: strategy,
+      modifiers: [].concat(modifiers, [updateModifier])
+    }));
+    return function () {
+      if (popperInstanceRef.current != null) {
+        popperInstanceRef.current.destroy();
+        popperInstanceRef.current = undefined;
+        setState(function (s) {
+          return extends_extends(extends_extends({}, s), {}, {
+            styles: initialPopperStyles,
+            arrowStyles: initialArrowStyles
+          });
+        });
+      }
+    }; // This is only run once to _create_ the popper
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [enabled, referenceElement, popperElement]);
+  return state;
+}
+
+/* harmony default export */ var esm_usePopper = (usePopper);
+// CONCATENATED MODULE: ./node_modules/dom-helpers/esm/contains.js
+/* eslint-disable no-bitwise, no-cond-assign */
+// HTML DOM and SVG DOM may have different support levels,
+// so we need to check on context instead of a document root element.
+function contains_contains(context, node) {
+  if (context.contains) return context.contains(node);
+  if (context.compareDocumentPosition) return context === node || !!(context.compareDocumentPosition(node) & 16);
+}
+// CONCATENATED MODULE: ./node_modules/dom-helpers/esm/canUseDOM.js
+/* harmony default export */ var canUseDOM = (!!(typeof window !== 'undefined' && window.document && window.document.createElement));
+// CONCATENATED MODULE: ./node_modules/dom-helpers/esm/addEventListener.js
+/* eslint-disable no-return-assign */
+
+var optionsSupported = false;
+var onceSupported = false;
+
+try {
+  var addEventListener_options = {
+    get passive() {
+      return optionsSupported = true;
+    },
+
+    get once() {
+      // eslint-disable-next-line no-multi-assign
+      return onceSupported = optionsSupported = true;
+    }
+
+  };
+
+  if (canUseDOM) {
+    window.addEventListener('test', addEventListener_options, addEventListener_options);
+    window.removeEventListener('test', addEventListener_options, true);
+  }
+} catch (e) {
+  /* */
+}
+
+/**
+ * An `addEventListener` ponyfill, supports the `once` option
+ */
+function addEventListener(node, eventName, handler, options) {
+  if (options && typeof options !== 'boolean' && !onceSupported) {
+    var once = options.once,
+        capture = options.capture;
+    var wrappedHandler = handler;
+
+    if (!onceSupported && once) {
+      wrappedHandler = handler.__once || function onceHandler(event) {
+        this.removeEventListener(eventName, onceHandler, capture);
+        handler.call(this, event);
+      };
+
+      handler.__once = wrappedHandler;
+    }
+
+    node.addEventListener(eventName, wrappedHandler, optionsSupported ? options : capture);
+  }
+
+  node.addEventListener(eventName, handler, options);
+}
+
+/* harmony default export */ var esm_addEventListener = (addEventListener);
+// CONCATENATED MODULE: ./node_modules/dom-helpers/esm/removeEventListener.js
+function removeEventListener(node, eventName, handler, options) {
+  var capture = options && typeof options !== 'boolean' ? options.capture : options;
+  node.removeEventListener(eventName, handler, capture);
+
+  if (handler.__once) {
+    node.removeEventListener(eventName, handler.__once, capture);
+  }
+}
+
+/* harmony default export */ var esm_removeEventListener = (removeEventListener);
+// CONCATENATED MODULE: ./node_modules/dom-helpers/esm/listen.js
+
+
+
+function listen(node, eventName, handler, options) {
+  esm_addEventListener(node, eventName, handler, options);
+  return function () {
+    esm_removeEventListener(node, eventName, handler, options);
+  };
+}
+
+/* harmony default export */ var esm_listen = (listen);
+// EXTERNAL MODULE: ./node_modules/warning/warning.js
+var warning = __webpack_require__(5);
+var warning_default = /*#__PURE__*/__webpack_require__.n(warning);
+
+// CONCATENATED MODULE: ./node_modules/dom-helpers/esm/ownerDocument.js
+function ownerDocument(node) {
+  return node && node.ownerDocument || document;
+}
+// EXTERNAL MODULE: ./node_modules/react-dom/index.js
+var react_dom = __webpack_require__(6);
+var react_dom_default = /*#__PURE__*/__webpack_require__.n(react_dom);
+
+// CONCATENATED MODULE: ./node_modules/react-overlays/esm/safeFindDOMNode.js
+
+function safeFindDOMNode(componentOrElement) {
+  if (componentOrElement && 'setState' in componentOrElement) {
+    return react_dom_default.a.findDOMNode(componentOrElement);
+  }
+
+  return componentOrElement != null ? componentOrElement : null;
+}
+// CONCATENATED MODULE: ./node_modules/react-overlays/esm/ownerDocument.js
+
+
+/* harmony default export */ var esm_ownerDocument = (function (componentOrElement) {
+  return ownerDocument(safeFindDOMNode(componentOrElement));
+});
+// CONCATENATED MODULE: ./node_modules/react-overlays/esm/useRootClose.js
+
+
+
+
+
+
+var escapeKeyCode = 27;
+
+var useRootClose_noop = function noop() {};
+
+function isLeftClickEvent(event) {
+  return event.button === 0;
+}
+
+function isModifiedEvent(event) {
+  return !!(event.metaKey || event.altKey || event.ctrlKey || event.shiftKey);
+}
+
+var getRefTarget = function getRefTarget(ref) {
+  return ref && ('current' in ref ? ref.current : ref);
+};
+
+/**
+ * The `useRootClose` hook registers your callback on the document
+ * when rendered. Powers the `<Overlay/>` component. This is used achieve modal
+ * style behavior where your callback is triggered when the user tries to
+ * interact with the rest of the document or hits the `esc` key.
+ *
+ * @param {Ref<HTMLElement>| HTMLElement} ref  The element boundary
+ * @param {function} onRootClose
+ * @param {object=}  options
+ * @param {boolean=} options.disabled
+ * @param {string=}  options.clickTrigger The DOM event name (click, mousedown, etc) to attach listeners on
+ */
+function useRootClose(ref, onRootClose, _temp) {
+  var _ref = _temp === void 0 ? {} : _temp,
+      disabled = _ref.disabled,
+      _ref$clickTrigger = _ref.clickTrigger,
+      clickTrigger = _ref$clickTrigger === void 0 ? 'click' : _ref$clickTrigger;
+
+  var preventMouseRootCloseRef = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(false);
+  var onClose = onRootClose || useRootClose_noop;
+  var handleMouseCapture = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useCallback"])(function (e) {
+    var currentTarget = getRefTarget(ref);
+    warning_default()(!!currentTarget, 'RootClose captured a close event but does not have a ref to compare it to. ' + 'useRootClose(), should be passed a ref that resolves to a DOM node');
+    preventMouseRootCloseRef.current = !currentTarget || isModifiedEvent(e) || !isLeftClickEvent(e) || !!contains_contains(currentTarget, e.target);
+  }, [ref]);
+  var handleMouse = useEventCallback(function (e) {
+    if (!preventMouseRootCloseRef.current) {
+      onClose(e);
+    }
+  });
+  var handleKeyUp = useEventCallback(function (e) {
+    if (e.keyCode === escapeKeyCode) {
+      onClose(e);
+    }
+  });
+  Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+    if (disabled || ref == null) return undefined;
+    var doc = esm_ownerDocument(getRefTarget(ref)); // Use capture for this listener so it fires before React's listener, to
+    // avoid false positives in the contains() check below if the target DOM
+    // element is removed in the React mouse callback.
+
+    var removeMouseCaptureListener = esm_listen(doc, clickTrigger, handleMouseCapture, true);
+    var removeMouseListener = esm_listen(doc, clickTrigger, handleMouse);
+    var removeKeyupListener = esm_listen(doc, 'keyup', handleKeyUp);
+    var mobileSafariHackListeners = [];
+
+    if ('ontouchstart' in doc.documentElement) {
+      mobileSafariHackListeners = [].slice.call(doc.body.children).map(function (el) {
+        return esm_listen(el, 'mousemove', useRootClose_noop);
+      });
+    }
+
+    return function () {
+      removeMouseCaptureListener();
+      removeMouseListener();
+      removeKeyupListener();
+      mobileSafariHackListeners.forEach(function (remove) {
+        return remove();
+      });
+    };
+  }, [ref, disabled, clickTrigger, handleMouseCapture, handleMouse, handleKeyUp]);
+}
+
+/* harmony default export */ var esm_useRootClose = (useRootClose);
+// CONCATENATED MODULE: ./node_modules/react-overlays/esm/DropdownMenu.js
+
+
+
+
+
+
+
+
+
+var DropdownMenu_noop = function noop() {};
+/**
+ * @memberOf Dropdown
+ * @param {object}  options
+ * @param {boolean} options.flip Automatically adjust the menu `drop` position based on viewport edge detection
+ * @param {boolean} options.show Display the menu manually, ignored in the context of a `Dropdown`
+ * @param {boolean} options.usePopper opt in/out of using PopperJS to position menus. When disabled you must position it yourself.
+ * @param {string}  options.rootCloseEvent The pointer event to listen for when determining "clicks outside" the menu for triggering a close.
+ * @param {object}  options.popperConfig Options passed to the [`usePopper`](/api/usePopper) hook.
+ */
+
+
+function useDropdownMenu(options) {
+  var _modifiers$arrow;
+
+  if (options === void 0) {
+    options = {};
+  }
+
+  var context = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useContext"])(esm_DropdownContext);
+
+  var _useCallbackRef = useCallbackRef(),
+      arrowElement = _useCallbackRef[0],
+      attachArrowRef = _useCallbackRef[1];
+
+  var hasShownRef = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(false);
+  var _options = options,
+      flip = _options.flip,
+      rootCloseEvent = _options.rootCloseEvent,
+      _options$popperConfig = _options.popperConfig,
+      popperConfig = _options$popperConfig === void 0 ? {} : _options$popperConfig,
+      _options$usePopper = _options.usePopper,
+      shouldUsePopper = _options$usePopper === void 0 ? !!context : _options$usePopper;
+  var show = (context == null ? void 0 : context.show) == null ? options.show : context.show;
+  var alignEnd = (context == null ? void 0 : context.alignEnd) == null ? options.alignEnd : context.alignEnd;
+
+  if (show && !hasShownRef.current) {
+    hasShownRef.current = true;
+  }
+
+  var handleClose = function handleClose(e) {
+    context == null ? void 0 : context.toggle(false, e);
+  };
+
+  var _ref = context || {},
+      drop = _ref.drop,
+      setMenu = _ref.setMenu,
+      menuElement = _ref.menuElement,
+      toggleElement = _ref.toggleElement;
+
+  var placement = alignEnd ? 'bottom-end' : 'bottom-start';
+  if (drop === 'up') placement = alignEnd ? 'top-end' : 'top-start';else if (drop === 'right') placement = alignEnd ? 'right-end' : 'right-start';else if (drop === 'left') placement = alignEnd ? 'left-end' : 'left-start';
+  var modifiers = toModifierMap(popperConfig.modifiers);
+  var popper = esm_usePopper(toggleElement, menuElement, extends_extends(extends_extends({}, popperConfig), {}, {
+    placement: placement,
+    enabled: !!(shouldUsePopper && show),
+    modifiers: extends_extends(extends_extends({}, modifiers), {}, {
+      eventListeners: {
+        enabled: !!show
+      },
+      arrow: extends_extends(extends_extends({}, modifiers.arrow), {}, {
+        enabled: !!arrowElement,
+        options: extends_extends(extends_extends({}, (_modifiers$arrow = modifiers.arrow) == null ? void 0 : _modifiers$arrow.options), {}, {
+          element: arrowElement
+        })
+      }),
+      flip: extends_extends({
+        enabled: !!flip
+      }, modifiers.flip)
+    })
+  }));
+  var menu;
+  var menuProps = {
+    ref: setMenu || DropdownMenu_noop,
+    'aria-labelledby': toggleElement == null ? void 0 : toggleElement.id
+  };
+  var childArgs = {
+    show: show,
+    alignEnd: alignEnd,
+    hasShown: hasShownRef.current,
+    close: handleClose
+  };
+
+  if (!shouldUsePopper) {
+    menu = extends_extends(extends_extends({}, childArgs), {}, {
+      props: menuProps
+    });
+  } else {
+    menu = extends_extends(extends_extends(extends_extends({}, popper), childArgs), {}, {
+      props: extends_extends(extends_extends({}, menuProps), {}, {
+        style: popper.styles
+      }),
+      arrowProps: {
+        ref: attachArrowRef,
+        style: popper.arrowStyles
+      }
+    });
+  }
+
+  esm_useRootClose(menuElement, handleClose, {
+    clickTrigger: rootCloseEvent,
+    disabled: !(menu && show)
+  });
+  return menu;
+}
+var DropdownMenu_propTypes = {
+  /**
+   * A render prop that returns a Menu element. The `props`
+   * argument should spread through to **a component that can accept a ref**.
+   *
+   * @type {Function ({
+   *   show: boolean,
+   *   alignEnd: boolean,
+   *   close: (?SyntheticEvent) => void,
+   *   placement: Placement,
+   *   outOfBoundaries: ?boolean,
+   *   scheduleUpdate: () => void,
+   *   props: {
+   *     ref: (?HTMLElement) => void,
+   *     style: { [string]: string | number },
+   *     aria-labelledby: ?string
+   *   },
+   *   arrowProps: {
+   *     ref: (?HTMLElement) => void,
+   *     style: { [string]: string | number },
+   *   },
+   * }) => React.Element}
+   */
+  children: prop_types_default.a.func.isRequired,
+
+  /**
+   * Controls the visible state of the menu, generally this is
+   * provided by the parent `Dropdown` component,
+   * but may also be specified as a prop directly.
+   */
+  show: prop_types_default.a.bool,
+
+  /**
+   * Aligns the dropdown menu to the 'end' of it's placement position.
+   * Generally this is provided by the parent `Dropdown` component,
+   * but may also be specified as a prop directly.
+   */
+  alignEnd: prop_types_default.a.bool,
+
+  /**
+   * Enables the Popper.js `flip` modifier, allowing the Dropdown to
+   * automatically adjust it's placement in case of overlap with the viewport or toggle.
+   * Refer to the [flip docs](https://popper.js.org/popper-documentation.html#modifiers..flip.enabled) for more info
+   */
+  flip: prop_types_default.a.bool,
+  usePopper: prop_types_default.a.oneOf([true, false]),
+
+  /**
+   * A set of popper options and props passed directly to react-popper's Popper component.
+   */
+  popperConfig: prop_types_default.a.object,
+
+  /**
+   * Override the default event used by RootCloseWrapper.
+   */
+  rootCloseEvent: prop_types_default.a.string
+};
+var DropdownMenu_defaultProps = {
+  usePopper: true
+};
+
+/**
+ * Also exported as `<Dropdown.Menu>` from `Dropdown`.
+ *
+ * @displayName DropdownMenu
+ * @memberOf Dropdown
+ */
+function DropdownMenu(_ref2) {
+  var children = _ref2.children,
+      options = objectWithoutPropertiesLoose_objectWithoutPropertiesLoose(_ref2, ["children"]);
+
+  var args = useDropdownMenu(options);
+  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.Fragment, null, args.hasShown ? children(args) : null);
+}
+
+DropdownMenu.displayName = 'ReactOverlaysDropdownMenu';
+DropdownMenu.propTypes = DropdownMenu_propTypes;
+DropdownMenu.defaultProps = DropdownMenu_defaultProps;
+/** @component */
+
+/* harmony default export */ var esm_DropdownMenu = (DropdownMenu);
+// CONCATENATED MODULE: ./node_modules/react-overlays/esm/DropdownToggle.js
+
+
+
+
+var DropdownToggle_noop = function noop() {};
+/**
+ * Wires up Dropdown toggle functionality, returning a set a props to attach
+ * to the element that functions as the dropdown toggle (generally a button).
+ *
+ * @memberOf Dropdown
+ */
+
+
+function useDropdownToggle() {
+  var _ref = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useContext"])(esm_DropdownContext) || {},
+      _ref$show = _ref.show,
+      show = _ref$show === void 0 ? false : _ref$show,
+      _ref$toggle = _ref.toggle,
+      toggle = _ref$toggle === void 0 ? DropdownToggle_noop : _ref$toggle,
+      setToggle = _ref.setToggle;
+
+  return [{
+    ref: setToggle || DropdownToggle_noop,
+    'aria-haspopup': true,
+    'aria-expanded': !!show
+  }, {
+    show: show,
+    toggle: toggle
+  }];
+}
+var DropdownToggle_propTypes = {
+  /**
+   * A render prop that returns a Toggle element. The `props`
+   * argument should spread through to **a component that can accept a ref**. Use
+   * the `onToggle` argument to toggle the menu open or closed
+   *
+   * @type {Function ({
+   *   show: boolean,
+   *   toggle: (show: boolean) => void,
+   *   props: {
+   *     ref: (?HTMLElement) => void,
+   *     aria-haspopup: true
+   *     aria-expanded: boolean
+   *   },
+   * }) => React.Element}
+   */
+  children: prop_types_default.a.func.isRequired
+};
+
+/**
+ * Also exported as `<Dropdown.Toggle>` from `Dropdown`.
+ *
+ * @displayName DropdownToggle
+ * @memberOf Dropdown
+ */
+function DropdownToggle(_ref2) {
+  var children = _ref2.children;
+
+  var _useDropdownToggle = useDropdownToggle(),
+      props = _useDropdownToggle[0],
+      _useDropdownToggle$ = _useDropdownToggle[1],
+      show = _useDropdownToggle$.show,
+      toggle = _useDropdownToggle$.toggle;
+
+  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.Fragment, null, children({
+    show: show,
+    toggle: toggle,
+    props: props
+  }));
+}
+
+DropdownToggle.displayName = 'ReactOverlaysDropdownToggle';
+DropdownToggle.propTypes = DropdownToggle_propTypes;
+/** @component */
+
+/* harmony default export */ var esm_DropdownToggle = (DropdownToggle);
+// CONCATENATED MODULE: ./node_modules/react-overlays/esm/Dropdown.js
+
+
+
+
+
+
 
 
 
@@ -4074,312 +6574,768 @@ var DropdownContext = external_root_React_commonjs2_react_commonjs_react_amd_rea
 
 
 var Dropdown_propTypes = {
-  a11y: prop_types_default.a.bool,
-  disabled: prop_types_default.a.bool,
-  direction: prop_types_default.a.oneOf(['up', 'down', 'left', 'right']),
-  group: prop_types_default.a.bool,
-  isOpen: prop_types_default.a.bool,
-  nav: prop_types_default.a.bool,
-  active: prop_types_default.a.bool,
-  addonType: prop_types_default.a.oneOfType([prop_types_default.a.bool, prop_types_default.a.oneOf(['prepend', 'append'])]),
-  size: prop_types_default.a.string,
-  tag: tagPropType,
-  toggle: prop_types_default.a.func,
-  children: prop_types_default.a.node,
-  className: prop_types_default.a.string,
-  cssModule: prop_types_default.a.object,
-  inNavbar: prop_types_default.a.bool,
-  setActiveFromChild: prop_types_default.a.bool
+  /**
+   * A render prop that returns the root dropdown element. The `props`
+   * argument should spread through to an element containing _both_ the
+   * menu and toggle in order to handle keyboard events for focus management.
+   *
+   * @type {Function ({
+   *   props: {
+   *     onKeyDown: (SyntheticEvent) => void,
+   *   },
+   * }) => React.Element}
+   */
+  children: prop_types_default.a.func.isRequired,
+
+  /**
+   * Determines the direction and location of the Menu in relation to it's Toggle.
+   */
+  drop: prop_types_default.a.oneOf(['up', 'left', 'right', 'down']),
+
+  /**
+   * Controls the focus behavior for when the Dropdown is opened. Set to
+   * `true` to always focus the first menu item, `keyboard` to focus only when
+   * navigating via the keyboard, or `false` to disable completely
+   *
+   * The Default behavior is `false` **unless** the Menu has a `role="menu"`
+   * where it will default to `keyboard` to match the recommended [ARIA Authoring practices](https://www.w3.org/TR/wai-aria-practices-1.1/#menubutton).
+   */
+  focusFirstItemOnShow: prop_types_default.a.oneOf([false, true, 'keyboard']),
+
+  /**
+   * A css slector string that will return __focusable__ menu items.
+   * Selectors should be relative to the menu component:
+   * e.g. ` > li:not('.disabled')`
+   */
+  itemSelector: prop_types_default.a.string,
+
+  /**
+   * Align the menu to the 'end' side of the placement side of the Dropdown toggle. The default placement is `top-start` or `bottom-start`.
+   */
+  alignEnd: prop_types_default.a.bool,
+
+  /**
+   * Whether or not the Dropdown is visible.
+   *
+   * @controllable onToggle
+   */
+  show: prop_types_default.a.bool,
+
+  /**
+   * Sets the initial show position of the Dropdown.
+   */
+  defaultShow: prop_types_default.a.bool,
+
+  /**
+   * A callback fired when the Dropdown wishes to change visibility. Called with the requested
+   * `show` value, the DOM event, and the source that fired it: `'click'`,`'keydown'`,`'rootClose'`, or `'select'`.
+   *
+   * ```ts static
+   * function(
+   *   isOpen: boolean,
+   *   event: SyntheticEvent,
+   * ): void
+   * ```
+   *
+   * @controllable show
+   */
+  onToggle: prop_types_default.a.func
 };
-var Dropdown_defaultProps = {
-  a11y: true,
-  isOpen: false,
-  direction: 'down',
-  nav: false,
-  active: false,
-  addonType: false,
-  inNavbar: false,
-  setActiveFromChild: false
-};
-var preventDefaultKeys = [keyCodes.space, keyCodes.enter, keyCodes.up, keyCodes.down, keyCodes.end, keyCodes.home];
 
-var Dropdown_Dropdown =
-/*#__PURE__*/
-function (_React$Component) {
-  inheritsLoose_inheritsLoose(Dropdown, _React$Component);
+/**
+ * @displayName Dropdown
+ */
+function Dropdown(_ref) {
+  var drop = _ref.drop,
+      alignEnd = _ref.alignEnd,
+      defaultShow = _ref.defaultShow,
+      rawShow = _ref.show,
+      rawOnToggle = _ref.onToggle,
+      _ref$itemSelector = _ref.itemSelector,
+      itemSelector = _ref$itemSelector === void 0 ? '* > *' : _ref$itemSelector,
+      focusFirstItemOnShow = _ref.focusFirstItemOnShow,
+      children = _ref.children;
+  var forceUpdate = useForceUpdate();
 
-  function Dropdown(props) {
-    var _this;
+  var _useUncontrolledProp = useUncontrolledProp(rawShow, defaultShow, rawOnToggle),
+      show = _useUncontrolledProp[0],
+      onToggle = _useUncontrolledProp[1];
 
-    _this = _React$Component.call(this, props) || this;
-    _this.addEvents = _this.addEvents.bind(assertThisInitialized_assertThisInitialized(_this));
-    _this.handleDocumentClick = _this.handleDocumentClick.bind(assertThisInitialized_assertThisInitialized(_this));
-    _this.handleKeyDown = _this.handleKeyDown.bind(assertThisInitialized_assertThisInitialized(_this));
-    _this.removeEvents = _this.removeEvents.bind(assertThisInitialized_assertThisInitialized(_this));
-    _this.toggle = _this.toggle.bind(assertThisInitialized_assertThisInitialized(_this));
-    _this.containerRef = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createRef();
-    return _this;
+  var _useCallbackRef = useCallbackRef(),
+      toggleElement = _useCallbackRef[0],
+      setToggle = _useCallbackRef[1]; // We use normal refs instead of useCallbackRef in order to populate the
+  // the value as quickly as possible, otherwise the effect to focus the element
+  // may run before the state value is set
+
+
+  var menuRef = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(null);
+  var menuElement = menuRef.current;
+  var setMenu = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useCallback"])(function (ref) {
+    menuRef.current = ref; // ensure that a menu set triggers an update for consumers
+
+    forceUpdate();
+  }, [forceUpdate]);
+  var lastShow = usePrevious(show);
+  var lastSourceEvent = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(null);
+  var focusInDropdown = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(false);
+  var toggle = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useCallback"])(function (event) {
+    onToggle(!show, event);
+  }, [onToggle, show]);
+  var context = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useMemo"])(function () {
+    return {
+      toggle: toggle,
+      drop: drop,
+      show: show,
+      alignEnd: alignEnd,
+      menuElement: menuElement,
+      toggleElement: toggleElement,
+      setMenu: setMenu,
+      setToggle: setToggle
+    };
+  }, [toggle, drop, show, alignEnd, menuElement, toggleElement, setMenu, setToggle]);
+
+  if (menuElement && lastShow && !show) {
+    focusInDropdown.current = menuElement.contains(document.activeElement);
   }
 
-  var _proto = Dropdown.prototype;
-
-  _proto.getContextValue = function getContextValue() {
-    return {
-      toggle: this.toggle,
-      isOpen: this.props.isOpen,
-      direction: this.props.direction === 'down' && this.props.dropup ? 'up' : this.props.direction,
-      inNavbar: this.props.inNavbar,
-      disabled: this.props.disabled
-    };
-  };
-
-  _proto.componentDidMount = function componentDidMount() {
-    this.handleProps();
-  };
-
-  _proto.componentDidUpdate = function componentDidUpdate(prevProps) {
-    if (this.props.isOpen !== prevProps.isOpen) {
-      this.handleProps();
+  var focusToggle = useEventCallback(function () {
+    if (toggleElement && toggleElement.focus) {
+      toggleElement.focus();
     }
-  };
+  });
+  var maybeFocusFirst = useEventCallback(function () {
+    var type = lastSourceEvent.current;
+    var focusType = focusFirstItemOnShow;
 
-  _proto.componentWillUnmount = function componentWillUnmount() {
-    this.removeEvents();
-  };
+    if (focusType == null) {
+      focusType = menuRef.current && matches(menuRef.current, '[role=menu]') ? 'keyboard' : false;
+    }
 
-  _proto.getContainer = function getContainer() {
-    return this.containerRef.current;
-  };
-
-  _proto.getMenuCtrl = function getMenuCtrl() {
-    if (this._$menuCtrl) return this._$menuCtrl;
-    this._$menuCtrl = this.getContainer().querySelector('[aria-expanded]');
-    return this._$menuCtrl;
-  };
-
-  _proto.getMenuItems = function getMenuItems() {
-    return [].slice.call(this.getContainer().querySelectorAll('[role="menuitem"]'));
-  };
-
-  _proto.addEvents = function addEvents() {
-    var _this2 = this;
-
-    ['click', 'touchstart', 'keyup'].forEach(function (event) {
-      return document.addEventListener(event, _this2.handleDocumentClick, true);
-    });
-  };
-
-  _proto.removeEvents = function removeEvents() {
-    var _this3 = this;
-
-    ['click', 'touchstart', 'keyup'].forEach(function (event) {
-      return document.removeEventListener(event, _this3.handleDocumentClick, true);
-    });
-  };
-
-  _proto.handleDocumentClick = function handleDocumentClick(e) {
-    if (e && (e.which === 3 || e.type === 'keyup' && e.which !== keyCodes.tab)) return;
-    var container = this.getContainer();
-
-    if (container.contains(e.target) && container !== e.target && (e.type !== 'keyup' || e.which === keyCodes.tab)) {
+    if (focusType === false || focusType === 'keyboard' && !/^key.+$/.test(type)) {
       return;
     }
 
-    this.toggle(e);
+    var first = qsa(menuRef.current, itemSelector)[0];
+    if (first && first.focus) first.focus();
+  });
+  Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+    if (show) maybeFocusFirst();else if (focusInDropdown.current) {
+      focusInDropdown.current = false;
+      focusToggle();
+    } // only `show` should be changing
+  }, [show, focusInDropdown, focusToggle, maybeFocusFirst]);
+  Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+    lastSourceEvent.current = null;
+  });
+
+  var getNextFocusedChild = function getNextFocusedChild(current, offset) {
+    if (!menuRef.current) return null;
+    var items = qsa(menuRef.current, itemSelector);
+    var index = items.indexOf(current) + offset;
+    index = Math.max(0, Math.min(index, items.length));
+    return items[index];
   };
 
-  _proto.handleKeyDown = function handleKeyDown(e) {
-    var _this4 = this;
+  var handleKeyDown = function handleKeyDown(event) {
+    var key = event.key;
+    var target = event.target; // Second only to https://github.com/twbs/bootstrap/blob/8cfbf6933b8a0146ac3fbc369f19e520bd1ebdac/js/src/dropdown.js#L400
+    // in inscrutability
 
-    if (/input|textarea/i.test(e.target.tagName) || keyCodes.tab === e.which && (e.target.getAttribute('role') !== 'menuitem' || !this.props.a11y)) {
+    var isInput = /input|textarea/i.test(target.tagName);
+
+    if (isInput && (key === ' ' || key !== 'Escape' && menuRef.current && menuRef.current.contains(target))) {
       return;
     }
 
-    if (preventDefaultKeys.indexOf(e.which) !== -1 || e.which >= 48 && e.which <= 90) {
-      e.preventDefault();
-    }
+    lastSourceEvent.current = event.type;
 
-    if (this.props.disabled) return;
-
-    if (this.getMenuCtrl() === e.target) {
-      if (!this.props.isOpen && [keyCodes.space, keyCodes.enter, keyCodes.up, keyCodes.down].indexOf(e.which) > -1) {
-        this.toggle(e);
-        setTimeout(function () {
-          return _this4.getMenuItems()[0].focus();
-        });
-      } else if (this.props.isOpen && e.which === keyCodes.esc) {
-        this.toggle(e);
-      }
-    }
-
-    if (this.props.isOpen && e.target.getAttribute('role') === 'menuitem') {
-      if ([keyCodes.tab, keyCodes.esc].indexOf(e.which) > -1) {
-        this.toggle(e);
-        this.getMenuCtrl().focus();
-      } else if ([keyCodes.space, keyCodes.enter].indexOf(e.which) > -1) {
-        e.target.click();
-        this.getMenuCtrl().focus();
-      } else if ([keyCodes.down, keyCodes.up].indexOf(e.which) > -1 || [keyCodes.n, keyCodes.p].indexOf(e.which) > -1 && e.ctrlKey) {
-        var $menuitems = this.getMenuItems();
-        var index = $menuitems.indexOf(e.target);
-
-        if (keyCodes.up === e.which || keyCodes.p === e.which && e.ctrlKey) {
-          index = index !== 0 ? index - 1 : $menuitems.length - 1;
-        } else if (keyCodes.down === e.which || keyCodes.n === e.which && e.ctrlKey) {
-          index = index === $menuitems.length - 1 ? 0 : index + 1;
+    switch (key) {
+      case 'ArrowUp':
+        {
+          var next = getNextFocusedChild(target, -1);
+          if (next && next.focus) next.focus();
+          event.preventDefault();
+          return;
         }
 
-        $menuitems[index].focus();
-      } else if (keyCodes.end === e.which) {
-        var _$menuitems = this.getMenuItems();
+      case 'ArrowDown':
+        event.preventDefault();
 
-        _$menuitems[_$menuitems.length - 1].focus();
-      } else if (keyCodes.home === e.which) {
-        var _$menuitems2 = this.getMenuItems();
+        if (!show) {
+          toggle(event);
+        } else {
+          var _next = getNextFocusedChild(target, 1);
 
-        _$menuitems2[0].focus();
-      } else if (e.which >= 48 && e.which <= 90) {
-        var _$menuitems3 = this.getMenuItems();
+          if (_next && _next.focus) _next.focus();
+        }
 
-        var charPressed = String.fromCharCode(e.which).toLowerCase();
+        return;
 
-        for (var i = 0; i < _$menuitems3.length; i += 1) {
-          var firstLetter = _$menuitems3[i].textContent && _$menuitems3[i].textContent[0].toLowerCase();
+      case 'Escape':
+      case 'Tab':
+        onToggle(false, event);
+        break;
 
-          if (firstLetter === charPressed) {
-            _$menuitems3[i].focus();
+      default:
+    }
+  };
 
-            break;
+  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_DropdownContext.Provider, {
+    value: context
+  }, children({
+    props: {
+      onKeyDown: handleKeyDown
+    }
+  }));
+}
+
+Dropdown.displayName = 'ReactOverlaysDropdown';
+Dropdown.propTypes = Dropdown_propTypes;
+Dropdown.Menu = esm_DropdownMenu;
+Dropdown.Toggle = esm_DropdownToggle;
+/* harmony default export */ var esm_Dropdown = (Dropdown);
+// CONCATENATED MODULE: ./node_modules/react-bootstrap/esm/SelectableContext.js
+
+var SelectableContext = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createContext();
+var makeEventKey = function makeEventKey(eventKey, href) {
+  if (eventKey != null) return String(eventKey);
+  return href || null;
+};
+/* harmony default export */ var esm_SelectableContext = (SelectableContext);
+// CONCATENATED MODULE: ./node_modules/react-bootstrap/esm/NavContext.js
+
+var NavContext = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createContext(null);
+/* harmony default export */ var esm_NavContext = (NavContext);
+// CONCATENATED MODULE: ./node_modules/react-bootstrap/esm/DropdownItem.js
+
+
+
+
+
+
+
+
+
+var DropdownItem_defaultProps = {
+  as: esm_SafeAnchor,
+  disabled: false
+};
+var DropdownItem = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.forwardRef(function (_ref, ref) {
+  var bsPrefix = _ref.bsPrefix,
+      className = _ref.className,
+      children = _ref.children,
+      eventKey = _ref.eventKey,
+      disabled = _ref.disabled,
+      href = _ref.href,
+      onClick = _ref.onClick,
+      onSelect = _ref.onSelect,
+      propActive = _ref.active,
+      Component = _ref.as,
+      props = objectWithoutPropertiesLoose_objectWithoutPropertiesLoose(_ref, ["bsPrefix", "className", "children", "eventKey", "disabled", "href", "onClick", "onSelect", "active", "as"]);
+
+  var prefix = useBootstrapPrefix(bsPrefix, 'dropdown-item');
+  var onSelectCtx = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useContext"])(esm_SelectableContext);
+  var navContext = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useContext"])(esm_NavContext);
+
+  var _ref2 = navContext || {},
+      activeKey = _ref2.activeKey;
+
+  var key = makeEventKey(eventKey, href);
+  var active = propActive == null && key != null ? makeEventKey(activeKey) === key : propActive;
+  var handleClick = useEventCallback(function (event) {
+    // SafeAnchor handles the disabled case, but we handle it here
+    // for other components
+    if (disabled) return;
+    if (onClick) onClick(event);
+    if (onSelectCtx) onSelectCtx(key, event);
+    if (onSelect) onSelect(key, event);
+  });
+  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Component, extends_extends({}, props, {
+    ref: ref,
+    href: href,
+    disabled: disabled,
+    className: classnames_default()(className, prefix, active && 'active', disabled && 'disabled'),
+    onClick: handleClick
+  }), children);
+});
+DropdownItem.displayName = 'DropdownItem';
+DropdownItem.defaultProps = DropdownItem_defaultProps;
+/* harmony default export */ var esm_DropdownItem = (DropdownItem);
+// CONCATENATED MODULE: ./node_modules/@restart/hooks/esm/useMergedRefs.js
+
+
+var toFnRef = function toFnRef(ref) {
+  return !ref || typeof ref === 'function' ? ref : function (value) {
+    ref.current = value;
+  };
+};
+
+function mergeRefs(refA, refB) {
+  var a = toFnRef(refA);
+  var b = toFnRef(refB);
+  return function (value) {
+    if (a) a(value);
+    if (b) b(value);
+  };
+}
+/**
+ * Create and returns a single callback ref composed from two other Refs.
+ *
+ * ```tsx
+ * const Button = React.forwardRef((props, ref) => {
+ *   const [element, attachRef] = useCallbackRef<HTMLButtonElement>();
+ *   const mergedRef = useMergedRefs(ref, attachRef);
+ *
+ *   return <button ref={mergedRef} {...props}/>
+ * })
+ * ```
+ *
+ * @param refA A Callback or mutable Ref
+ * @param refB A Callback or mutable Ref
+ * @category refs
+ */
+
+function useMergedRefs(refA, refB) {
+  return Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useMemo"])(function () {
+    return mergeRefs(refA, refB);
+  }, [refA, refB]);
+}
+
+/* harmony default export */ var esm_useMergedRefs = (useMergedRefs);
+// CONCATENATED MODULE: ./node_modules/react-bootstrap/esm/NavbarContext.js
+
+/* harmony default export */ var NavbarContext = (external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createContext(null));
+// CONCATENATED MODULE: ./node_modules/react-bootstrap/esm/useWrappedRefWithWarning.js
+
+
+
+function useWrappedRefWithWarning(ref, componentName) {
+  if (true) return ref; // eslint-disable-next-line react-hooks/rules-of-hooks
+
+  var warningRef = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useCallback"])(function (refValue) {
+    !(refValue == null || !refValue.isReactComponent) ?  false ? undefined : browser_default()(false) : void 0;
+  }, [componentName]); // eslint-disable-next-line react-hooks/rules-of-hooks
+
+  return esm_useMergedRefs(warningRef, ref);
+}
+// CONCATENATED MODULE: ./node_modules/dom-helpers/esm/hasClass.js
+function hasClass(element, className) {
+  if (element.classList) return !!className && element.classList.contains(className);
+  return (" " + (element.className.baseVal || element.className) + " ").indexOf(" " + className + " ") !== -1;
+}
+// CONCATENATED MODULE: ./node_modules/react-bootstrap/esm/usePopperMarginModifiers.js
+
+
+
+function getMargins(element) {
+  var styles = getComputedStyle(element);
+  var top = parseFloat(styles.marginTop) || 0;
+  var right = parseFloat(styles.marginRight) || 0;
+  var bottom = parseFloat(styles.marginBottom) || 0;
+  var left = parseFloat(styles.marginLeft) || 0;
+  return {
+    top: top,
+    right: right,
+    bottom: bottom,
+    left: left
+  };
+}
+
+function usePopperMarginModifiers() {
+  var overlayRef = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(null);
+  var margins = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(null);
+  return [Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useCallback"])(function (overlay) {
+    if (!overlay || !(hasClass(overlay, 'popover') || hasClass(overlay, 'dropdown-menu'))) return;
+    margins.current = getMargins(overlay);
+    overlay.style.margin = 0;
+    overlayRef.current = overlay;
+  }, []), [Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useMemo"])(function () {
+    return {
+      name: 'offset',
+      options: {
+        offset: function offset(_ref) {
+          var placement = _ref.placement;
+          if (!margins.current) return [0, 0];
+          var _margins$current = margins.current,
+              top = _margins$current.top,
+              left = _margins$current.left,
+              bottom = _margins$current.bottom,
+              right = _margins$current.right;
+
+          switch (placement.split('-')[0]) {
+            case 'top':
+              return [0, bottom];
+
+            case 'left':
+              return [0, right];
+
+            case 'bottom':
+              return [0, top];
+
+            case 'right':
+              return [0, left];
+
+            default:
+              return [0, 0];
           }
         }
       }
-    }
-  };
-
-  _proto.handleProps = function handleProps() {
-    if (this.props.isOpen) {
-      this.addEvents();
-    } else {
-      this.removeEvents();
-    }
-  };
-
-  _proto.toggle = function toggle(e) {
-    if (this.props.disabled) {
-      return e && e.preventDefault();
-    }
-
-    return this.props.toggle(e);
-  };
-
-  _proto.render = function render() {
-    var _classNames, _ref;
-
-    var _omit = omit(this.props, ['toggle', 'disabled', 'inNavbar', 'a11y']),
-        className = _omit.className,
-        cssModule = _omit.cssModule,
-        direction = _omit.direction,
-        isOpen = _omit.isOpen,
-        group = _omit.group,
-        size = _omit.size,
-        nav = _omit.nav,
-        setActiveFromChild = _omit.setActiveFromChild,
-        active = _omit.active,
-        addonType = _omit.addonType,
-        tag = _omit.tag,
-        attrs = objectWithoutPropertiesLoose_objectWithoutPropertiesLoose(_omit, ["className", "cssModule", "direction", "isOpen", "group", "size", "nav", "setActiveFromChild", "active", "addonType", "tag"]);
-
-    var Tag = tag || (nav ? 'li' : 'div');
-    var subItemIsActive = false;
-
-    if (setActiveFromChild) {
-      external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.Children.map(this.props.children[1].props.children, function (dropdownItem) {
-        if (dropdownItem && dropdownItem.props.active) subItemIsActive = true;
-      });
-    }
-
-    var classes = mapToCssModules(classnames_default()(className, direction !== 'down' && "drop" + direction, nav && active ? 'active' : false, setActiveFromChild && subItemIsActive ? 'active' : false, (_classNames = {}, _classNames["input-group-" + addonType] = addonType, _classNames['btn-group'] = group, _classNames["btn-group-" + size] = !!size, _classNames.dropdown = !group && !addonType, _classNames.show = isOpen, _classNames['nav-item'] = nav, _classNames)), cssModule);
-    return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(DropdownContext.Provider, {
-      value: this.getContextValue()
-    }, external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Manager_Manager, null, external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Tag, extends_extends({}, attrs, (_ref = {}, _ref[typeof Tag === 'string' ? 'ref' : 'innerRef'] = this.containerRef, _ref), {
-      onKeyDown: this.handleKeyDown,
-      className: classes
-    }))));
-  };
-
-  return Dropdown;
-}(external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.Component);
-
-Dropdown_Dropdown.propTypes = Dropdown_propTypes;
-Dropdown_Dropdown.defaultProps = Dropdown_defaultProps;
-/* harmony default export */ var es_Dropdown = (Dropdown_Dropdown);
-// CONCATENATED MODULE: ./src/HeaderDropdown.js
-function HeaderDropdown_objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
-
-function HeaderDropdown_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function HeaderDropdown_inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
-
-function HeaderDropdown_extends() { HeaderDropdown_extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return HeaderDropdown_extends.apply(this, arguments); }
-
-
-
-
-
-var HeaderDropdown_propTypes = HeaderDropdown_extends({
-  children: prop_types_default.a.node,
-  direction: prop_types_default.a.string
-}, es_Dropdown.propTypes);
-
-var HeaderDropdown_defaultProps = {
-  direction: 'down'
-};
-
-var HeaderDropdown_AppHeaderDropdown = /*#__PURE__*/function (_Component) {
-  HeaderDropdown_inheritsLoose(AppHeaderDropdown, _Component);
-
-  function AppHeaderDropdown(props) {
-    var _this;
-
-    _this = _Component.call(this, props) || this;
-    _this.toggle = _this.toggle.bind(HeaderDropdown_assertThisInitialized(_this));
-    _this.state = {
-      dropdownOpen: false
     };
-    return _this;
+  }, [margins])]];
+}
+// CONCATENATED MODULE: ./node_modules/react-bootstrap/esm/DropdownMenu.js
+
+
+
+
+
+
+
+
+
+
+var esm_DropdownMenu_defaultProps = {
+  alignRight: false,
+  flip: true
+};
+var DropdownMenu_DropdownMenu = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.forwardRef(function (_ref, ref) {
+  var bsPrefix = _ref.bsPrefix,
+      className = _ref.className,
+      alignRight = _ref.alignRight,
+      rootCloseEvent = _ref.rootCloseEvent,
+      flip = _ref.flip,
+      showProps = _ref.show,
+      renderOnMount = _ref.renderOnMount,
+      _ref$as = _ref.as,
+      Component = _ref$as === void 0 ? 'div' : _ref$as,
+      _ref$popperConfig = _ref.popperConfig,
+      popperConfig = _ref$popperConfig === void 0 ? {} : _ref$popperConfig,
+      props = objectWithoutPropertiesLoose_objectWithoutPropertiesLoose(_ref, ["bsPrefix", "className", "alignRight", "rootCloseEvent", "flip", "show", "renderOnMount", "as", "popperConfig"]);
+
+  var isNavbar = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useContext"])(NavbarContext);
+  var prefix = useBootstrapPrefix(bsPrefix, 'dropdown-menu');
+
+  var _usePopperMarginModif = usePopperMarginModifiers(),
+      popperRef = _usePopperMarginModif[0],
+      marginModifiers = _usePopperMarginModif[1];
+
+  var _useDropdownMenu = useDropdownMenu({
+    flip: flip,
+    rootCloseEvent: rootCloseEvent,
+    show: showProps,
+    alignEnd: alignRight,
+    usePopper: !isNavbar,
+    popperConfig: extends_extends({}, popperConfig, {
+      modifiers: marginModifiers.concat(popperConfig.modifiers || [])
+    })
+  }),
+      hasShown = _useDropdownMenu.hasShown,
+      placement = _useDropdownMenu.placement,
+      show = _useDropdownMenu.show,
+      alignEnd = _useDropdownMenu.alignEnd,
+      close = _useDropdownMenu.close,
+      menuProps = _useDropdownMenu.props;
+
+  menuProps.ref = esm_useMergedRefs(popperRef, esm_useMergedRefs(useWrappedRefWithWarning(ref, 'DropdownMenu'), menuProps.ref));
+  if (!hasShown && !renderOnMount) return null; // For custom components provide additional, non-DOM, props;
+
+  if (typeof Component !== 'string') {
+    menuProps.show = show;
+    menuProps.close = close;
+    menuProps.alignRight = alignEnd;
   }
 
-  var _proto = AppHeaderDropdown.prototype;
+  var style = props.style;
 
-  _proto.toggle = function toggle() {
-    this.setState({
-      dropdownOpen: !this.state.dropdownOpen
+  if (placement) {
+    // we don't need the default popper style,
+    // menus are display: none when not shown.
+    style = extends_extends({}, style, {}, menuProps.style);
+    props['x-placement'] = placement;
+  }
+
+  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Component, extends_extends({}, props, menuProps, {
+    style: style,
+    className: classnames_default()(className, prefix, show && 'show', alignEnd && prefix + "-right")
+  }));
+});
+DropdownMenu_DropdownMenu.displayName = 'DropdownMenu';
+DropdownMenu_DropdownMenu.defaultProps = esm_DropdownMenu_defaultProps;
+/* harmony default export */ var react_bootstrap_esm_DropdownMenu = (DropdownMenu_DropdownMenu);
+// EXTERNAL MODULE: ./node_modules/prop-types-extra/lib/isRequiredForA11y.js
+var isRequiredForA11y = __webpack_require__(17);
+
+// CONCATENATED MODULE: ./node_modules/react-bootstrap/esm/Button.js
+
+
+
+
+
+
+var Button_defaultProps = {
+  variant: 'primary',
+  active: false,
+  disabled: false,
+  type: 'button'
+};
+var Button = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.forwardRef(function (_ref, ref) {
+  var bsPrefix = _ref.bsPrefix,
+      variant = _ref.variant,
+      size = _ref.size,
+      active = _ref.active,
+      className = _ref.className,
+      block = _ref.block,
+      type = _ref.type,
+      as = _ref.as,
+      props = objectWithoutPropertiesLoose_objectWithoutPropertiesLoose(_ref, ["bsPrefix", "variant", "size", "active", "className", "block", "type", "as"]);
+
+  var prefix = useBootstrapPrefix(bsPrefix, 'btn');
+  var classes = classnames_default()(className, prefix, active && 'active', prefix + "-" + variant, block && prefix + "-block", size && prefix + "-" + size);
+
+  if (props.href) {
+    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_SafeAnchor, extends_extends({}, props, {
+      as: as,
+      ref: ref,
+      className: classnames_default()(classes, props.disabled && 'disabled')
+    }));
+  }
+
+  if (ref) {
+    props.ref = ref;
+  }
+
+  if (!as) {
+    props.type = type;
+  }
+
+  var Component = as || 'button';
+  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Component, extends_extends({}, props, {
+    className: classes
+  }));
+});
+Button.displayName = 'Button';
+Button.defaultProps = Button_defaultProps;
+/* harmony default export */ var esm_Button = (Button);
+// CONCATENATED MODULE: ./node_modules/react-bootstrap/esm/DropdownToggle.js
+
+
+
+
+
+
+
+
+
+
+var DropdownToggle_DropdownToggle = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.forwardRef(function (_ref, ref) {
+  var bsPrefix = _ref.bsPrefix,
+      split = _ref.split,
+      className = _ref.className,
+      children = _ref.children,
+      childBsPrefix = _ref.childBsPrefix,
+      _ref$as = _ref.as,
+      Component = _ref$as === void 0 ? esm_Button : _ref$as,
+      props = objectWithoutPropertiesLoose_objectWithoutPropertiesLoose(_ref, ["bsPrefix", "split", "className", "children", "childBsPrefix", "as"]);
+
+  var prefix = useBootstrapPrefix(bsPrefix, 'dropdown-toggle');
+
+  if (childBsPrefix !== undefined) {
+    props.bsPrefix = childBsPrefix;
+  }
+
+  var _useDropdownToggle = useDropdownToggle(),
+      toggleProps = _useDropdownToggle[0],
+      toggle = _useDropdownToggle[1].toggle;
+
+  toggleProps.ref = esm_useMergedRefs(toggleProps.ref, useWrappedRefWithWarning(ref, 'DropdownToggle')); // This intentionally forwards size and variant (if set) to the
+  // underlying component, to allow it to render size and style variants.
+
+  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Component, extends_extends({
+    onClick: toggle,
+    className: classnames_default()(className, prefix, split && prefix + "-split")
+  }, toggleProps, props), children);
+});
+DropdownToggle_DropdownToggle.displayName = 'DropdownToggle';
+/* harmony default export */ var react_bootstrap_esm_DropdownToggle = (DropdownToggle_DropdownToggle);
+// CONCATENATED MODULE: ./node_modules/dom-helpers/esm/camelize.js
+var rHyphen = /-(.)/g;
+function camelize(string) {
+  return string.replace(rHyphen, function (_, chr) {
+    return chr.toUpperCase();
+  });
+}
+// CONCATENATED MODULE: ./node_modules/react-bootstrap/esm/createWithBsPrefix.js
+
+
+
+
+
+
+
+var createWithBsPrefix_pascalCase = function pascalCase(str) {
+  return str[0].toUpperCase() + camelize(str).slice(1);
+};
+
+function createWithBsPrefix(prefix, _temp) {
+  var _ref = _temp === void 0 ? {} : _temp,
+      _ref$displayName = _ref.displayName,
+      displayName = _ref$displayName === void 0 ? createWithBsPrefix_pascalCase(prefix) : _ref$displayName,
+      _ref$Component = _ref.Component,
+      Component = _ref$Component === void 0 ? 'div' : _ref$Component,
+      defaultProps = _ref.defaultProps;
+
+  var BsComponent = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.forwardRef( // eslint-disable-next-line react/prop-types
+  function (_ref2, ref) {
+    var className = _ref2.className,
+        bsPrefix = _ref2.bsPrefix,
+        _ref2$as = _ref2.as,
+        Tag = _ref2$as === void 0 ? Component : _ref2$as,
+        props = objectWithoutPropertiesLoose_objectWithoutPropertiesLoose(_ref2, ["className", "bsPrefix", "as"]);
+
+    var resolvedPrefix = useBootstrapPrefix(bsPrefix, prefix);
+    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Tag, extends_extends({
+      ref: ref,
+      className: classnames_default()(className, resolvedPrefix)
+    }, props));
+  });
+  BsComponent.defaultProps = defaultProps;
+  BsComponent.displayName = displayName;
+  return BsComponent;
+}
+// CONCATENATED MODULE: ./node_modules/react-bootstrap/esm/Dropdown.js
+
+
+
+
+
+
+
+
+
+
+
+
+
+var Dropdown_defaultProps = {
+  navbar: false
+};
+var Dropdown_Dropdown = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.forwardRef(function (uncontrolledProps, ref) {
+  var _useUncontrolled = useUncontrolled(uncontrolledProps, {
+    show: 'onToggle'
+  }),
+      bsPrefix = _useUncontrolled.bsPrefix,
+      drop = _useUncontrolled.drop,
+      show = _useUncontrolled.show,
+      className = _useUncontrolled.className,
+      alignRight = _useUncontrolled.alignRight,
+      onSelect = _useUncontrolled.onSelect,
+      onToggle = _useUncontrolled.onToggle,
+      focusFirstItemOnShow = _useUncontrolled.focusFirstItemOnShow,
+      _useUncontrolled$as = _useUncontrolled.as,
+      Component = _useUncontrolled$as === void 0 ? 'div' : _useUncontrolled$as,
+      _4 = _useUncontrolled.navbar,
+      props = objectWithoutPropertiesLoose_objectWithoutPropertiesLoose(_useUncontrolled, ["bsPrefix", "drop", "show", "className", "alignRight", "onSelect", "onToggle", "focusFirstItemOnShow", "as", "navbar"]);
+
+  var onSelectCtx = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useContext"])(esm_SelectableContext);
+  var prefix = useBootstrapPrefix(bsPrefix, 'dropdown');
+  var handleToggle = useEventCallback(function (nextShow, event, source) {
+    if (source === void 0) {
+      source = event.type;
+    }
+
+    if (event.currentTarget === document) source = 'rootClose';
+    onToggle(nextShow, event, {
+      source: source
     });
-  };
+  });
+  var handleSelect = useEventCallback(function (key, event) {
+    if (onSelectCtx) onSelectCtx(key, event);
+    if (onSelect) onSelect(key, event);
+    handleToggle(false, event, 'select');
+  });
+  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_SelectableContext.Provider, {
+    value: handleSelect
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Dropdown, {
+    drop: drop,
+    show: show,
+    alignEnd: alignRight,
+    onToggle: handleToggle,
+    focusFirstItemOnShow: focusFirstItemOnShow,
+    itemSelector: "." + prefix + "-item:not(.disabled):not(:disabled)"
+  }, function (_ref) {
+    var dropdownProps = _ref.props;
+    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Component, extends_extends({}, props, dropdownProps, {
+      ref: ref,
+      className: classnames_default()(className, show && 'show', (!drop || drop === 'down') && prefix, drop === 'up' && 'dropup', drop === 'right' && 'dropright', drop === 'left' && 'dropleft')
+    }));
+  }));
+});
+Dropdown_Dropdown.displayName = 'Dropdown';
+Dropdown_Dropdown.defaultProps = Dropdown_defaultProps;
+Dropdown_Dropdown.Toggle = react_bootstrap_esm_DropdownToggle;
+Dropdown_Dropdown.Menu = react_bootstrap_esm_DropdownMenu;
+Dropdown_Dropdown.Item = esm_DropdownItem;
+Dropdown_Dropdown.Header = createWithBsPrefix('dropdown-header', {
+  defaultProps: {
+    role: 'heading'
+  }
+});
+Dropdown_Dropdown.Divider = createWithBsPrefix('dropdown-divider', {
+  defaultProps: {
+    role: 'separator'
+  }
+});
+/* harmony default export */ var react_bootstrap_esm_Dropdown = (Dropdown_Dropdown);
+// CONCATENATED MODULE: ./node_modules/react-bootstrap/esm/NavItem.js
 
-  _proto.render = function render() {
-    var _this$props = this.props,
-        children = _this$props.children,
-        attributes = HeaderDropdown_objectWithoutPropertiesLoose(_this$props, ["children"]);
 
-    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(es_Dropdown, HeaderDropdown_extends({
-      nav: true,
-      isOpen: this.state.dropdownOpen,
-      toggle: this.toggle
-    }, attributes), children);
-  };
 
-  return AppHeaderDropdown;
-}(external_root_React_commonjs2_react_commonjs_react_amd_react_["Component"]);
 
-HeaderDropdown_AppHeaderDropdown.propTypes = HeaderDropdown_propTypes;
-HeaderDropdown_AppHeaderDropdown.defaultProps = HeaderDropdown_defaultProps;
+
+var NavItem = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.forwardRef( // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
+function (_ref, ref) {
+  var bsPrefix = _ref.bsPrefix,
+      className = _ref.className,
+      children = _ref.children,
+      _ref$as = _ref.as,
+      Component = _ref$as === void 0 ? 'div' : _ref$as,
+      props = objectWithoutPropertiesLoose_objectWithoutPropertiesLoose(_ref, ["bsPrefix", "className", "children", "as"]);
+
+  bsPrefix = useBootstrapPrefix(bsPrefix, 'nav-item');
+  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Component, extends_extends({}, props, {
+    ref: ref,
+    className: classnames_default()(className, bsPrefix)
+  }), children);
+});
+NavItem.displayName = 'NavItem';
+/* harmony default export */ var esm_NavItem = (NavItem);
+// CONCATENATED MODULE: ./src/HeaderDropdown.js
+
+
+
+
+
+var HeaderDropdown_AppHeaderDropdown = function AppHeaderDropdown(_ref) {
+  var children = _ref.children;
+
+  var _useState = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useState"])(false),
+      show = _useState[0],
+      setShow = _useState[1];
+
+  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(react_bootstrap_esm_Dropdown, {
+    as: esm_NavItem,
+    show: show,
+    onToggle: function onToggle() {
+      return setShow(!show);
+    }
+  }, children);
+};
+
+HeaderDropdown_AppHeaderDropdown.propTypes = {
+  children: prop_types_default.a.node
+};
 /* harmony default export */ var HeaderDropdown = (HeaderDropdown_AppHeaderDropdown);
 // CONCATENATED MODULE: ./src/NavbarBrand.js
-function NavbarBrand_extends() { NavbarBrand_extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return NavbarBrand_extends.apply(this, arguments); }
-
-function NavbarBrand_objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
-
 function NavbarBrand_inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
 
@@ -4437,9 +7393,7 @@ var NavbarBrand_AppNavbarBrand = /*#__PURE__*/function (_Component) {
     var _this$props = this.props,
         className = _this$props.className,
         children = _this$props.children,
-        Tag = _this$props.tag,
-        attributes = NavbarBrand_objectWithoutPropertiesLoose(_this$props, ["className", "children", "tag"]);
-
+        Tag = _this$props.tag;
     var classes = classnames_default()(className, 'navbar-brand');
     var img = [];
 
@@ -4461,9 +7415,9 @@ var NavbarBrand_AppNavbarBrand = /*#__PURE__*/function (_Component) {
       img.push(this.navbarBrandImg(_props2, _classBrand2, img.length + 1));
     }
 
-    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Tag, NavbarBrand_extends({}, attributes, {
+    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Tag, {
       className: classes
-    }), children || img);
+    }, children || img);
   };
 
   return AppNavbarBrand;
@@ -4473,11 +7427,11 @@ NavbarBrand_AppNavbarBrand.propTypes = NavbarBrand_propTypes;
 NavbarBrand_AppNavbarBrand.defaultProps = NavbarBrand_defaultProps;
 /* harmony default export */ var NavbarBrand = (NavbarBrand_AppNavbarBrand);
 // EXTERNAL MODULE: ./node_modules/react-onclickout/index.js
-var react_onclickout = __webpack_require__(9);
+var react_onclickout = __webpack_require__(8);
 var react_onclickout_default = /*#__PURE__*/__webpack_require__.n(react_onclickout);
 
 // EXTERNAL MODULE: ./src/Shared/element-closest.js
-var element_closest = __webpack_require__(23);
+var element_closest = __webpack_require__(18);
 
 // CONCATENATED MODULE: ./src/Shared/my-sidebar-controller.js
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -4486,6 +7440,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 The document body classList is the one source of info.
 If there is no document, do nothing.
+
+sidebar-show is for mobile
+sidebar-{}-show is for all other browsers
 
 Use SidebarController as a singleton across multiple components:
   Sidebar, SidebarNav, SidebarMinimizer, SidebarToggler
@@ -4533,6 +7490,7 @@ var my_sidebar_controller_SidebarController = function SidebarController() {
   });
 
   _defineProperty(this, "close", function () {
+    // console.log('Hello from close!');
     if (document.body) {
       _this.remove('sidebar-show');
 
@@ -4553,6 +7511,7 @@ var my_sidebar_controller_SidebarController = function SidebarController() {
   });
 
   _defineProperty(this, "toggleOpen", function () {
+    // console.log('Hello from toggleOpen!');
     if (document.body) {
       if (_this.isOpen) {
         _this.close();
@@ -4617,9 +7576,10 @@ var my_sidebar_controller_SidebarController = function SidebarController() {
   });
 
   _defineProperty(this, "hideMobile", function () {
-    _this.remove('sidebar-show');
+    console.log('Hello from hideMobile in my-sidebar-contoller.js!');
 
-    _this.remove("sidebar-" + _this.display + "-show");
+    _this.remove('sidebar-show'); // this.remove(`sidebar-${this.display}-show`);
+
   });
 
   _defineProperty(this, "isOnMobile", function () {
@@ -4833,6 +7793,7 @@ var Sidebar_AppSidebar = /*#__PURE__*/function (_Component) {
   };
 
   _proto.hideMobile = function hideMobile() {
+    console.log('Hello from hideMobile in Sidebar.js!');
     this.sidebarController.hideMobile();
   };
 
@@ -5087,232 +8048,309 @@ var SidebarMinimizer_AppSidebarMinimizer = /*#__PURE__*/function (_Component) {
 SidebarMinimizer_AppSidebarMinimizer.propTypes = SidebarMinimizer_propTypes;
 SidebarMinimizer_AppSidebarMinimizer.defaultProps = SidebarMinimizer_defaultProps;
 /* harmony default export */ var SidebarMinimizer = (SidebarMinimizer_AppSidebarMinimizer);
-// CONCATENATED MODULE: ./node_modules/reactstrap/es/NavItem.js
+// CONCATENATED MODULE: ./node_modules/react-bootstrap/esm/Badge.js
 
 
 
 
 
-
-var NavItem_propTypes = {
-  tag: tagPropType,
-  active: prop_types_default.a.bool,
-  className: prop_types_default.a.string,
-  cssModule: prop_types_default.a.object
-};
-var NavItem_defaultProps = {
-  tag: 'li'
-};
-
-var NavItem_NavItem = function NavItem(props) {
-  var className = props.className,
-      cssModule = props.cssModule,
-      active = props.active,
-      Tag = props.tag,
-      attributes = objectWithoutPropertiesLoose_objectWithoutPropertiesLoose(props, ["className", "cssModule", "active", "tag"]);
-
-  var classes = mapToCssModules(classnames_default()(className, 'nav-item', active ? 'active' : false), cssModule);
-  return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Tag, extends_extends({}, attributes, {
-    className: classes
-  }));
-};
-
-NavItem_NavItem.propTypes = NavItem_propTypes;
-NavItem_NavItem.defaultProps = NavItem_defaultProps;
-/* harmony default export */ var es_NavItem = (NavItem_NavItem);
-// CONCATENATED MODULE: ./node_modules/reactstrap/es/NavLink.js
-
-
-
-
-
-
-
-
-var NavLink_propTypes = {
-  tag: tagPropType,
-  innerRef: prop_types_default.a.oneOfType([prop_types_default.a.object, prop_types_default.a.func, prop_types_default.a.string]),
-  disabled: prop_types_default.a.bool,
-  active: prop_types_default.a.bool,
-  className: prop_types_default.a.string,
-  cssModule: prop_types_default.a.object,
-  onClick: prop_types_default.a.func,
-  href: prop_types_default.a.any
-};
-var NavLink_defaultProps = {
-  tag: 'a'
-};
-
-var NavLink_NavLink =
-/*#__PURE__*/
-function (_React$Component) {
-  inheritsLoose_inheritsLoose(NavLink, _React$Component);
-
-  function NavLink(props) {
-    var _this;
-
-    _this = _React$Component.call(this, props) || this;
-    _this.onClick = _this.onClick.bind(assertThisInitialized_assertThisInitialized(_this));
-    return _this;
-  }
-
-  var _proto = NavLink.prototype;
-
-  _proto.onClick = function onClick(e) {
-    if (this.props.disabled) {
-      e.preventDefault();
-      return;
-    }
-
-    if (this.props.href === '#') {
-      e.preventDefault();
-    }
-
-    if (this.props.onClick) {
-      this.props.onClick(e);
-    }
-  };
-
-  _proto.render = function render() {
-    var _this$props = this.props,
-        className = _this$props.className,
-        cssModule = _this$props.cssModule,
-        active = _this$props.active,
-        Tag = _this$props.tag,
-        innerRef = _this$props.innerRef,
-        attributes = objectWithoutPropertiesLoose_objectWithoutPropertiesLoose(_this$props, ["className", "cssModule", "active", "tag", "innerRef"]);
-
-    var classes = mapToCssModules(classnames_default()(className, 'nav-link', {
-      disabled: attributes.disabled,
-      active: active
-    }), cssModule);
-    return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Tag, extends_extends({}, attributes, {
-      ref: innerRef,
-      onClick: this.onClick,
-      className: classes
-    }));
-  };
-
-  return NavLink;
-}(external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.Component);
-
-NavLink_NavLink.propTypes = NavLink_propTypes;
-NavLink_NavLink.defaultProps = NavLink_defaultProps;
-/* harmony default export */ var es_NavLink = (NavLink_NavLink);
-// CONCATENATED MODULE: ./node_modules/reactstrap/es/Badge.js
-
-
-
-
-
-
-var Badge_propTypes = {
-  color: prop_types_default.a.string,
-  pill: prop_types_default.a.bool,
-  tag: tagPropType,
-  innerRef: prop_types_default.a.oneOfType([prop_types_default.a.object, prop_types_default.a.func, prop_types_default.a.string]),
-  children: prop_types_default.a.node,
-  className: prop_types_default.a.string,
-  cssModule: prop_types_default.a.object
-};
 var Badge_defaultProps = {
-  color: 'secondary',
-  pill: false,
-  tag: 'span'
+  pill: false
 };
+var Badge = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.forwardRef(function (_ref, ref) {
+  var bsPrefix = _ref.bsPrefix,
+      variant = _ref.variant,
+      pill = _ref.pill,
+      className = _ref.className,
+      _ref$as = _ref.as,
+      Component = _ref$as === void 0 ? 'span' : _ref$as,
+      props = objectWithoutPropertiesLoose_objectWithoutPropertiesLoose(_ref, ["bsPrefix", "variant", "pill", "className", "as"]);
 
-var Badge_Badge = function Badge(props) {
-  var className = props.className,
-      cssModule = props.cssModule,
-      color = props.color,
-      innerRef = props.innerRef,
-      pill = props.pill,
-      Tag = props.tag,
-      attributes = objectWithoutPropertiesLoose_objectWithoutPropertiesLoose(props, ["className", "cssModule", "color", "innerRef", "pill", "tag"]);
+  var prefix = useBootstrapPrefix(bsPrefix, 'badge');
+  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Component, extends_extends({
+    ref: ref
+  }, props, {
+    className: classnames_default()(className, prefix, pill && prefix + "-pill", variant && prefix + "-" + variant)
+  }));
+});
+Badge.displayName = 'Badge';
+Badge.defaultProps = Badge_defaultProps;
+/* harmony default export */ var esm_Badge = (Badge);
+// EXTERNAL MODULE: ./node_modules/prop-types-extra/lib/all.js
+var lib_all = __webpack_require__(21);
 
-  var classes = mapToCssModules(classnames_default()(className, 'badge', 'badge-' + color, pill ? 'badge-pill' : false), cssModule);
+// CONCATENATED MODULE: ./node_modules/react-bootstrap/esm/CardContext.js
 
-  if (attributes.href && Tag === 'span') {
-    Tag = 'a';
+/* harmony default export */ var CardContext = (external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createContext(null));
+// CONCATENATED MODULE: ./node_modules/react-bootstrap/esm/TabContext.js
+
+var TabContext = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createContext(null);
+/* harmony default export */ var esm_TabContext = (TabContext);
+// CONCATENATED MODULE: ./node_modules/react-bootstrap/esm/AbstractNav.js
+
+
+
+
+
+
+
+
+
+
+var AbstractNav_noop = function noop() {};
+
+var AbstractNav = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.forwardRef(function (_ref, ref) {
+  var _ref$as = _ref.as,
+      Component = _ref$as === void 0 ? 'ul' : _ref$as,
+      onSelect = _ref.onSelect,
+      activeKey = _ref.activeKey,
+      role = _ref.role,
+      onKeyDown = _ref.onKeyDown,
+      props = objectWithoutPropertiesLoose_objectWithoutPropertiesLoose(_ref, ["as", "onSelect", "activeKey", "role", "onKeyDown"]);
+
+  // A ref and forceUpdate for refocus, b/c we only want to trigger when needed
+  // and don't want to reset the set in the effect
+  var forceUpdate = useForceUpdate();
+  var needsRefocusRef = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(false);
+  var parentOnSelect = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useContext"])(esm_SelectableContext);
+  var tabContext = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useContext"])(esm_TabContext);
+  var getControlledId, getControllerId;
+
+  if (tabContext) {
+    role = role || 'tablist';
+    activeKey = tabContext.activeKey;
+    getControlledId = tabContext.getControlledId;
+    getControllerId = tabContext.getControllerId;
   }
 
-  return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Tag, extends_extends({}, attributes, {
-    className: classes,
-    ref: innerRef
+  var listNode = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useRef"])(null);
+
+  var getNextActiveChild = function getNextActiveChild(offset) {
+    if (!listNode.current) return null;
+    var items = qsa(listNode.current, '[data-rb-event-key]:not(.disabled)');
+    var activeChild = listNode.current.querySelector('.active');
+    var index = items.indexOf(activeChild);
+    if (index === -1) return null;
+    var nextIndex = index + offset;
+    if (nextIndex >= items.length) nextIndex = 0;
+    if (nextIndex < 0) nextIndex = items.length - 1;
+    return items[nextIndex];
+  };
+
+  var handleSelect = function handleSelect(key, event) {
+    if (key == null) return;
+    if (onSelect) onSelect(key, event);
+    if (parentOnSelect) parentOnSelect(key, event);
+  };
+
+  var handleKeyDown = function handleKeyDown(event) {
+    if (onKeyDown) onKeyDown(event);
+    var nextActiveChild;
+
+    switch (event.key) {
+      case 'ArrowLeft':
+      case 'ArrowUp':
+        nextActiveChild = getNextActiveChild(-1);
+        break;
+
+      case 'ArrowRight':
+      case 'ArrowDown':
+        nextActiveChild = getNextActiveChild(1);
+        break;
+
+      default:
+        return;
+    }
+
+    if (!nextActiveChild) return;
+    event.preventDefault();
+    handleSelect(nextActiveChild.dataset.rbEventKey, event);
+    needsRefocusRef.current = true;
+    forceUpdate();
+  };
+
+  Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useEffect"])(function () {
+    if (listNode.current && needsRefocusRef.current) {
+      var activeChild = listNode.current.querySelector('[data-rb-event-key].active');
+      if (activeChild) activeChild.focus();
+    }
+
+    needsRefocusRef.current = false;
+  });
+  var mergedRef = esm_useMergedRefs(ref, listNode);
+  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_SelectableContext.Provider, {
+    value: handleSelect
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_NavContext.Provider, {
+    value: {
+      role: role,
+      // used by NavLink to determine it's role
+      activeKey: makeEventKey(activeKey),
+      getControlledId: getControlledId || AbstractNav_noop,
+      getControllerId: getControllerId || AbstractNav_noop
+    }
+  }, /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Component, extends_extends({}, props, {
+    onKeyDown: handleKeyDown,
+    ref: mergedRef,
+    role: role
+  }))));
+});
+/* harmony default export */ var esm_AbstractNav = (AbstractNav);
+// CONCATENATED MODULE: ./node_modules/react-bootstrap/esm/AbstractNavItem.js
+
+
+
+
+
+
+
+
+var AbstractNavItem_defaultProps = {
+  disabled: false
+};
+var AbstractNavItem = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.forwardRef(function (_ref, ref) {
+  var active = _ref.active,
+      className = _ref.className,
+      tabIndex = _ref.tabIndex,
+      eventKey = _ref.eventKey,
+      onSelect = _ref.onSelect,
+      onClick = _ref.onClick,
+      Component = _ref.as,
+      props = objectWithoutPropertiesLoose_objectWithoutPropertiesLoose(_ref, ["active", "className", "tabIndex", "eventKey", "onSelect", "onClick", "as"]);
+
+  var navKey = makeEventKey(eventKey, props.href);
+  var parentOnSelect = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useContext"])(esm_SelectableContext);
+  var navContext = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useContext"])(esm_NavContext);
+  var isActive = active;
+
+  if (navContext) {
+    if (!props.role && navContext.role === 'tablist') props.role = 'tab';
+    var contextControllerId = navContext.getControllerId(navKey);
+    var contextControlledId = navContext.getControlledId(navKey);
+     false ? undefined : void 0;
+     false ? undefined : void 0;
+    props['data-rb-event-key'] = navKey;
+    props.id = contextControllerId || props.id;
+    props['aria-controls'] = contextControlledId || props['aria-controls'];
+    isActive = active == null && navKey != null ? navContext.activeKey === navKey : active;
+  }
+
+  if (props.role === 'tab') {
+    props.tabIndex = isActive ? tabIndex : -1;
+    props['aria-selected'] = isActive;
+  }
+
+  var handleOnclick = useEventCallback(function (e) {
+    if (onClick) onClick(e);
+    if (navKey == null) return;
+    if (onSelect) onSelect(navKey, e);
+    if (parentOnSelect) parentOnSelect(navKey, e);
+  });
+  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Component, extends_extends({}, props, {
+    ref: ref,
+    onClick: handleOnclick,
+    className: classnames_default()(className, isActive && 'active')
   }));
+});
+AbstractNavItem.defaultProps = AbstractNavItem_defaultProps;
+/* harmony default export */ var esm_AbstractNavItem = (AbstractNavItem);
+// CONCATENATED MODULE: ./node_modules/react-bootstrap/esm/NavLink.js
+
+
+
+
+
+
+
+var NavLink_defaultProps = {
+  disabled: false,
+  as: esm_SafeAnchor
 };
+var NavLink = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.forwardRef(function (_ref, ref) {
+  var bsPrefix = _ref.bsPrefix,
+      disabled = _ref.disabled,
+      className = _ref.className,
+      href = _ref.href,
+      eventKey = _ref.eventKey,
+      onSelect = _ref.onSelect,
+      as = _ref.as,
+      props = objectWithoutPropertiesLoose_objectWithoutPropertiesLoose(_ref, ["bsPrefix", "disabled", "className", "href", "eventKey", "onSelect", "as"]);
 
-Badge_Badge.propTypes = Badge_propTypes;
-Badge_Badge.defaultProps = Badge_defaultProps;
-/* harmony default export */ var es_Badge = (Badge_Badge);
-// CONCATENATED MODULE: ./node_modules/reactstrap/es/Nav.js
+  bsPrefix = useBootstrapPrefix(bsPrefix, 'nav-link');
+  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_AbstractNavItem, extends_extends({}, props, {
+    href: href,
+    ref: ref,
+    eventKey: eventKey,
+    as: as,
+    disabled: disabled,
+    onSelect: onSelect,
+    className: classnames_default()(className, bsPrefix, disabled && 'disabled')
+  }));
+});
+NavLink.displayName = 'NavLink';
+NavLink.defaultProps = NavLink_defaultProps;
+/* harmony default export */ var esm_NavLink = (NavLink);
+// CONCATENATED MODULE: ./node_modules/react-bootstrap/esm/Nav.js
 
 
 
 
 
 
-var Nav_propTypes = {
-  tabs: prop_types_default.a.bool,
-  pills: prop_types_default.a.bool,
-  vertical: prop_types_default.a.oneOfType([prop_types_default.a.bool, prop_types_default.a.string]),
-  horizontal: prop_types_default.a.string,
-  justified: prop_types_default.a.bool,
-  fill: prop_types_default.a.bool,
-  navbar: prop_types_default.a.bool,
-  card: prop_types_default.a.bool,
-  tag: tagPropType,
-  className: prop_types_default.a.string,
-  cssModule: prop_types_default.a.object
-};
+
+
+
+
+
+
 var Nav_defaultProps = {
-  tag: 'ul',
-  vertical: false
+  justify: false,
+  fill: false
 };
+var Nav = external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.forwardRef(function (uncontrolledProps, ref) {
+  var _classNames;
 
-var getVerticalClass = function getVerticalClass(vertical) {
-  if (vertical === false) {
-    return false;
-  } else if (vertical === true || vertical === 'xs') {
-    return 'flex-column';
+  var _useUncontrolled = useUncontrolled(uncontrolledProps, {
+    activeKey: 'onSelect'
+  }),
+      _useUncontrolled$as = _useUncontrolled.as,
+      as = _useUncontrolled$as === void 0 ? 'div' : _useUncontrolled$as,
+      bsPrefix = _useUncontrolled.bsPrefix,
+      variant = _useUncontrolled.variant,
+      fill = _useUncontrolled.fill,
+      justify = _useUncontrolled.justify,
+      navbar = _useUncontrolled.navbar,
+      className = _useUncontrolled.className,
+      children = _useUncontrolled.children,
+      activeKey = _useUncontrolled.activeKey,
+      props = objectWithoutPropertiesLoose_objectWithoutPropertiesLoose(_useUncontrolled, ["as", "bsPrefix", "variant", "fill", "justify", "navbar", "className", "children", "activeKey"]);
+
+  bsPrefix = useBootstrapPrefix(bsPrefix, 'nav');
+  var navbarBsPrefix, cardHeaderBsPrefix;
+  var navbarContext = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useContext"])(NavbarContext);
+  var cardContext = Object(external_root_React_commonjs2_react_commonjs_react_amd_react_["useContext"])(CardContext);
+
+  if (navbarContext) {
+    navbarBsPrefix = navbarContext.bsPrefix;
+    navbar = navbar == null ? true : navbar;
+  } else if (cardContext) {
+    cardHeaderBsPrefix = cardContext.cardHeaderBsPrefix;
   }
 
-  return "flex-" + vertical + "-column";
-};
-
-var Nav_Nav = function Nav(props) {
-  var className = props.className,
-      cssModule = props.cssModule,
-      tabs = props.tabs,
-      pills = props.pills,
-      vertical = props.vertical,
-      horizontal = props.horizontal,
-      justified = props.justified,
-      fill = props.fill,
-      navbar = props.navbar,
-      card = props.card,
-      Tag = props.tag,
-      attributes = objectWithoutPropertiesLoose_objectWithoutPropertiesLoose(props, ["className", "cssModule", "tabs", "pills", "vertical", "horizontal", "justified", "fill", "navbar", "card", "tag"]);
-
-  var classes = mapToCssModules(classnames_default()(className, navbar ? 'navbar-nav' : 'nav', horizontal ? "justify-content-" + horizontal : false, getVerticalClass(vertical), {
-    'nav-tabs': tabs,
-    'card-header-tabs': card && tabs,
-    'nav-pills': pills,
-    'card-header-pills': card && pills,
-    'nav-justified': justified,
-    'nav-fill': fill
-  }), cssModule);
-  return external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(Tag, extends_extends({}, attributes, {
-    className: classes
-  }));
-};
-
-Nav_Nav.propTypes = Nav_propTypes;
-Nav_Nav.defaultProps = Nav_defaultProps;
-/* harmony default export */ var es_Nav = (Nav_Nav);
+  return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_AbstractNav, extends_extends({
+    as: as,
+    ref: ref,
+    activeKey: activeKey,
+    className: classnames_default()(className, (_classNames = {}, _classNames[bsPrefix] = !navbar, _classNames[navbarBsPrefix + "-nav"] = navbar, _classNames[cardHeaderBsPrefix + "-" + variant] = !!cardHeaderBsPrefix, _classNames[bsPrefix + "-" + variant] = !!variant, _classNames[bsPrefix + "-fill"] = fill, _classNames[bsPrefix + "-justified"] = justify, _classNames))
+  }, props), children);
+});
+Nav.displayName = 'Nav';
+Nav.defaultProps = Nav_defaultProps;
+Nav.Item = esm_NavItem;
+Nav.Link = esm_NavLink;
+/* harmony default export */ var esm_Nav = (Nav);
 // EXTERNAL MODULE: ./node_modules/react-perfect-scrollbar/lib/index.js
-var react_perfect_scrollbar_lib = __webpack_require__(10);
-var react_perfect_scrollbar_lib_default = /*#__PURE__*/__webpack_require__.n(react_perfect_scrollbar_lib);
+var lib = __webpack_require__(9);
+var lib_default = /*#__PURE__*/__webpack_require__.n(lib);
 
 // CONCATENATED MODULE: ./src/SidebarNav.js
 function SidebarNav_objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
@@ -5322,6 +8360,7 @@ function SidebarNav_extends() { SidebarNav_extends = Object.assign || function (
 function SidebarNav_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function SidebarNav_inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
 
 
 
@@ -5469,13 +8508,13 @@ var SidebarNav_AppSidebarNav = /*#__PURE__*/function (_Component) {
     });
     var itemBadge = this.navBadge(item.badge);
     var attributes = item.attributes || {};
-    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(es_NavItem, {
+    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Nav.Item, {
       key: key,
       className: classes.item
-    }, attributes.disabled ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(es_NavLink, SidebarNav_extends({
+    }, attributes.disabled ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Nav.Link, SidebarNav_extends({
       href: '',
       className: classes.link
-    }, attributes), itemIcon, item.name, itemBadge) : this.isExternal(url) ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(es_NavLink, SidebarNav_extends({
+    }, attributes), itemIcon, item.name, itemBadge) : this.isExternal(url) ? /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Nav.Link, SidebarNav_extends({
       href: url,
       className: classes.link,
       active: true
@@ -5491,7 +8530,7 @@ var SidebarNav_AppSidebarNav = /*#__PURE__*/function (_Component) {
   _proto.navBadge = function navBadge(badge) {
     if (badge) {
       var classes = classnames_default()(badge["class"]);
-      return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(es_Badge, {
+      return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Badge, {
         className: classes,
         color: badge.variant
       }, badge.text);
@@ -5502,6 +8541,7 @@ var SidebarNav_AppSidebarNav = /*#__PURE__*/function (_Component) {
 
   _proto.isExternal = function isExternal(url) {
     var link = url ? url.substring(0, 4) : '';
+    console.log('Hello from isExternal!', link);
     return link === 'http';
   };
 
@@ -5519,13 +8559,13 @@ var SidebarNav_AppSidebarNav = /*#__PURE__*/function (_Component) {
 
     var isRtl = getComputedStyle(document.documentElement).direction === 'rtl'; // sidebar-nav root
 
-    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(react_perfect_scrollbar_lib_default.a, SidebarNav_extends({
+    return /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(lib_default.a, SidebarNav_extends({
       className: navClasses
     }, attributes, {
       options: {
         suppressScrollX: !isRtl
       }
-    }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(es_Nav, null, children || this.navList(navConfig.items)));
+    }), /*#__PURE__*/external_root_React_commonjs2_react_commonjs_react_amd_react_default.a.createElement(esm_Nav, null, children || this.navList(navConfig.items)));
   };
 
   return AppSidebarNav;
@@ -5777,8 +8817,6 @@ Switch_AppSwitch.propTypes = Switch_propTypes;
 Switch_AppSwitch.defaultProps = Switch_defaultProps;
 /* harmony default export */ var Switch = (Switch_AppSwitch);
 // CONCATENATED MODULE: ./src/index.js
-
-
 
 
 

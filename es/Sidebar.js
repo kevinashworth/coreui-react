@@ -92,6 +92,7 @@ var AppSidebar = /*#__PURE__*/function (_Component) {
   };
 
   _proto.hideMobile = function hideMobile() {
+    console.log('Hello from hideMobile in Sidebar.js!');
     this.sidebarController.hideMobile();
   };
 

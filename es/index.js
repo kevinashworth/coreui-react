@@ -4,8 +4,6 @@ import _AppAsideToggler from './AsideToggler';
 export { _AppAsideToggler as AppAsideToggler };
 import _AppBreadcrumb from './Breadcrumb';
 export { _AppBreadcrumb as AppBreadcrumb };
-import _AppBreadcrumb2 from './Breadcrumb2';
-export { _AppBreadcrumb2 as AppBreadcrumb2 };
 import _AppFooter from './Footer';
 export { _AppFooter as AppFooter };
 import _AppHeader from './Header';

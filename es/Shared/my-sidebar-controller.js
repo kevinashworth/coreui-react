@@ -5,6 +5,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 The document body classList is the one source of info.
 If there is no document, do nothing.
 
+sidebar-show is for mobile
+sidebar-{}-show is for all other browsers
+
 Use SidebarController as a singleton across multiple components:
   Sidebar, SidebarNav, SidebarMinimizer, SidebarToggler
 
@@ -51,6 +54,7 @@ var SidebarController = function SidebarController() {
   });
 
   _defineProperty(this, "close", function () {
+    // console.log('Hello from close!');
     if (document.body) {
       _this.remove('sidebar-show');
 
@@ -71,6 +75,7 @@ var SidebarController = function SidebarController() {
   });
 
   _defineProperty(this, "toggleOpen", function () {
+    // console.log('Hello from toggleOpen!');
     if (document.body) {
       if (_this.isOpen) {
         _this.close();
@@ -135,9 +140,10 @@ var SidebarController = function SidebarController() {
   });
 
   _defineProperty(this, "hideMobile", function () {
-    _this.remove('sidebar-show');
+    console.log('Hello from hideMobile in my-sidebar-contoller.js!');
 
-    _this.remove("sidebar-" + _this.display + "-show");
+    _this.remove('sidebar-show'); // this.remove(`sidebar-${this.display}-show`);
+
   });
 
   _defineProperty(this, "isOnMobile", function () {
