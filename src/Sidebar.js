@@ -43,6 +43,10 @@ class AppSidebar extends Component {
     this.isFixed(this.props.fixed);
     this.isOffCanvas(this.props.offCanvas);
     this.handleSidebarMinimizer(this.props.minimized);
+    if (this.sidebarController.isOnMobile()) {
+      this.sidebarController.close()
+    }
+
   }
 
   handleSidebarMinimizer = (shouldMinimize) => {
